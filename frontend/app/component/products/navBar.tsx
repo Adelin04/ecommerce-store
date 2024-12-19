@@ -9,12 +9,18 @@ import { useCategoryStore } from '../../zustandStore/useCategoryStore';
 import { useProductStore } from '../../zustandStore/useProductStore';
 import Link from 'next/link';
 import UserProfile from './userProfile';
-
+declare global {
+    interface Window {
+        width: number;
+        height: number;
+    }
+}
 const NavBar = () => {
-    const { products } = useProductStore()
-    const { setCategoryClicked, categorySelected }:any = useCategoryStore()
 
-    const [windowDimensions, setWindowDimensions] = useState({
+    const { products } = useProductStore()
+    const { setCategoryClicked, categorySelected }: any = useCategoryStore()
+
+    const [windowDimensions, setWindowDimensions] = useState<any>({
         width: window.innerWidth,
         height: window.innerHeight,
     });

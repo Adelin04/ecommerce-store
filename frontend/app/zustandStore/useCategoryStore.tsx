@@ -26,11 +26,11 @@ export const useCategoryStore = create((set: any, get: any) => ({
         //Set men as the default selected category
         set(() => ({ categorySelected: get().categories.filter((category: any) => category.gender.gender === 'men') }))
         console.log(get().categorySelected);
-        
+
     },
 
-    setCategoryClicked: (categoryClicked: any) => {
-        set(() => ({ categorySelected: get().categories.filter((category: any) => category.gender.gender === categoryClicked.toLowerCase()) }))
+    setCategoryClicked: (categoryClicked: string) => {
+        set(() => ({ categorySelected: get().categories.filter((category: ICategory) => category.gender.gender === categoryClicked.toLowerCase()) }))
     }
 
 }))
