@@ -5,16 +5,22 @@ import { useProductStore } from "./zustandStore/useProductStore";
 import React, { useEffect } from "react";
 import styled from 'styled-components';
 import { useCategoryStore } from './zustandStore/useCategoryStore';
+import Loading from './loading';
+import { useMounted } from './component/useMounted';
 
 const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
     const { getProducts } = useProductStore();
     const { getCategories } = useCategoryStore();
+    const { hasMounted } = useMounted()
 
     useEffect(() => {
         getProducts();
         getCategories();
     }, [])
 
+
+    if (!hasMounted)
+        return <Loading />
     return (
         <Container>
             {children}

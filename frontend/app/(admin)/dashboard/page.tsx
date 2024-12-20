@@ -1,10 +1,17 @@
 'use client'
 
+import { useMounted } from "@/app/component/useMounted";
+import Loading from "@/app/loading";
+
 export default function Dashboard() {
-    return (
-      <div>
-        <main> Dashboard </main>
-      </div>
-    );
-  }
-  
+  const { hasMounted } = useMounted()
+
+
+  if (!hasMounted)
+    return <Loading />
+  return (
+    <div>
+      <main> Dashboard </main>
+    </div>
+  );
+}

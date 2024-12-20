@@ -1,6 +1,6 @@
 'use client'
 
-import LogoIcon from '../../../assets/logoIcon.svg'
+import LogoIcon from '../../assets/logoIcon.svg'
 import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';

@@ -5,8 +5,8 @@ import Logo from './logo';
 import NavBarMenu from "./navBarMenu";
 // import UserProfile from './UserProfile.jsx';
 import { useEffect, useState } from 'react';
-import { useCategoryStore } from '../../zustandStore/useCategoryStore';
-import { useProductStore } from '../../zustandStore/useProductStore';
+import { useCategoryStore } from '../zustandStore/useCategoryStore';
+import { useProductStore } from '../zustandStore/useProductStore';
 import Link from 'next/link';
 import UserProfile from './userProfile';
 declare global {

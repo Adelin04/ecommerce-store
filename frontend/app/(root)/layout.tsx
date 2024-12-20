@@ -1,20 +1,11 @@
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import NavBar from "../component/navBar";
+import Footer from "../component/footer";
 import SetGlobalState from "../setGlobalState";
-import NavBar from "../component/products/navBar";
-import Footer from "../component/products/footer";
+import React from "react";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "BOUTIQUE",
@@ -27,15 +18,12 @@ export default function SetupLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <SetGlobalState>
-          <NavBar />
-          {children}
-          <Footer />
-        </SetGlobalState>
-      </body>
-    </html>
-
+    <React.Fragment>
+      <SetGlobalState>
+        <NavBar />
+        {children}
+        <Footer />
+      </SetGlobalState>
+    </React.Fragment>
   );
 }
