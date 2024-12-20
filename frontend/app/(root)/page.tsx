@@ -1,12 +1,12 @@
 'use client'
 
 import styled from 'styled-components'
-import { useCategoryStore } from './zustandStore/useCategoryStore';
-import CategoriesList from './component/products/categoriesList';
+import { useCategoryStore } from '../zustandStore/useCategoryStore';
+import CategoriesList from '../component/products/categoriesList';
 
 
 const HomePage = () => {
-  const { categories, categorySelected }:any = useCategoryStore();
+  const { categorySelected }: any = useCategoryStore();
 
   return (
     <Container className='home-container'>

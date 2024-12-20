@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     PRODUCTION_URI: "https://am-cloud.eu/api",
     DEV_URI: "http://localhost:5000/api",
   },
+  
 };
 
 export default nextConfig;

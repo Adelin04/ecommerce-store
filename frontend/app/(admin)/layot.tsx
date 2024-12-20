@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ReactElement } from 'react'
+import Footer from '../component/products/footer';
 
 
 export const metadata: Metadata = {
@@ -7,13 +8,31 @@ export const metadata: Metadata = {
   description: 'Online Store',
 }
 
-type LayoutProps = ({ children }: { children: ReactElement }) => ReactElement
+/* type LayoutProps = ({ children }: { children: ReactElement }) => ReactElement
 
 const AdminLayout: LayoutProps = ({ children }) => {
   return (
-    <div >
-      {children}
-    </div>
+    <html lang="en">
+      <body>
+        {children}
+      </body>
+    </html>
   )
 }
-export default AdminLayout
+export default AdminLayout */
+
+export default function DashboardLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body>
+        <p>Admin Layout</p>
+        {children}
+      </body>
+    </html>
+
+  );
+}

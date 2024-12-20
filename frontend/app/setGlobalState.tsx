@@ -1,6 +1,6 @@
 'use client'
 
-import '@/app/globals.css'
+import './globals.css'
 import { useProductStore } from "./zustandStore/useProductStore";
 import React, { useEffect } from "react";
 import styled from 'styled-components';
@@ -17,7 +17,6 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <Container>
-
             {children}
         </Container>
     )
