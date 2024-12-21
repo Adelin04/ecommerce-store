@@ -42,8 +42,6 @@ const Container = styled.div`
     
     .img-card {
         z-index: 1;
-        width: 200px;
-        height: 100%;
         border-radius: 10px;
         object-fit: cover;
     }

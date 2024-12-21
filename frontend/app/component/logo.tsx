@@ -11,7 +11,7 @@ const Logo = () => {
     return (
         <Container className="log-container">
             <Link className='link-logo' href="/">
-                <Image className='img-logo' src={LogoIcon} alt='Logo'/>
+                <Image className='img-logo' priority src={LogoIcon} alt='Logo'/>
                 <LabelLogo> BOUTIQUE </LabelLogo>
             </Link>
         </Container>
