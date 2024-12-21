@@ -4,6 +4,7 @@ import NavBar from "../component/navBar";
 import Footer from "../component/footer";
 import SetGlobalState from "../setGlobalState";
 import React from "react";
+import navBarMenu from '../component/navBarMenu'
 
 
 
@@ -19,7 +20,7 @@ export default function SetupLayout({
 }>) {
   return (
     <React.Fragment>
-      <NavBar />
+      <NavBar  navBarMenu={navBarMenu}/>
         {children}
       <Footer />
     </React.Fragment>

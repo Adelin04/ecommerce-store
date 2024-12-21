@@ -2,7 +2,6 @@
 
 import styled from 'styled-components';
 import Logo from './logo';
-import NavBarMenu from "./navBarMenu";
 // import UserProfile from './UserProfile.jsx';
 import { useEffect, useState } from 'react';
 import { useCategoryStore } from '../zustandStore/useCategoryStore';
@@ -15,7 +14,7 @@ declare global {
         height: number;
     }
 }
-const NavBar = () => {
+const NavBar = ({ navBarMenu }: any) => {
 
     const { products } = useProductStore()
     const { setCategoryClicked, categorySelected }: any = useCategoryStore()
@@ -48,7 +47,7 @@ const NavBar = () => {
                     </WrapperLogo>
 
                     <MenuNavBar className='wrapper-nav-link'>
-                        {NavBarMenu.map((menu, index) => {
+                        {navBarMenu && navBarMenu.map((menu: any, index: number) => {
                             return (
                                 <WrapperLink key={index} className='wrapper-link'>
                                     <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => { setClickedGender(menu.name); setCategoryClicked(menu.name) }}>{menu.name}</p>
@@ -77,11 +76,10 @@ const NavBar = () => {
                     </WrapperLogoUserProfile>
 
                     <MenuNavBar className='wrapper-nav-link'>
-                        {NavBarMenu.map((menu, index) => {
+                        {navBarMenu && navBarMenu.map((menu: any, index: number) => {
                             return (
                                 <WrapperLink key={index} className='wrapper-link'>
                                     <Link className='link' href={menu.to}>{menu.name}</Link>
-                                    {/* {console.log(menu)} */}
                                 </WrapperLink>
                             )
                         })}

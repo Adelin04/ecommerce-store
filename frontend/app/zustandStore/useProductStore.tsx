@@ -36,7 +36,12 @@ export const useProductStore = create((set: any, get: any) => ({
         set(() => ({ products: fetchProducts.data }))
     },
 
+    selectProduct: (id: string) => {
+        set(() => ({ selectedProduct: get().products.filter((product: IProduct) => product._id === id) }))
+    },
+
     selectedByCategory: (category: any, genderSelected: string) => {
+        console.log(category, genderSelected);
 
         set(() => ({ selectedProducts: get().products.filter((product: any) => product.gender.gender === genderSelected && product.category === category) }))
     },

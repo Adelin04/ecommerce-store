@@ -1,7 +1,7 @@
-import { NextPage } from 'next'
+/* import { NextPage } from 'next'
 import type { ReactElement } from 'react'
 import MainLayout from './(store)/layout'
-import AdminLayout from './(dashboard)/layot'
+import AdminLayout from './(dashboard)/dashboard/layot'
 import './globals.css'
 
 export type PageWithMainLayoutType = NextPage & { layout: typeof MainLayout }
@@ -11,4 +11,4 @@ export type PageWithLayoutType = | PageWithMainLayoutType | PageWithAdminLayoutT
 
 export type LayoutProps = ({ children }: { children: ReactElement }) => ReactElement
 
-export default PageWithLayoutType
+export default PageWithLayoutType */

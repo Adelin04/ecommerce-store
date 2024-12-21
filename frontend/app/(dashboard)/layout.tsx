@@ -16,7 +16,7 @@ export default function DashboardLayout({
 }>) {
   return (
     <React.Fragment>
-      Dashboard Layout
+      Dashboard Layot
       {children}
     </React.Fragment>
 

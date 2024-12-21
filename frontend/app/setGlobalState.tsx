@@ -7,16 +7,19 @@ import styled from 'styled-components';
 import { useCategoryStore } from './zustandStore/useCategoryStore';
 import Loading from './loading';
 import { useMounted } from './component/useMounted';
+import { useUserStore } from './zustandStore/useUserStore';
 
 const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
+    const { checkAuth } = useUserStore();
     const { getProducts } = useProductStore();
     const { getCategories } = useCategoryStore();
     const { hasMounted } = useMounted()
 
     useEffect(() => {
+        checkAuth();
         getProducts();
         getCategories();
-    }, [])
+    }, [checkAuth])
 
 
     if (!hasMounted)

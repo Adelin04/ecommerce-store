@@ -1,19 +1,20 @@
 'use client'
 
 import styled from 'styled-components';
-import UserProfileImageLogin from '../../../assets/userLogin.png'
-import UserProfileImageLogout from '../../../assets/userLogout.png'
+import UserProfileImageLogin from '../../assets/userLogin.png'
+import UserProfileImageLogout from '../../assets/userLogout.png'
 import Link from 'next/link';
+import Image from 'next/image';
+import { useUserStore } from '../zustandStore/useUserStore';
 // import { useUserStore } from '../store/useUserStore';
 
 const UserProfile = () => {
-    // const {user} = useUserStore();
-    const user = true;
+    const {user} = useUserStore();
 
     return (
         <Container className="container-user-profile">
-            <Link className='link-user-profile' href={user ? "/profile" : "/authPage"}>
-                {/* <Image className='img-user-profile' src={user ? UserProfileImageLogin : UserProfileImageLogout} alt="User Profile" /> */}
+            <Link className='link-user-profile' href={user ? "/profile" : "/auth"}>
+                <Image className='img-user-profile' src={user ? UserProfileImageLogin : UserProfileImageLogout} alt="User Profile" />
             </Link>
         </Container>
     )
