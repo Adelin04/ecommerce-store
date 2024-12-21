@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import Footer from '../component/footer';
 import NavBar from '../component/navBar';
 
@@ -15,13 +15,10 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <NavBar />
-        {children}
-        <p>Admin Layout</p>
-      </body>
-    </html>
+    <React.Fragment>
+      Dashboard Layout
+      {children}
+    </React.Fragment>
 
   );
 }

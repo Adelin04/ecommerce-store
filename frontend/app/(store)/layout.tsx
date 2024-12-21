@@ -19,11 +19,9 @@ export default function SetupLayout({
 }>) {
   return (
     <React.Fragment>
-      <SetGlobalState>
-        <NavBar />
+      <NavBar />
         {children}
-        <Footer />
-      </SetGlobalState>
+      <Footer />
     </React.Fragment>
   );
 }

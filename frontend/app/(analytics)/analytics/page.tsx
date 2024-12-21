@@ -3,7 +3,7 @@
 import { useMounted } from "@/app/component/useMounted";
 import Loading from "@/app/loading";
 
-export default function Dashboard() {
+export default function Analytics() {
   const { hasMounted } = useMounted()
 
 
@@ -11,7 +11,7 @@ export default function Dashboard() {
     return <Loading />
   return (
     <div>
-      <main> Dashboard </main>
+      Analytics
     </div>
   );
 }
