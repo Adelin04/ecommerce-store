@@ -13,7 +13,7 @@ const CategoryCard = ({ category }: any) => {
 
     return (
         <Container className='container-product-card'>
-            <Link className='link-product-card' href={`/${name}`} onClick={() => { selectedByCategory(name, category.gender.gender) }} >
+            <div className='link-product-card'/*  href={`/${name}`} */ onClick={() => { selectedByCategory(name, category.gender.gender) }} >
                 <WrapperProductCard className='wrapper-product-card' >
                     <WrapperImage className='wrapper-image' >
                         <Image className='img-card' priority src={image} alt={name} width={200} height={300} />
@@ -22,7 +22,7 @@ const CategoryCard = ({ category }: any) => {
                         <p className='name'>{name}</p>
                     </WrapperDetailsProductCard>
                 </WrapperProductCard>
-            </Link>
+            </div>
         </Container>
     )
 }

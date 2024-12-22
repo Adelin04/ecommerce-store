@@ -26,13 +26,13 @@ const Login = () => {
 
                     <WrapperLabelInput>
                         <label className='email-label'>Email</label>
-                        <input className='email-input' type='email' required name='email' id='email' placeholder='email@example.com' autoFocus value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input className='email-input' type='email' autoComplete='on' required name='email' id='email' placeholder='email@example.com' autoFocus value={email} onChange={(e) => setEmail(e.target.value)} />
                         <TfiEmail style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                     </WrapperLabelInput>
 
                     <WrapperLabelInput>
                         <label className='password-label'>Password</label>
-                        <input className='password-input' type='password' required name='password' id='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input className='password-input' type='password' autoComplete='on' required name='password' id='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                         <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                     </WrapperLabelInput>
 

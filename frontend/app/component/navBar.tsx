@@ -16,7 +16,7 @@ declare global {
 }
 const NavBar = ({ navBarMenu }: any) => {
 
-    const { products } = useProductStore()
+    const { products, resetSelectedProducts } = useProductStore()
     const { setCategoryClicked, categorySelected }: any = useCategoryStore()
 
     const [windowDimensions, setWindowDimensions] = useState<any>({
@@ -50,7 +50,7 @@ const NavBar = ({ navBarMenu }: any) => {
                         {navBarMenu && navBarMenu.map((menu: any, index: number) => {
                             return (
                                 <WrapperLink key={index} className='wrapper-link'>
-                                    <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => { setClickedGender(menu.name); setCategoryClicked(menu.name) }}>{menu.name}</p>
+                                    <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => { setClickedGender(menu.name); setCategoryClicked(menu.name); resetSelectedProducts() }}>{menu.name}</p>
                                 </WrapperLink>
                             )
                         })}

@@ -13,6 +13,7 @@ interface ProductState {
     sizesProductAvailable: any | null,
     newProductsAdded: [],
     selectedProduct: IProduct | null,
+    selectedProducts: Array<IProduct> | null,
 }
 
 // Initialize a default state
@@ -26,6 +27,7 @@ const INITIAL_STATE: ProductState = {
     sizesProductAvailable: null,
     newProductsAdded: [],
     selectedProduct: null,
+    selectedProducts: null,
 }
 
 export const useProductStore = create((set: any, get: any) => ({
@@ -41,9 +43,12 @@ export const useProductStore = create((set: any, get: any) => ({
     },
 
     selectedByCategory: (category: any, genderSelected: string) => {
-        console.log(category, genderSelected);
-
+        
         set(() => ({ selectedProducts: get().products.filter((product: any) => product.gender.gender === genderSelected && product.category === category) }))
+    },
+
+    resetSelectedProducts: () => {
+        set(() => ({ selectedProducts: null }))
     },
 
 }))

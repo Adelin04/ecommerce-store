@@ -5,17 +5,21 @@ import { useCategoryStore } from '../zustandStore/useCategoryStore';
 import CategoriesList from '../component/products/categoriesList';
 import { useMounted } from '../component/useMounted';
 import Loading from '../loading';
+import ProductsList from '../component/products/productList';
+import { useProductStore } from '../zustandStore/useProductStore';
 
 
 const HomePage = () => {
   const { categorySelected }: any = useCategoryStore();
+  const { selectedProducts }: any = useProductStore();
   const { hasMounted } = useMounted()
+  console.log(selectedProducts);
 
   if (!hasMounted)
     return <Loading />
   return (
     <Container className='home-container'>
-      <CategoriesList categories={categorySelected} />
+      {selectedProducts === null ? <CategoriesList categories={categorySelected} /> : <ProductsList products={selectedProducts} />}
     </Container>
   )
 }

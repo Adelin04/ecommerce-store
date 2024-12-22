@@ -2,9 +2,14 @@ import React from 'react'
 import styled from 'styled-components';
 import ProductCard from '../../component/products/productsCard';
 import { IProduct } from '@/app/interfaces/interfaces';
+import { useMounted } from '../useMounted';
+import Loading from '@/app/loading';
 
 const ProductsList = ({ products }: any) => {
+    const { hasMounted } = useMounted()
 
+    if (!hasMounted)
+        return <Loading />
     return (
         <Container className='container-products-list'>
             <WrapperProductList className='wrapper-products-list'>
