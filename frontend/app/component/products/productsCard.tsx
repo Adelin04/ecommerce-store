@@ -4,10 +4,14 @@ import { IProduct } from '@/app/interfaces/interfaces';
 import { useProductStore } from '@/app/zustandStore/useProductStore';
 import { useRouter } from 'next/router';
 
-const ProductCard = ({product}: any) => {
+interface PropsProductCard {
+    product: IProduct
+}
+
+const ProductCard = ({ product }: PropsProductCard) => {
     const { selectProduct } = useProductStore();
     // const router = useRouter()
-    const { _id, name, image, price, color, size, currency, seller } = product
+    const { _id, name, image, price, color, size, currency, seller }: any = product
 
     const handleClick = () => {
         selectProduct(_id)
@@ -19,12 +23,12 @@ const ProductCard = ({product}: any) => {
             <WrapperProductCard className='wrapper-product-card' >
                 <img className='img-product-card' src={image} alt={name} />
                 <WrapperDetailsProductCard className='wrapper-details-product-card' >
-                 {/*    <p className='name'>{name}</p>
+                    <p className='name'>{name}</p>
                     <p className='price'>{price}</p>
-                    <p className='color'>{color}</p>
-                    <p className='size'>{size}</p>
-                    <p className='currency'>{currency}</p>
-                    <p className='seller'>{seller}</p> */}
+                    <p className='color'>{color.color}</p>
+                    <p className='size'>{size.size}</p>
+                    <p className='currency'>{currency.currency}</p>
+                    <p className='seller'>{seller}</p>
                 </WrapperDetailsProductCard>
             </WrapperProductCard>
         </Container>

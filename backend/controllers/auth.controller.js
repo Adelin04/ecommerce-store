@@ -33,7 +33,7 @@ const setCookie = (res, accessToken, refreshToken) => {
     httpOnly: true, // prevent XSS attacks, cross site scripting attack
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
-    maxAge: 15 * 60 * 1000, // 15 minutes
+    maxAge: 60 * 60 * 1000, // one hour
   });
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true, // prevent XSS attacks, cross site scripting attack
@@ -135,11 +135,11 @@ export const refreshToken = async (req, res) => {
     const accessToken = jwt.sign(
       { userId: decoded.userId },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "1h" }
     );
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 15,
+      maxAge: 1000 * 60 * 60,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });

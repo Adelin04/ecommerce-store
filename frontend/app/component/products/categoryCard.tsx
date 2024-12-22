@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useProductStore } from '../../zustandStore/useProductStore';
 import Link from 'next/link';
 import Image from 'next/image';
+import Loading from '@/app/loading';
 
 const CategoryCard = ({ category }: any) => {
 
@@ -16,7 +17,7 @@ const CategoryCard = ({ category }: any) => {
             <div className='link-product-card'/*  href={`/${name}`} */ onClick={() => { selectedByCategory(name, category.gender.gender) }} >
                 <WrapperProductCard className='wrapper-product-card' >
                     <WrapperImage className='wrapper-image' >
-                        <Image className='img-card' priority src={image} alt={name} width={200} height={300} />
+                        {!image ? <Loading /> :<Image className='img-card' priority src={image} alt={name} width={200} height={300} loading='eager'/>}
                     </WrapperImage>
                     <WrapperDetailsProductCard className='wrapper-details-product-card' >
                         <p className='name'>{name}</p>
