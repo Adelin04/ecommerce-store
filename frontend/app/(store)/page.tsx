@@ -13,7 +13,6 @@ const HomePage = () => {
   const { categorySelected }: any = useCategoryStore();
   const { selectedProducts }: any = useProductStore();
   const { hasMounted } = useMounted()
-  console.log(selectedProducts);
 
   if (!hasMounted)
     return <Loading />

@@ -10,12 +10,10 @@ export let linksNavBar = [
   {
     to: "/men",
     name: "MEN",
-    img: [{ path: "./slides/img_subLink_Jewellery.jpg" }],
   },
   {
     to: "/women",
     name: "WOMEN",
-    img: [{ path: "./slides/img_subLink_Jewellery.jpg" }],
   },
 ]
 

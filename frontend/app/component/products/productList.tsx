@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import ProductCard from '../../component/products/productsCard';
+import ProductCard from './productCard';
 import { IProduct } from '@/app/interfaces/interfaces';
 import { useMounted } from '../useMounted';
 import Loading from '@/app/loading';

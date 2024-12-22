@@ -38,12 +38,20 @@ export const useProductStore = create((set: any, get: any) => ({
         set(() => ({ products: fetchProducts.data }))
     },
 
+    getProductById: async (_id: string) => {
+
+        const fetchProduct = await axios.get(`${process.env.DEV_URI}products/getProductById/${_id}`);
+        console.log(fetchProduct.data);
+
+        set(() => ({ productById: fetchProduct.data }))
+    },
+
     selectProduct: (id: string) => {
-        set(() => ({ selectedProduct: get().products.filter((product: IProduct) => product._id === id) }))
+        set(() => ({ selectedProduct: get().products.filter((product: IProduct) => product._id === id)[0] }))
     },
 
     selectedByCategory: (category: any, genderSelected: string) => {
-        
+
         set(() => ({ selectedProducts: get().products.filter((product: any) => product.gender.gender === genderSelected && product.category === category) }))
     },
 

@@ -10,7 +10,7 @@ import styled from 'styled-components';
 
 const Footer = () => {
     const [emailSubscriber, setEmailSubscriber] = useState<string>('')
-    const [checkTerms, setCheckTerms] = useState<boolean>(false)
+    const [checkTerms, setCheckTerms] = useState<any>(false)
     const [toogleArraw, setToogleArraw] = useState<boolean>(false)
     let scrollDirection = 1;
     const handlerNewsletter = () => {

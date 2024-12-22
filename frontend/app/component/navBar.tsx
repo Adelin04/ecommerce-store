@@ -3,19 +3,15 @@
 import styled from 'styled-components';
 import Logo from './logo';
 // import UserProfile from './UserProfile.jsx';
-import { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useCategoryStore } from '../zustandStore/useCategoryStore';
 import { useProductStore } from '../zustandStore/useProductStore';
 import Link from 'next/link';
 import UserProfile from './userProfile';
-declare global {
-    interface Window {
-        width: number;
-        height: number;
-    }
-}
-const NavBar = ({ navBarMenu }: any) => {
+import { useRouter } from 'next/navigation';
 
+const NavBar = ({ navBarMenu }: any) => {
+    const router = useRouter()
     const { products, resetSelectedProducts } = useProductStore()
     const { setCategoryClicked, categorySelected }: any = useCategoryStore()
 
@@ -24,6 +20,14 @@ const NavBar = ({ navBarMenu }: any) => {
         height: window.innerHeight,
     });
     const [clickedGender, setClickedGender] = useState(localStorage.getItem('Gender') || "MEN")
+
+    const handleClickNavBarMenu = (menuName: string) => {
+        localStorage.setItem('Gender', menuName)
+        setClickedGender(menuName)
+        setCategoryClicked(menuName)
+        resetSelectedProducts()
+        router.push(`/`)
+    }
 
     useEffect(() => {
         const handleResize = () => {
@@ -50,7 +54,7 @@ const NavBar = ({ navBarMenu }: any) => {
                         {navBarMenu && navBarMenu.map((menu: any, index: number) => {
                             return (
                                 <WrapperLink key={index} className='wrapper-link'>
-                                    <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => { setClickedGender(menu.name); setCategoryClicked(menu.name); resetSelectedProducts() }}>{menu.name}</p>
+                                    <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => handleClickNavBarMenu(menu.name)}>{menu.name}</p>
                                 </WrapperLink>
                             )
                         })}

@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 
 const generateTokens = (userId) => {
   const accessToken = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "24h",
   });
 
   const refreshToken = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -33,7 +33,7 @@ const setCookie = (res, accessToken, refreshToken) => {
     httpOnly: true, // prevent XSS attacks, cross site scripting attack
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
-    maxAge: 60 * 60 * 1000, // one hour
+    maxAge: 24 * 60 * 60 * 1000, // one hour
   });
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true, // prevent XSS attacks, cross site scripting attack
@@ -135,7 +135,7 @@ export const refreshToken = async (req, res) => {
     const accessToken = jwt.sign(
       { userId: decoded.userId },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     res.cookie("accessToken", accessToken, {
       httpOnly: true,

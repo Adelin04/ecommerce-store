@@ -9,11 +9,11 @@ import { useUserStore } from '../zustandStore/useUserStore';
 // import { useUserStore } from '../store/useUserStore';
 
 const UserProfile = () => {
-    const {user} = useUserStore();
+    const { user } = useUserStore();
 
     return (
         <Container className="container-user-profile">
-            <Link className='link-user-profile' href={user ? "/profile" : "/auth"}>
+            <Link className='link-user-profile' href={user ? "/user/settings" : "/auth"}>
                 <Image className='img-user-profile' src={user ? UserProfileImageLogin : UserProfileImageLogout} alt="User Profile" />
             </Link>
         </Container>
