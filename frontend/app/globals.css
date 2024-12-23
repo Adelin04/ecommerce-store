@@ -1,17 +1,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-
   --primary-color: radial-gradient(3000px circle at 50% 0%, rgb(4, 121, 112) 5.2%, rgb(2, 68, 61) 50%, rgb(5, 51, 50) 70%);
   --secondary-color: #1e2b35;
   --border-color: salmon;
   --message-color: salmon;
-  --button-color:  rgb(4, 121, 112);
-  --title-color:  rgb(71, 209, 198);
-  --input-color: #475b6b;
-  --input-color-hover: #1e2b35;
-  --input-color-focus: #1e2b35;
-  --input-color-disabled: #1e2b35;
+  --button-color: rgb(4, 121, 112);
+  --button-color-active: rgb(4, 121, 112);
+  --button-backgound-hover: #ffffff50;
+  --button-border-hover: #fa807285;
 }
 
 :root {
@@ -46,9 +43,9 @@
   }
 } */
 
-html{
+html {
   /* height: 100%; */
-  background: no-repeat ;
+  background: no-repeat;
   background: var(--primary-color);
 }
 

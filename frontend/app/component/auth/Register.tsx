@@ -34,13 +34,13 @@ const Register = () => {
 
                     <WrapperLabelInput>
                         <label className='firstName-label'>First Name</label>
-                        <input className='firstName-input' type='firstName' required name='firstName' id='firstName' placeholder='John Doe' autoFocus defaultValue={email} onChange={(e) => setFirstName(e.target.value)} />
+                        <input className='firstName-input' type='text' required name='firstName' id='firstName' placeholder='John Doe' autoFocus defaultValue={firstName} onChange={(e) => setFirstName(e.target.value)} />
                         <FaRegUser style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                     </WrapperLabelInput>
 
                     <WrapperLabelInput>
                         <label className='lastName-label'>Last Name</label>
-                        <input className='lastName-input' type='lastName' required name='lastName' id='lastName' placeholder='first name' defaultValue={email} onChange={(e) => setLastName(e.target.value)} />
+                        <input className='lastName-input' type='text' required name='lastName' id='lastName' placeholder='first name' defaultValue={lastName} onChange={(e) => setLastName(e.target.value)} />
                         <FaRegUser style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                     </WrapperLabelInput>
 
@@ -136,14 +136,14 @@ const WrapperRegister = styled.div`
         border: none;
         border-radius: 5px;
         margin: 0px;
-        background-color: var(--input-color);
-        color: #ffffff;
+        background-color: #8080801c;
         text-align:center;
+        color: #ffffff;
     }
 
-    ::placeholder{
+    input::placeholder{
+        font-size: 15px;
         color: grey;
-        font-size: 10px;
     }
 
 `

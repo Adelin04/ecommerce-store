@@ -256,6 +256,12 @@ const ContainerNewsletter = styled.div`
         cursor: pointer;
     }
 
+    .buttonNewsletter:hover{
+      cursor: pointer;
+      background-color: var(--button-background-hover);
+      border: 1px solid var(--button-border-hover);
+    }
+
     .terms-and-conditions{
         color: #ffffff;
         font-size: 10px;

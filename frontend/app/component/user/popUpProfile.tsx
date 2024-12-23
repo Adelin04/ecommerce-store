@@ -6,12 +6,17 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 
-export default function Settings() {
+interface PropsAddNewProduct {
+    close: () => void | null,
+  }
+
+  
+export default function PopUpProfile({ close }: PropsAddNewProduct) {
 
     return (
         <Container>
             <PopUp>
-            <Link style={{position:'absolute', top: '5px', right: '10px',color:'red', cursor:'pointer', fontSize:'20px', fontWeight:'bold'}} href={'/'}> X </Link>
+            <Link className='close'  href={'/'}> X </Link>
                 <LeftContent className="leftContent">
                     <ContainerLeftSide className={'containerLeftSide '}>
                         <WrapperTitleLeftSide className="wrapperTitleLeftSide">
@@ -19,11 +24,11 @@ export default function Settings() {
                             <p>Manage your account info</p>
                         </WrapperTitleLeftSide>
 
-                        <ButtonsLeftSide>
+                        {/* <ButtonsLeftSide> */}
                             {/* <button className="button">Profile</button> */}
                             {/* <button className="button">Security</button>
                             <button className="button">Notifications</button> */}
-                        </ButtonsLeftSide>
+                        {/* </ButtonsLeftSide> */}
 
                     </ContainerLeftSide>
 
@@ -66,7 +71,24 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     /* background-color: red; */
-    `
+
+    .close{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 5px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bolder;
+        border-radius: 50px;
+        color: #ff0000;
+        background-color:var(--button-color);
+    }
+`
 
 const PopUp = styled.div`
     position: absolute;
@@ -131,7 +153,7 @@ const WrapperTitleLeftSide = styled.div`
     }
 `
 
-const ButtonsLeftSide = styled.div`
+/* const ButtonsLeftSide = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -156,9 +178,14 @@ const ButtonsLeftSide = styled.div`
 
     button:hover{
       cursor: pointer;
-        color: #ffffff;
+      background-color: var(--button-backgound-hover);
+      border: 1px solid var(--button-border-hover);
     }
-`
+
+    button:active{
+     color: salmon;
+    }
+` */
 
 const ContainerCopyRight = styled.div`
     display: flex;
@@ -237,24 +264,31 @@ const WrapperProfile = styled.div`
         /* color: #ffffff;         */
       }
 
-    button{
+      button{
       padding: 5px 0px;
       min-width: 90px;
       font-size: 13px;    
-      width:  auto;
-      min-height: 25px; 
-      height: auto;
+      /* width:  60%; */
+      height: 35px;
+      /* height: auto; */
       outline: none;
       border: none;
       border-radius: 5px;
       margin: 5px 0px;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 5px 0px;
       background-color: var(--button-color);
-
     }
 
     button:hover{
       cursor: pointer;
-        color: #ffffff;
+      border: 1px solid var(--button-border-hover);
+    }
+    
+    button:active{
+        color: var(--button-color-active);
+        background-color: var(--button-backgound-hover);
     }
 
     .wrapper-image-name{
