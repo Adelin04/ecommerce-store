@@ -41,7 +41,12 @@ export default function PopUpSecurity({ close }: PropsAddNewProduct) {
                 </LeftContent>
 
                 <RightContent className="rightContent">
-                    PopUpSecurity
+                    <WrapperTitle className="wrapperTitleRightSide">
+                        <label>Security</label>
+                    </WrapperTitle>
+                    <WrapperEmail className="wrapper-email">
+                        <label>Email Address</label>
+                    </WrapperEmail>
                 </RightContent>
             </PopUp>
         </Container >

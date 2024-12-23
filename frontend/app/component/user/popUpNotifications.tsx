@@ -41,7 +41,9 @@ export default function Notifications({ close }: PropsAddNewProduct) {
                 </LeftContent>
 
                 <RightContent className="rightContent">
-                    Notifications
+                <WrapperTitle className="wrapperTitleRightSide">
+                        <label>Notifications</label>
+                    </WrapperTitle>
                 </RightContent>
             </PopUp>
         </Container >
