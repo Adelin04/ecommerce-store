@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import Logo from './logo';
 // import UserProfile from './UserProfile.jsx';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { useCategoryStore } from '../zustandStore/useCategoryStore';
 import { useProductStore } from '../zustandStore/useProductStore';
 import Link from 'next/link';

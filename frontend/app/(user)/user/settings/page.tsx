@@ -1,9 +1,9 @@
 
 'use client'
 
+import PopUp from '../../../component/user/popUp'
 import { useMounted } from "@/app/component/useMounted";
 import Loading from "@/app/loading";
-import Link from "next/link";
 import styled from "styled-components";
 
 export default function Settings() {
@@ -14,32 +14,22 @@ export default function Settings() {
   if (!hasMounted)
     return <Loading />
   return (
-    <Container>
-      <PopUp>
-        <LeftContent>
-          <ContainerLeftSide className={'containerLeftSide '}>
-            <WrapperTitleLeftSide className="wrapperTitleLeftSide">
-              <label>Account</label>
-              <p>Manage your account info</p>
-            </WrapperTitleLeftSide>
+    <Container className='containe'>
 
-            <ButtonsLeftSide>
-              <button className="button">Profile</button>
-              <button className="button">Security</button>
-              <button className="button">Notifications</button>
-            </ButtonsLeftSide>
+      <Slider className='slider'>
+        <WrapperSlider className='wrapper-slider'>
+          <ButtonsLeftSide className='buttons-left-side'>
+            <button className="button">Profile</button>
+            <button className="button">Security</button>
+            <button className="button">Notifications</button>
+          </ButtonsLeftSide>
+        </WrapperSlider>
+      </Slider>
 
-          </ContainerLeftSide>
-
-          <ContainerCopyRight className={'containerCopyRight '}>
-            <div> <p className="copyRight"> Made In Romania by <Link className="name-owner" href={'https://adelin-marin-portfolio.netlify.app/'} target='_blank'> <span className="name-owner">Adelin Marin</span></Link> © {new Date().getFullYear()} </p></div>
-          </ContainerCopyRight>
-        </LeftContent>
-        <RightContent>
-          Settings
-        </RightContent>
-      </PopUp>
-    </Container>
+      <Content>
+        <PopUp />
+      </Content>
+    </Container >
   );
 }
 
@@ -48,66 +38,35 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100vh;
+    /* background-color: red; */
+`
+
+const Slider = styled.div`
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 20%;
+    min-width: 250px;
+    /* max-width: 250px; */
+    /* width:150px; */
+    height: 100%;
     /* background-color: red; */
     `
 
-const PopUp = styled.div`
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    width: 500px;
-    height: 400px;
-    border-radius: 10px;
-    border-top:  1px solid salmon;
-    box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
-    background: white;
-`
 
-const LeftContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 30%;
-    height: 100%;
-    padding: 10px;
-    border-right: solid 1px rgba(128, 128, 128, 0.145);
-    /* background-color: green; */
-`
 
-const ContainerLeftSide = styled.div`
+const WrapperSlider = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: start;
     width: 100%;
-    height: 50%;
+    max-width: 250px;
+    height: 100%;
+    border-right: 1px solid grey;
     /* background-color: red; */
-`
-
-const WrapperTitleLeftSide = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    /* width: 100%;
-    height: 50%; */
-
-    label{
-        font-size: 20px;
-        /* color: #ffffff;         */
-    }
-
-    p{
-        font-size: 10px;
-        /* color: #ffffff; */
-    }
 `
 
 const ButtonsLeftSide = styled.div`
@@ -138,33 +97,15 @@ const ButtonsLeftSide = styled.div`
         color: #ffffff;
     }
 `
-//RIGHT CONTENT
 
-const RightContent = styled.div`  
+
+const Content = styled.div`
+    position: relative;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;    
-    width: 70%;
-    height: 100%;
-    /* background-color: blue; */
-`
-const ContainerCopyRight = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
     align-items: center;
-    /* color: #ffffff; */
-    height: 50%;
-
-    p{
-        /* color: #ffffff; */
-        font-size: 13px;
-        text-align: center;
-    }
-
-    span{
-        text-decoration: underline;
-        color: var(--button-color);
-    }
+    width: 80%;
+    height: 100%;
+    /* background-color: salmon; */
+    /* border: 5px solid black; */
 `
