@@ -11,6 +11,7 @@ export default function Settings() {
     return (
         <Container>
             <PopUp>
+            <Link style={{position:'absolute', top: '5px', right: '10px',color:'red', cursor:'pointer', fontSize:'20px', fontWeight:'bold'}} href={'/'}> X </Link>
                 <LeftContent className="leftContent">
                     <ContainerLeftSide className={'containerLeftSide '}>
                         <WrapperTitleLeftSide className="wrapperTitleLeftSide">
@@ -27,7 +28,10 @@ export default function Settings() {
                     </ContainerLeftSide>
 
                     <ContainerCopyRight className={'containerCopyRight '}>
-                        <div> <p className="copyRight"> Made In Romania by <Link className="name-owner" href={'https://adelin-marin-portfolio.netlify.app/'} target='_blank'> <span className="name-owner">Adelin Marin</span></Link> © {new Date().getFullYear()} </p></div>
+                        <div>
+                            <p className="copyRight"> Made In Romania by </p>
+                            <p> <Link className="name-owner" href={'https://adelin-marin-portfolio.netlify.app/'} target='_blank'> <span className="name-owner">Adelin Marin</span></Link> © {new Date().getFullYear()} </p>
+                        </div>
                     </ContainerCopyRight>
                 </LeftContent>
 
@@ -52,7 +56,7 @@ export default function Settings() {
 
                 </RightContent>
             </PopUp>
-        </Container>
+        </Container >
     );
 }
 

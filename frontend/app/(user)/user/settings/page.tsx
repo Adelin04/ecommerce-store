@@ -36,7 +36,7 @@ export default function Settings() {
 
 const Container = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100vh;
@@ -47,7 +47,7 @@ const Slider = styled.div`
     display: flex;
     justify-content: start;
     align-items: center;
-    width: 20%;
+    /* width: 20%; */
     min-width: 250px;
     /* max-width: 250px; */
     /* width:150px; */
@@ -104,7 +104,7 @@ const Content = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     height: 100%;
     /* background-color: salmon; */
     /* border: 5px solid black; */
