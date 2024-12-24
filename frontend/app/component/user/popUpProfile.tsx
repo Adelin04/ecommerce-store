@@ -47,7 +47,6 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
 
                 </div>
                 <input className="input-upload-image" type='file' onClick={(e) => { handleSelectedNewImages(e) }} />
-                {console.log(imageProfile)}
             </WrapperProfile>
 
         )
