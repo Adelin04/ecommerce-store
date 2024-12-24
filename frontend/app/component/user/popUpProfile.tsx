@@ -5,9 +5,10 @@ import { IUser } from '@/app/interfaces/interfaces';
 import UserProfileImageLogin from '../../../assets/userLogin.png'
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
+import UploadImage from '../uploadImage';
 interface PropsAddNewProduct {
     close: () => void | null,
     user: IUser | null
@@ -18,19 +19,11 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
 
     const [btnClicked, setBtnClicked] = useState<any>('Profile');
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
-    const [imageProfile, setImageProfile] = useState<File | null>(null);
+    const [imageProfile, setImageProfile] = useState<string | null>(null);
 
-    const handleSelectedNewImages = (e) => {
-        // setLoading(true);
-        const TMP_selectedFiles = e.target.files;
-        setImageProfile(TMP_selectedFiles);
-        const selectedFileArray = Array.from(TMP_selectedFiles);
-        const imagesArray = selectedFileArray.map((image: any) => {
-            return URL.createObjectURL(image);
-        });
-        // setSelectedFiles(imagesArray);
-        // setLoading(false);
-    };
+    const handleSaveActions = () => {
+        return console.log('saved actions');
+    }
 
     const Menu: any = {
         Profile: () => ContentProfile(user),
@@ -43,10 +36,14 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                 <div className="wrapper-image-name">
 
                     {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
-                    <Image className='img-profile' src={user?.imageProfile ? user.imageProfile : UserProfileImageLogin} alt="User Profile" width={80} height={80} />
+                    {!imageProfile && <Image className='img-profile' src={user?.imageProfile ? user.imageProfile : UserProfileImageLogin} alt="User Profile" width={80} height={80} />}
+                    {imageProfile && <Image className='img-profile' src={imageProfile} alt="User Profile" width={80} height={80} />}
 
                 </div>
-                <input className="input-upload-image" type='file' onClick={(e) => { handleSelectedNewImages(e) }} />
+
+                <div className='wrapper-upload'>
+                    <UploadImage imagesSelected={(images: any) => setImageProfile(images.blobs[0])} multipleFile={false} />
+                </div>
             </WrapperProfile>
 
         )
@@ -108,8 +105,11 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                     <Content className="content">
                         {btnClicked && Menu[`${btnClicked}`]()}
                         {(btnClicked === 'Email' && toggleInputNewEmail) ? <input type="text" placeholder="Email Address" /> : null}
-                        {console.log(toggleInputNewEmail)}
+                        {console.log(imageProfile)}
                     </Content>
+                    <WrapperSaveButton>
+                        <button className="save-button" onClick={()=>{handleSaveActions()}}>Save Actions</button>
+                    </WrapperSaveButton>
                 </RightContent>
             </PopUp>
         </Container >
@@ -122,7 +122,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     /* background-color: red; */
-
+    
     .close{
         display: flex;
         justify-content: center;
@@ -296,6 +296,41 @@ const Content = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
+`
+
+const WrapperSaveButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    /* background-color: red; */
+
+    button{
+        padding: 5px 0px;
+        min-width: 90px;
+        font-size: 13px;  
+        height: 25px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 0px;
+        color: salmon;
+        font-weight: bold;
+        padding: 5px 0px;
+        background-color: var(--button-color);
+    }
+    
+    button:hover{
+        cursor: pointer;
+        border: 1px solid var(--button-border-hover);
+    }
+    
+    button:active{
+        color: var(--button-color-active);
+        background-color: var(--button-background-hover);
+    }
 `
 
 const WrapperTitle = styled.div`
