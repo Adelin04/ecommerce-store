@@ -8,13 +8,15 @@ import Loading from "@/app/loading";
 import React, { useState } from 'react';
 import styled from "styled-components";
 import Notifications from '@/app/component/user/popUpNotifications';
+import { useUserStore } from '@/app/zustandStore/useUserStore';
 
 export default function Settings() {
   const { hasMounted } = useMounted()
+  const { user } = useUserStore();
   const [btnClicked, setBtnClicked] = useState<any>('Profile');
 
   const Menu: any = {
-    Profile: () => <PopUpProfile close={handleClosePopUp} />,
+    Profile: () => <PopUpProfile close={handleClosePopUp} user={user} />,
     Security: () => <PopUpSecurity close={handleClosePopUp} />,
     Notifications: () => <Notifications close={handleClosePopUp} />,
   };
@@ -34,7 +36,7 @@ export default function Settings() {
   if (!hasMounted)
     return <Loading />
   return (
-    <Container className='containe'>
+    <Container className='container'>
 
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>

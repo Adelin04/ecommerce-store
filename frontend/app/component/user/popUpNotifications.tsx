@@ -16,7 +16,7 @@ export default function Notifications({ close }: PropsAddNewProduct) {
     return (
         <Container>
             <PopUp>
-                <Link className='close' href={'/'}> X </Link>
+                <Link className='close' href={'/'}> go to store </Link>
                 <LeftContent className="leftContent">
                     <ContainerLeftSide className={'containerLeftSide '}>
                         <WrapperTitleLeftSide className="wrapperTitleLeftSide">
@@ -58,20 +58,36 @@ const Container = styled.div`
     /* background-color: red; */
 
     .close{
-        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
-        top: 5px;
+        position: absolute;
+        top: 10px;
         right: 10px;
-        width: 25px;
+        padding: 5px 0px;
+        min-width: 90px;
+        font-size: 13px;    
+        width:  auto;
         height: 25px;
-        cursor: pointer;
-        font-size: 15px;
-        font-weight: bolder;
-        border-radius: 50px;
-        color: #ff0000;
-        background-color:var(--button-color);
+        /* height: auto; */
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 0px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 5px 0px;
+        background-color: var(--button-color);
+    }
+
+    .close:hover{
+      cursor: pointer;
+      border: 1px solid var(--button-border-hover);
+    }
+    
+    .close:active{
+      background-color: var(--button-background-hover);
+      color: var(--button-color-active);
     }
 `
 

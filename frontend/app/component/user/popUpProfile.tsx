@@ -1,22 +1,83 @@
 
 'use client'
 
+import { IUser } from '@/app/interfaces/interfaces';
 import UserProfileImageLogin from '../../../assets/userLogin.png'
 import Image from "next/image";
 import Link from "next/link";
+import React, { useState } from 'react';
 import styled from "styled-components";
-
+import { FaPlus } from "react-icons/fa";
 interface PropsAddNewProduct {
     close: () => void | null,
-  }
+    user: IUser | null
+}
 
-  
-export default function PopUpProfile({ close }: PropsAddNewProduct) {
+
+export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
+
+    const [btnClicked, setBtnClicked] = useState<any>('Profile');
+    const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
+    const [imageProfile, setImageProfile] = useState<File | null>(null);
+
+    const handleSelectedNewImages = (e) => {
+        // setLoading(true);
+        const TMP_selectedFiles = e.target.files;
+        setImageProfile(TMP_selectedFiles);
+        const selectedFileArray = Array.from(TMP_selectedFiles);
+        const imagesArray = selectedFileArray.map((image: any) => {
+            return URL.createObjectURL(image);
+        });
+        // setSelectedFiles(imagesArray);
+        // setLoading(false);
+    };
+
+    const Menu: any = {
+        Profile: () => ContentProfile(user),
+        Email: () => ContentEmailAddress(),
+    };
+
+    const ContentProfile = (user: IUser | null) => {
+        return (
+            <WrapperProfile className="wrapperTitleRightSide">
+                <div className="wrapper-image-name">
+
+                    {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
+                    <Image className='img-profile' src={user?.imageProfile ? user.imageProfile : UserProfileImageLogin} alt="User Profile" width={80} height={80} />
+
+                </div>
+                <input className="input-upload-image" type='file' onClick={(e) => { handleSelectedNewImages(e) }} />
+                {console.log(imageProfile)}
+            </WrapperProfile>
+
+        )
+    }
+
+    const ContentEmailAddress = () => {
+        return (
+            <ContainerEmailAddress>
+
+                <WrapperEmailAddress>
+                    <WrapperIconAddEmail className="wrapper-icon-add-email" onClick={() => { setToggleInputNewEmail(true) }}>
+                        <FaPlus className={'plus-icon'} />
+                        <span>
+                            {'Add new email address'}
+                        </span>
+                    </WrapperIconAddEmail>
+                    <WrapperEmail className="wrapper-email">
+                        <p>{`${user?.email}`}</p><span>Primary</span>
+                    </WrapperEmail>
+
+                </WrapperEmailAddress>
+
+            </ContainerEmailAddress>
+        )
+    }
 
     return (
         <Container>
             <PopUp>
-            <Link className='close'  href={'/'}> X </Link>
+                <Link className='close' href={'/'}> go to store </Link>
                 <LeftContent className="leftContent">
                     <ContainerLeftSide className={'containerLeftSide '}>
                         <WrapperTitleLeftSide className="wrapperTitleLeftSide">
@@ -24,11 +85,10 @@ export default function PopUpProfile({ close }: PropsAddNewProduct) {
                             <p>Manage your account info</p>
                         </WrapperTitleLeftSide>
 
-                        {/* <ButtonsLeftSide> */}
-                            {/* <button className="button">Profile</button> */}
-                            {/* <button className="button">Security</button>
-                            <button className="button">Notifications</button> */}
-                        {/* </ButtonsLeftSide> */}
+                        <ButtonsLeftSide>
+                            <button className="button" style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Profile')}>Profile</button>
+                            <button className="button" style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Email')}>Email</button>
+                        </ButtonsLeftSide>
 
                     </ContainerLeftSide>
 
@@ -42,23 +102,15 @@ export default function PopUpProfile({ close }: PropsAddNewProduct) {
 
                 <RightContent className="rightContent">
                     <WrapperTitle className="wrapperTitleRightSide">
-                        <label>Profile Details</label>
+                        {btnClicked === 'Profile' && <label>Profile</label>}
+                        {btnClicked === 'Email' && <label>Email addresses</label>}
                     </WrapperTitle>
 
                     <Content className="content">
-                        <WrapperProfile className="wrapperTitleRightSide">
-                            <label>Profile </label>
-                            <div className="wrapper-image-name">
-                                <Image src={UserProfileImageLogin} alt="User Profile" width={80} height={80} />
-                                <span>Name </span>
-                            </div>
-                            <button className="button-profile">Upload Image </button>
-                        </WrapperProfile>
-                        <WrapperEmail className="wrapper-email">
-                            <label>Email Address</label>
-                        </WrapperEmail>
+                        {btnClicked && Menu[`${btnClicked}`]()}
+                        {(btnClicked === 'Email' && toggleInputNewEmail) ? <input type="text" placeholder="Email Address" /> : null}
+                        {console.log(toggleInputNewEmail)}
                     </Content>
-
                 </RightContent>
             </PopUp>
         </Container >
@@ -73,20 +125,36 @@ const Container = styled.div`
     /* background-color: red; */
 
     .close{
-        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
-        top: 5px;
+        position: absolute;
+        top: 10px;
         right: 10px;
-        width: 25px;
+        padding: 5px 0px;
+        min-width: 90px;
+        font-size: 13px;    
+        width:  auto;
         height: 25px;
-        cursor: pointer;
-        font-size: 15px;
-        font-weight: bolder;
-        border-radius: 50px;
-        color: #ff0000;
-        background-color:var(--button-color);
+        /* height: auto; */
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 0px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 5px 0px;
+        background-color: var(--button-color);
+    }
+
+    .close:hover{
+      cursor: pointer;
+      border: 1px solid var(--button-border-hover);
+    }
+    
+    .close:active{
+      background-color: var(--button-background-hover);
+      color: var(--button-color-active);
     }
 `
 
@@ -153,7 +221,7 @@ const WrapperTitleLeftSide = styled.div`
     }
 `
 
-/* const ButtonsLeftSide = styled.div`
+const ButtonsLeftSide = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -161,31 +229,33 @@ const WrapperTitleLeftSide = styled.div`
     width: 100%;
     margin: 15px 0px;
     
-    .button{
+    button{
       padding: 5px 0px;
       min-width: 90px;
       font-size: 13px;    
-      width:  auto;
-      min-height: 25px; 
-      height: auto;
+      width:  80%;
+      height: 30px;
+      /* height: auto; */
       outline: none;
       border: none;
       border-radius: 5px;
       margin: 5px 0px;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 5px 0px;
       background-color: var(--button-color);
-
     }
 
     button:hover{
       cursor: pointer;
-      background-color: var(--button-backgound-hover);
       border: 1px solid var(--button-border-hover);
     }
-
+    
     button:active{
-     color: salmon;
+      background-color: var(--button-background-hover);
+      color: var(--button-color-active);
     }
-` */
+`
 
 const ContainerCopyRight = styled.div`
     display: flex;
@@ -223,7 +293,7 @@ const RightContent = styled.div`
 const Content = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -252,54 +322,123 @@ const WrapperTitle = styled.div`
 `
 const WrapperProfile = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
+    height: 100%;
     padding: 15px 0px;
-    border-bottom: 1px solid #c7c7c7ba;
-
+    /* border-bottom: 1px solid #c7c7c7ba; */
+    
     label{
         font-size: 20px;
         font-weight: bold;
         /* color: #ffffff;         */
-      }
-
-      button{
-      padding: 5px 0px;
-      min-width: 90px;
-      font-size: 13px;    
-      /* width:  60%; */
-      height: 35px;
-      /* height: auto; */
-      outline: none;
-      border: none;
-      border-radius: 5px;
-      margin: 5px 0px;
-      color: #ffffff;
-      font-weight: bold;
-      padding: 5px 0px;
-      background-color: var(--button-color);
     }
-
+    
+    button{
+        padding: 5px 0px;
+        /* min-width: 90px; */
+        font-size: 13px;    
+        /* width:  60%; */
+        height: 35px;
+        /* height: auto; */
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 0px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 5px 0px;
+        background-color: var(--button-color);
+    }
+    
     button:hover{
-      cursor: pointer;
-      border: 1px solid var(--button-border-hover);
+        cursor: pointer;
+        border: 1px solid var(--button-border-hover);
     }
     
     button:active{
         color: var(--button-color-active);
-        background-color: var(--button-backgound-hover);
+        background-color: var(--button-background-hover);
+    }
+    
+    .wrapper-image-name{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 50%;
     }
 
-    .wrapper-image-name{
+    img{
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;}
+    
+    span{
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        padding: 5px;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    input {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 25px auto;
+      color: transparent;
+      width: 150px;
+      height: 35px;
+    }
+    
+    input::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    
+    input::before {
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
+        content: "Upload image";
+        white-space: nowrap;
+        text-align: center;
+        padding: 5px 0px;
+        width: auto;
+        height: auto;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 0px;
+        color: #ffffff;
+        font-size: 13px;    
+        font-weight: bold;
+        padding: 5px 0px;
+        background-color: var(--button-color);
     }
 
-    span{
-        padding: 5px;
-    }
+`
+
+const ContainerEmailAddress = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px 0px;
+    /* border-bottom: 1px solid #c7c7c7ba; */
+
+    
+    label{
+        font-size: 13px;
+        font-weight: bold;
+        /* color: #ffffff;         */
+      }
 `
 
 const WrapperEmail = styled.div`
@@ -307,13 +446,53 @@ const WrapperEmail = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 100%;
     padding: 15px 0px;
-    border-bottom: 1px solid #c7c7c7ba;
-
+    /* border-bottom: 1px solid #c7c7c7ba; */
     
     label{
-        font-size: 20px;
+        font-size: 13px;
         font-weight: bold;
-        /* color: #ffffff;         */
-      }
+    }
+    
+    p{
+        font-size: 13px;
+        font-weight: bold;    
+    }
+
+    span{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        font-size: 13px;
+        color: var(--button-color);
+    }
+`
+
+const WrapperIconAddEmail = styled.div`
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--button-color);
+
+    span{
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        padding: 5px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+`
+
+const WrapperEmailAddress = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 `

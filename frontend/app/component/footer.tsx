@@ -12,7 +12,7 @@ const Footer = () => {
     const [emailSubscriber, setEmailSubscriber] = useState<string>('')
     const [checkTerms, setCheckTerms] = useState<any>(false)
     const [toogleArraw, setToogleArraw] = useState<boolean>(false)
-    let scrollDirection = 1;
+
     const handlerNewsletter = () => {
         if (!checkTerms) {
             return alert('Please accept terms and conditions')
