@@ -7,6 +7,7 @@ import { connectDB } from "./lib/db.js";
 import path from "path";
 
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import sizeRoutes from "./routes/size.routes.js";
 import currencyRoutes from "./routes/currency.routes.js";
@@ -41,6 +42,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/size", sizeRoutes);
 app.use("/api/currency", currencyRoutes);

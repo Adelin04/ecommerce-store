@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import UploadImage from '../uploadImage';
+import { useUserStore } from '@/app/zustandStore/useUserStore';
 interface PropsAddNewProduct {
     close: () => void | null,
     user: IUser | null
@@ -16,13 +17,22 @@ interface PropsAddNewProduct {
 
 
 export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
-
+    const { updateUserById } = useUserStore();
     const [btnClicked, setBtnClicked] = useState<any>('Profile');
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
     const [imageProfile, setImageProfile] = useState<string | null>(null);
+    const [emails, setEmails] = useState<Array<string>>([]);
 
     const handleSaveActions = () => {
-        return console.log('saved actions');
+        user && updateUserById(imageProfile, user._id);
+    }
+
+    const handleAddNewEmail = (e: any) => {
+        if (emails.length === 2) return
+        if (e.key === 'Enter') {
+            setEmails([...emails, e.target.value]);
+            e.target.value = ''
+        }
     }
 
     const Menu: any = {
@@ -62,10 +72,12 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                     </WrapperIconAddEmail>
                     <WrapperEmail className="wrapper-email">
                         <p>{`${user?.email}`}</p><span>Primary</span>
+                        {emails && emails.map((email: string, index: number) =>
+                            <span key={index}>{email}</span>)}
+                        {(btnClicked === 'Email' && toggleInputNewEmail && emails.length < 2) ? <input type="text" autoFocus placeholder="Email Address" onKeyDown={(e) => handleAddNewEmail(e)} /> : null}
                     </WrapperEmail>
 
                 </WrapperEmailAddress>
-
             </ContainerEmailAddress>
         )
     }
@@ -104,11 +116,9 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
 
                     <Content className="content">
                         {btnClicked && Menu[`${btnClicked}`]()}
-                        {(btnClicked === 'Email' && toggleInputNewEmail) ? <input type="text" placeholder="Email Address" /> : null}
-                        {console.log(imageProfile)}
                     </Content>
                     <WrapperSaveButton>
-                        <button className="save-button" onClick={()=>{handleSaveActions()}}>Save Actions</button>
+                        <button className="save-button" onClick={() => { handleSaveActions() }}>Save Actions</button>
                     </WrapperSaveButton>
                 </RightContent>
             </PopUp>

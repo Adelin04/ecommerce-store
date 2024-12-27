@@ -14,7 +14,7 @@ const UserProfile = () => {
     return (
         <Container className="container-user-profile">
             <Link className='link-user-profile' href={user ? "/user/settings" : "/auth"}>
-                <Image className='img-user-profile' src={user ? UserProfileImageLogin : UserProfileImageLogout} alt="User Profile" />
+                <Image className='img-user-profile' src={user ? `${user.imageProfile}` : UserProfileImageLogout} alt="User Profile" width={50} height={50}/>
             </Link>
         </Container>
     )
@@ -28,10 +28,11 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
 
-    .img-user-profile{
-        width: 25px;
+    .img-user-profile {
+        width: 50px;
         height: auto;
         cursor: pointer;
+        border-radius: 50%;
     }
 
     @media (max-width: 400px) {

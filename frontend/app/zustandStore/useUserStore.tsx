@@ -30,7 +30,7 @@ export const useUserStore = create((set: any, get: any) => ({
         set(() => ({ isLoading: true }));
 
         try {
-            const fetchUser = await axios.post(`${process.env.DEV_URI}auth/login`, { email, password },{ withCredentials: true });
+            const fetchUser = await axios.post(`${process.env.DEV_URI}auth/login`, { email, password }, { withCredentials: true });
             const user = fetchUser.data
 
             set(() => ({ user: user, isAuth: true, isAdmin: user.role === 'admin', }));
@@ -81,6 +81,17 @@ export const useUserStore = create((set: any, get: any) => ({
             throw error;
         }
     },
+
+    updateUserById: async (image: any, _id: string | number) => {
+        try {
+            const response = await axios.put(`${process.env.DEV_URI}user/updateUserById/${_id}`, { imageProfile: image }, { withCredentials: true });
+            console.log(response.data);
+            
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }));
 
 

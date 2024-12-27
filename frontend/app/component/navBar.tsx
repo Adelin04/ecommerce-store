@@ -60,7 +60,7 @@ const NavBar = ({ navBarMenu }: any) => {
                         })}
                     </MenuNavBar>
 
-                    <WrapperUserProfile>
+                    <WrapperUserProfile className='wrapper-user-profile'>
                         <UserProfile />
                     </WrapperUserProfile>
 
@@ -102,7 +102,8 @@ const Container = styled.div`
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    /* height: auto; */
+    height: 100px;
     background-color: var(--secondary-color);
     padding-top: 10px;
     padding-bottom: 10px;
