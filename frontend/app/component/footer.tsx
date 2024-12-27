@@ -7,6 +7,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
 import styled from 'styled-components';
+import Button from './ui/Button';
 
 const Footer = () => {
     const [emailSubscriber, setEmailSubscriber] = useState<string>('')
@@ -87,10 +88,7 @@ const Footer = () => {
                             onChange={(e) => setEmailSubscriber(e.target.value)}
                         />
 
-                        <button
-                            className={'buttonNewsletter'}
-                            onClick={handlerNewsletter}
-                        >Subscribe</button>
+                        <Button onClick={handlerNewsletter}>Subscribe</Button>
                     </WrapperNewsletter>
 
                     <WrapperTerms className={'terms'}>
@@ -239,27 +237,6 @@ const ContainerNewsletter = styled.div`
         font-size: 20px;
         text-align: center;
         padding: 5px;
-    }
-
-    .buttonNewsletter{
-        min-width: 90px;
-        font-size: 13px;
-        width:  auto;
-        min-height: 25px;
-        height: auto;
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        margin: 15px 0px;
-        background-color: var(--button-color);
-        color: #ffffff;
-        cursor: pointer;
-    }
-
-    .buttonNewsletter:hover{
-      cursor: pointer;
-      background-color: var(--button-background-hover);
-      border: 1px solid var(--button-border-hover);
     }
 
     .terms-and-conditions{

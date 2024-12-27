@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import UploadImage from '../uploadImage';
 import { useUserStore } from '@/app/zustandStore/useUserStore';
+import Button from '../ui/Button';
 interface PropsAddNewProduct {
     close: () => void | null,
     user: IUser | null
@@ -94,8 +95,10 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                         </WrapperTitleLeftSide>
 
                         <ButtonsLeftSide>
-                            <button className="button" style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Profile')}>Profile</button>
-                            <button className="button" style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Email')}>Email</button>
+                            {/* <button className="button" style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Profile')}>Profile</button>
+                            <button className="button" style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Email')}>Email</button> */}
+                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Profile')}>Profile</Button>
+                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Email')}>Email</Button>
                         </ButtonsLeftSide>
 
                     </ContainerLeftSide>
@@ -118,7 +121,8 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                         {btnClicked && Menu[`${btnClicked}`]()}
                     </Content>
                     <WrapperSaveButton>
-                        <button className="save-button" onClick={() => { handleSaveActions() }}>Save Actions</button>
+                        {/* <button className="save-button" onClick={() => { handleSaveActions() }}>Save Actions</button> */}
+                        <Button onClick={() => { handleSaveActions() }}>Save Actions</Button>
                     </WrapperSaveButton>
                 </RightContent>
             </PopUp>
