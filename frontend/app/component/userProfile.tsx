@@ -14,7 +14,7 @@ const UserProfile = () => {
     return (
         <Container className="container-user-profile">
             <Link className='link-user-profile' href={user ? "/user/settings" : "/auth"}>
-                <Image className='img-user-profile' src={user ? `${user.imageProfile}` : UserProfileImageLogout} alt="User Profile" width={50} height={50}/>
+                <Image className='img-user-profile' src={user ? `${user.imageProfile}` : UserProfileImageLogin} alt="User Profile" width={50} height={50} />
             </Link>
         </Container>
     )

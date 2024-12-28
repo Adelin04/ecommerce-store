@@ -75,16 +75,16 @@ a {
 button {
   padding: 5px 0px;
   min-width: 90px;
-  font-size: 13px;
-  width: auto;
-  height: auto;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 5px;
+  font-size: 13px;    
+  width:  auto;
+  height: 30px;
   outline: none;
   border: none;
-  font-weight: bold;
+  border-radius: 5px;
+  margin: 5px 0px;
   color: #ffffff;
+  font-weight: bold;
+  padding: 5px 0px;
   background-color: var(--button-color);
 }
 

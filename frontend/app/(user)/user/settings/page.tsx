@@ -31,7 +31,7 @@ export default function Settings() {
 
   const onOpenMenu = (buttonClicked: string) => {
     // cleanProductClickedToEdit()
-    
+
     setBtnClicked(buttonClicked)
   }
 
@@ -43,12 +43,9 @@ export default function Settings() {
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>
           <WrapperButtons className='wrapper-buttons'>
-            {/* <button className="button" id='Profile' style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Profile</button>
-            <button className="button" id='Security' style={{ color: btnClicked === 'Security' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Security</button>
-            <button className="button" id='Notifications' style={{ color: btnClicked === 'Notifications' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Notifications</button> */}
             <Button id='Profile' style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Profile</Button>
             <Button id='Security' style={{ color: btnClicked === 'Security' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Security</Button>
-            <Button id='Notifications' style={{ color: btnClicked === 'Notifications' ? 'salmon' : '#ffffff' }} onClick={(e: any) => {console.log(e.target);onOpenMenu(e.target.id) }}>Notifications</Button>
+            <Button id='Notifications' style={{ color: btnClicked === 'Notifications' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Notifications</Button>
           </WrapperButtons>
         </WrapperSlider>
       </Slider>

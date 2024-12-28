@@ -5,6 +5,8 @@ import UserProfileImageLogin from '../../../assets/userLogin.png'
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
+import Button from '../ui/Button';
+import { useState } from 'react';
 
 interface PropsAddNewProduct {
     close: () => void | null,
@@ -12,6 +14,11 @@ interface PropsAddNewProduct {
 
 
 export default function PopUpSecurity({ close }: PropsAddNewProduct) {
+    const [btnClicked, setBtnClicked] = useState<any>('Change Password');
+
+    const handleSaveActions = () => {
+      console.log('clicked');
+    }
 
     return (
         <Container>
@@ -25,9 +32,7 @@ export default function PopUpSecurity({ close }: PropsAddNewProduct) {
                         </WrapperTitleLeftSide>
 
                         <ButtonsLeftSide>
-                            {/* <button className="button">Profile</button> */}
-                            {/* <button className="button">Security</button>
-                            <button className="button">Notifications</button> */}
+                            <Button style={{ color: btnClicked === 'Change Password' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => setBtnClicked('Change Password')}>Change Password</Button>
                         </ButtonsLeftSide>
 
                     </ContainerLeftSide>
@@ -47,6 +52,10 @@ export default function PopUpSecurity({ close }: PropsAddNewProduct) {
                     <WrapperEmail className="wrapper-email">
                         <label>Email Address</label>
                     </WrapperEmail>
+
+                    <WrapperSaveButton>
+                        <Button style={{ color: 'salmon', }} onClick={() => { handleSaveActions() }}>Save Actions</Button>
+                    </WrapperSaveButton>
                 </RightContent>
             </PopUp>
         </Container >
@@ -319,4 +328,13 @@ const WrapperEmail = styled.div`
         font-weight: bold;
         /* color: #ffffff;         */
       }
+`
+
+const WrapperSaveButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 50px;
 `

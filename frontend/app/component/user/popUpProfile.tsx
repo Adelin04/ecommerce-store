@@ -47,7 +47,7 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                 <div className="wrapper-image-name">
 
                     {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
-                    {!imageProfile && <Image className='img-profile' src={user?.imageProfile ? user.imageProfile : UserProfileImageLogin} alt="User Profile" width={80} height={80} />}
+                    {!imageProfile && <Image className='img-profile' src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={80} height={80} />}
                     {imageProfile && <Image className='img-profile' src={imageProfile} alt="User Profile" width={80} height={80} />}
 
                 </div>
@@ -72,10 +72,21 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                         </span>
                     </WrapperIconAddEmail>
                     <WrapperEmail className="wrapper-email">
-                        <p>{`${user?.email}`}</p><span>Primary</span>
+                        <div className="wrapper-email-status">
+                            <p>{`${user?.email}`}</p>
+                            <span>Primary</span>
+                        </div>
+
                         {emails && emails.map((email: string, index: number) =>
-                            <span key={index}>{email}</span>)}
-                        {(btnClicked === 'Email' && toggleInputNewEmail && emails.length < 2) ? <input type="text" autoFocus placeholder="Email Address" onKeyDown={(e) => handleAddNewEmail(e)} /> : null}
+                            <div className='new-email-added'>
+                                <p key={index}>{email}</p>
+                            </div>
+                        )}
+
+                        <div className="wrapper-input-new-email">
+                            {(btnClicked === 'Email' && toggleInputNewEmail && emails.length < 2) ? <input type="text" autoFocus placeholder="Add New Email Address" onKeyDown={(e) => handleAddNewEmail(e)} /> : null}
+                        </div>
+
                     </WrapperEmail>
 
                 </WrapperEmailAddress>
@@ -95,10 +106,8 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                         </WrapperTitleLeftSide>
 
                         <ButtonsLeftSide>
-                            {/* <button className="button" style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Profile')}>Profile</button>
-                            <button className="button" style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Email')}>Email</button> */}
-                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Profile')}>Profile</Button>
-                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff' }} onClick={() => setBtnClicked('Email')}>Email</Button>
+                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => setBtnClicked('Profile')}>Profile</Button>
+                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => setBtnClicked('Email')}>Email</Button>
                         </ButtonsLeftSide>
 
                     </ContainerLeftSide>
@@ -121,8 +130,7 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                         {btnClicked && Menu[`${btnClicked}`]()}
                     </Content>
                     <WrapperSaveButton>
-                        {/* <button className="save-button" onClick={() => { handleSaveActions() }}>Save Actions</button> */}
-                        <Button onClick={() => { handleSaveActions() }}>Save Actions</Button>
+                        <Button style={{ color: 'salmon', }} onClick={() => { handleSaveActions() }}>Save Actions</Button>
                     </WrapperSaveButton>
                 </RightContent>
             </PopUp>
@@ -241,33 +249,6 @@ const ButtonsLeftSide = styled.div`
     align-items: center;
     width: 100%;
     margin: 15px 0px;
-    
-    button{
-      padding: 5px 0px;
-      min-width: 90px;
-      font-size: 13px;    
-      width:  80%;
-      height: 30px;
-      /* height: auto; */
-      outline: none;
-      border: none;
-      border-radius: 5px;
-      margin: 5px 0px;
-      color: #ffffff;
-      font-weight: bold;
-      padding: 5px 0px;
-      background-color: var(--button-color);
-    }
-
-    button:hover{
-      cursor: pointer;
-      border: 1px solid var(--button-border-hover);
-    }
-    
-    button:active{
-      background-color: var(--button-background-hover);
-      color: var(--button-color-active);
-    }
 `
 
 const ContainerCopyRight = styled.div`
@@ -319,32 +300,6 @@ const WrapperSaveButton = styled.div`
     align-items: center;
     width: 100%;
     height: 50px;
-    /* background-color: red; */
-
-    button{
-        padding: 5px 0px;
-        min-width: 90px;
-        font-size: 13px;  
-        height: 25px;
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        margin: 5px 0px;
-        color: salmon;
-        font-weight: bold;
-        padding: 5px 0px;
-        background-color: var(--button-color);
-    }
-    
-    button:hover{
-        cursor: pointer;
-        border: 1px solid var(--button-border-hover);
-    }
-    
-    button:active{
-        color: var(--button-color-active);
-        background-color: var(--button-background-hover);
-    }
 `
 
 const WrapperTitle = styled.div`
@@ -384,32 +339,6 @@ const WrapperProfile = styled.div`
         /* color: #ffffff;         */
     }
     
-    button{
-        padding: 5px 0px;
-        /* min-width: 90px; */
-        font-size: 13px;    
-        /* width:  60%; */
-        height: 35px;
-        /* height: auto; */
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        margin: 5px 0px;
-        color: #ffffff;
-        font-weight: bold;
-        padding: 5px 0px;
-        background-color: var(--button-color);
-    }
-    
-    button:hover{
-        cursor: pointer;
-        border: 1px solid var(--button-border-hover);
-    }
-    
-    button:active{
-        color: var(--button-color-active);
-        background-color: var(--button-background-hover);
-    }
     
     .wrapper-image-name{
         display: flex;
@@ -419,11 +348,15 @@ const WrapperProfile = styled.div`
         width: 100%;
         height: 50%;
     }
-
+    
     img{
         width: 150px;
         height: 150px;
-        border-radius: 50%;}
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid salmon;
+        text-align: center;
+    }
     
     span{
         display: flex;
@@ -491,12 +424,22 @@ const ContainerEmailAddress = styled.div`
 
 const WrapperEmail = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
     padding: 15px 0px;
     /* border-bottom: 1px solid #c7c7c7ba; */
+
+    .new-email-added,
+    .wrapper-email-status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 5px 0px;
+    }
     
     label{
         font-size: 13px;
@@ -515,6 +458,22 @@ const WrapperEmail = styled.div`
         padding: 5px;
         font-size: 13px;
         color: var(--button-color);
+    }
+
+    .wrapper-input-new-email{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+        margin: 5px auto;
+
+        input {
+            text-align: center;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid salmon;
+        }
     }
 `
 
