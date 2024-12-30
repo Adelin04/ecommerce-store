@@ -18,14 +18,19 @@ interface PropsAddNewProduct {
 
 
 export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
-    const { updateUserById } = useUserStore();
+    const { updateUserById, uploadImageProfileUser } = useUserStore();
     const [btnClicked, setBtnClicked] = useState<any>('Profile');
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
-    const [imageProfile, setImageProfile] = useState<string | null>(null);
+    const [imageProfile, setImageProfile] = useState<string | File | null>(null);
     const [emails, setEmails] = useState<Array<string>>([]);
+    const formData = new FormData();
 
     const handleSaveActions = () => {
-        user && updateUserById(imageProfile, user._id);
+        const file: any = imageProfile && imageProfile.files[0];
+        formData.append('file', file);
+
+        user && uploadImageProfileUser(formData, user._id);
+        // user && updateUserById(imageProfile, user._id);
     }
 
     const handleAddNewEmail = (e: any) => {
@@ -48,12 +53,12 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
 
                     {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
                     {!imageProfile && <Image className='img-profile' src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={80} height={80} />}
-                    {imageProfile && <Image className='img-profile' src={imageProfile} alt="User Profile" width={80} height={80} />}
+                    {imageProfile && <Image className='img-profile' src={imageProfile.blobs[0]} alt="User Profile" width={80} height={80} />}
 
                 </div>
 
                 <div className='wrapper-upload'>
-                    <UploadImage imagesSelected={(images: any) => setImageProfile(images.blobs[0])} multipleFile={false} />
+                    <UploadImage imagesSelected={(images: any) => setImageProfile(images)} multipleFile={false} />
                 </div>
             </WrapperProfile>
 

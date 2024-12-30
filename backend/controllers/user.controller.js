@@ -47,3 +47,20 @@ export const deleteUserById = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const uploadImageProfileUser = async (req, res) => {
+  try {
+    const { originalname, mimetype, path, size } = req.file;
+    console.log({ originalname, mimetype, path, size });
+    
+    // const fileStream = fs.createReadStream(path);
+
+    /*   fs.readFile(req.files.file.path, function (err, data) {
+      console.log(data);
+      // Do something with the data (which holds the file information)
+    }); */
+    res.status(200);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

@@ -29,7 +29,7 @@ const Container = styled.div`
     align-items: center;
 
     .img-user-profile {
-        width: 50px;
+        width: 40px;
         height: auto;
         cursor: pointer;
         border-radius: 50%;

@@ -86,12 +86,25 @@ export const useUserStore = create((set: any, get: any) => ({
         try {
             const response = await axios.put(`${process.env.DEV_URI}user/updateUserById/${_id}`, { imageProfile: image }, { withCredentials: true });
             console.log(response.data);
-            
+
             return response.data;
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+
+    uploadImageProfileUser: async (formData: any, _id: string | number) => {
+        try {
+            console.log(formData.getAll('file'));
+            const response = await axios.post(`${process.env.DEV_URI}user/uploadImageProfileUser/${_id}`, formData,{headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
 }));
 
 
