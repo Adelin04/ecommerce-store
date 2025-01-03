@@ -96,8 +96,8 @@ export const useUserStore = create((set: any, get: any) => ({
 
     uploadImageProfileUser: async (formData: any, _id: string | number) => {
         try {
-            console.log(formData.getAll('file'));
-            const response = await axios.post(`${process.env.DEV_URI}user/uploadImageProfileUser/${_id}`, formData,{headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+            console.log(formData.getAll('file')[0]);
+            const response = await axios.post(`${process.env.DEV_URI}user/uploadImageProfileUser/${_id}`, formData);
 
             return response.data;
         } catch (error) {

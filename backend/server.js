@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { connectDB } from "./lib/db.js";
-import path from "path";
+// import path from "path";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
@@ -50,13 +50,7 @@ app.use("/api/color", colorRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/gender", genderRoutes);
 
-// if (process.env.NODE_ENV === "production") {
-// 	app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-// 	app.get("*", (req, res) => {
-// 		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-// 	});
-// }
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
@@ -64,11 +58,3 @@ app.listen(PORT, () => {
   connectDB();
 });
 
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   res.setHeader('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept, authorization')
-//   res.setHeader('Content-Type', 'application/json');
-//   res.setHeader('Access-Control-Allow-Origin','http://localhost:5173');
-//   res.setHeader('Access-Control-Allow-METHODS',"GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, PATCH");
-//   next();
-// });

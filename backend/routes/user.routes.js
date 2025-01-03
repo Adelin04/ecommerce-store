@@ -1,4 +1,5 @@
 import express from "express";
+import fs from 'fs';
 import {
   createUser,
   getAllUsers,
@@ -8,17 +9,7 @@ import {
   uploadImageProfileUser,
 } from "../controllers/user.controller.js";
 import { adminRoute, protectRoute } from "../middleware/auth.middleware.js";
-import multer from "multer";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    return cb(null, "./public");
-  },
-  filename: function (req, file, cb) {
-    return cb(null,file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+import { upload } from "../middleware/uploadFile.js";
 
 const router = express.Router();
 
@@ -29,8 +20,7 @@ router.put("/updateUserById/:id", protectRoute, adminRoute, updateUserById);
 router.delete("/deleteUserById/:id", protectRoute, adminRoute, deleteUserById);
 router.post(
   "/uploadImageProfileUser/:id",
-//   upload.single("file"),
-//   protectRoute,
+  upload.single("file"),
   uploadImageProfileUser
 );
 
