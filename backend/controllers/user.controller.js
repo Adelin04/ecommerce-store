@@ -95,7 +95,7 @@ export const uploadImageProfileUser = async (req, res) => {
         console.log(error);
         return res.status(500).json({ error: error.message });
       })
-      .finally(async () => {
+      .finally(() => {
         // Remove the uploaded file
         deleteFile(url_upload_cloudinary);
       });
