@@ -63,8 +63,6 @@ export const deleteUserById = async (req, res) => {
 };
 
 export const uploadImageProfileUser = async (req, res) => {
-  //  https://cloudinary.com/blog/uploading-images-node-js-cloudinary-node-sdk
-
   try {
     const { originalname, mimetype, path, size } = req.file;
     const user = await User.findById(req.params.id);
@@ -73,85 +71,52 @@ export const uploadImageProfileUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const url_upload_cloudinary = `${__dirname}\\uploads\\${req.params.id}\\${originalname}`;
-console.log(url_upload_cloudinary);
+    const url_upload_cloudinary = `${__dirname}\\uploads\\${req.params.id}-${originalname}`;
 
-    const result = await cloudinary.uploader
+    // Upload the user profile image to Cloudinary and save the URL in the database
+    await cloudinary.uploader
       .upload(url_upload_cloudinary, {
         resource_type: "image",
         folder: `${folderCloudinary}`,
       })
-      .then((result) =>
-        result.url({
-          max_width: 500,
-          max_height: 500,
-          crop: "scale",
-          quality: "auto",
-        })
-      );
-    console.log(result);
+      .then(async (result) => {
+        if (result)
+          cloudinary.url(result.public_id, {
+            max_width: 50,
+            max_height: 50,
+            crop: "scale",
+            quality: "auto",
+          });
+        // Update the user's imageProfile
+        user.imageProfile = result.secure_url;
+        await user.save();
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(500).json({ error: error.message });
+      })
+      .finally(async () => {
+        // Remove the uploaded file
+        deleteFile(url_upload_cloudinary);
+      });
 
-    // await cloudinaryConfig(
-    //   cloud_name,
-    //   api_key,
-    //   api_secret,
-    //   url_upload_cloudinary,
-    //   folderCloudinary
-    // );
+    console.log(url_upload_cloudinary);
 
-    if (result) {
-      user.imageProfile = result.secure_url;
-      await user.save();
-    }
-
-    res.status(200);
+    res
+      .status(200)
+      .json({ success: true, message: "Image uploaded successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const cloudinaryConfig = async function (
-  cloud_name,
-  api_key,
-  api_secret,
-  urlImage,
-  folder
-) {
-  // Configuration
-  cloudinary.config({
-    cloud_name,
-    api_key,
-    api_secret,
-    urlImage,
-  });
-
-  // Upload an image
-  const uploadResult = await cloudinary.uploader
-    .upload(urlImage, {
-      resource_type: "image",
-      folder: `${folder}`,
-    })
-    .catch((error) => {
-      console.log(error);
+const deleteFile = (filePath) => {
+  if (fs.exists(filePath)) {
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: err.message });
+      }
     });
-
-  console.log(uploadResult);
-
-  // Optimize delivery by resizing and applying auto-format and auto-quality
-  // const optimizeUrl = cloudinary.url(public_id.toString(), {
-  //   fetch_format: "auto",
-  //   quality: "auto",
-  // });
-
-  // console.log(optimizeUrl);
-
-  // Transform the image: auto-crop to square aspect_ratio
-  const autoCropUrl = cloudinary.url(uploadResult.public_id, {
-    crop: "auto",
-    gravity: "auto",
-    width: 500,
-    height: 500,
-  });
-
-  console.log(autoCropUrl);
+  }
 };

@@ -23,14 +23,17 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
     const [imageProfile, setImageProfile] = useState<string | File | null>(null);
     const [emails, setEmails] = useState<Array<string>>([]);
+    const [messageResponse, setMessageResponse] = useState<string>('');
     const formData = new FormData();
 
     const handleSaveActions = () => {
         const file: any = imageProfile && imageProfile.files[0];
         formData.append('file', file);
 
-        user && uploadImageProfileUser(formData, user._id);
-        // user && updateUserById(imageProfile, user._id);
+        user && uploadImageProfileUser(formData, user._id).then((response) => {
+            const { success, message } = response;
+            setMessageResponse(message);
+        });
     }
 
     const handleAddNewEmail = (e: any) => {
@@ -49,11 +52,12 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
     const ContentProfile = (user: IUser | null) => {
         return (
             <WrapperProfile className="wrapperTitleRightSide">
+                {messageResponse && <p className='message'>{messageResponse}</p>}
                 <div className="wrapper-image-name">
 
                     {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
-                    {!imageProfile && <Image className='img-profile' src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={80} height={80} />}
-                    {imageProfile && <Image className='img-profile' src={imageProfile.blobs[0]} alt="User Profile" width={80} height={80} />}
+                    {!imageProfile && <Image className='img-profile' src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={150} height={150} />}
+                    {imageProfile && <Image className='img-profile' src={imageProfile.blobs[0]} alt="User Profile" width={150} height={150} />}
 
                 </div>
 
@@ -338,6 +342,15 @@ const WrapperProfile = styled.div`
     padding: 15px 0px;
     /* border-bottom: 1px solid #c7c7c7ba; */
     
+    .message{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: salmon;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
     label{
         font-size: 20px;
         font-weight: bold;

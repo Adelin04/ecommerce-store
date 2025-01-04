@@ -27,10 +27,13 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     .img-user-profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 40px;
-        height: auto;
+        height: 40px;
         cursor: pointer;
         border-radius: 50%;
     }

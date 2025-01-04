@@ -1,21 +1,22 @@
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 
 const __dirname = path.resolve();
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-//   console.log('ID: ',req.params.id);
-  
-//     if (!req.params.id) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-  
+  destination: async function (req, file, cb) {
+    if (!req.params.id) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     cb(null, `${__dirname}/uploads`);
   },
 
-  filename: function (req, file, cb) {
-    cb(null, `${req.params.id}${'\\'}${file.originalname}`);
+  filename: async function (req, file, cb) {
+    const fileName = `${req.params.id}-${file.originalname}`;
+
+    cb(null, fileName);
   },
 });
 

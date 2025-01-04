@@ -96,7 +96,6 @@ export const useUserStore = create((set: any, get: any) => ({
 
     uploadImageProfileUser: async (formData: any, id: string | number) => {
         try {
-            console.log(formData.getAll('file')[0]);
             const response = await axios.post(`${process.env.DEV_URI}user/uploadImageProfileUser/${id}`, formData);
 
             return response.data;
