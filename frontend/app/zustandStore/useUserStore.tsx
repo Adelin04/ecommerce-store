@@ -1,8 +1,6 @@
 import { create } from "zustand";
-import { IAddress, IProduct, IUser } from "../interfaces/interfaces";
+import { IAddress, IUser } from "../interfaces/interfaces";
 import axios from "axios";
-import { URI } from "../utils/URI";
-import { headers } from "next/headers";
 
 interface UserState {
     user: IUser | null,
@@ -48,6 +46,7 @@ export const useUserStore = create((set: any, get: any) => ({
             await axios.post(`${process.env.DEV_URI}auth/logout`, { withCredentials: true });
 
             set(() => ({ user: null, isAuth: false, isAdmin: false, }));
+
         } catch (error) {
         }
 

@@ -13,7 +13,7 @@ import Button from '@/app/component/ui/Button';
 
 export default function Settings() {
   const { hasMounted } = useMounted()
-  const { user } = useUserStore();
+  const { user, logout } = useUserStore();
   const [btnClicked, setBtnClicked] = useState<any>('Profile');
 
   const Menu: any = {
@@ -43,9 +43,15 @@ export default function Settings() {
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>
           <WrapperButtons className='wrapper-buttons'>
-            <Button id='Profile' style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Profile</Button>
-            <Button id='Security' style={{ color: btnClicked === 'Security' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Security</Button>
-            <Button id='Notifications' style={{ color: btnClicked === 'Notifications' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Notifications</Button>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+              <Button id='Profile' style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Profile</Button>
+              <Button id='Security' style={{ color: btnClicked === 'Security' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Security</Button>
+              <Button id='Notifications' style={{ color: btnClicked === 'Notifications' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Notifications</Button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+              <Button id='Notifications' style={{ color: 'salmon' }} onClick={() => { logout() }}>Logout</Button>
+            </div>
           </WrapperButtons>
         </WrapperSlider>
       </Slider>
@@ -89,9 +95,10 @@ const WrapperSlider = styled.div`
 const WrapperButtons = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 100%;
     margin: 15px 0px;
     
     button{

@@ -19,7 +19,7 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
         checkAuth();
         getProducts();
         getCategories();
-    }, [checkAuth])
+    }, [])
 
 
     if (!hasMounted)
