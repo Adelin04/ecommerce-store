@@ -8,12 +8,11 @@ import Loading from '../loading';
 import ProductsList from '../component/products/productList';
 import { useProductStore } from '../zustandStore/useProductStore';
 
-
 const HomePage = () => {
   const { categorySelected }: any = useCategoryStore();
   const { selectedProducts }: any = useProductStore();
   const { hasMounted } = useMounted()
-
+  
   if (!hasMounted)
     return <Loading />
   return (

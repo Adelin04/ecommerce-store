@@ -11,6 +11,7 @@ import { FaPlus } from "react-icons/fa";
 import UploadImage from '../uploadImage';
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '../ui/Button';
+
 interface PropsAddNewProduct {
     close: () => void | null,
     user: IUser | null
@@ -56,7 +57,7 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                 <div className="wrapper-image-name">
 
                     {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
-                    {!imageProfile && <Image className='img-profile' src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={150} height={150} />}
+                    {!imageProfile && <Image className='img-profile' priority src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={150} height={150} />}
                     {imageProfile && <Image className='img-profile' src={imageProfile.blobs[0]} alt="User Profile" width={150} height={150} />}
 
                 </div>

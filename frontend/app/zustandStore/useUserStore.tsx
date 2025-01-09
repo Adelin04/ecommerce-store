@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { IAddress, IUser } from "../interfaces/interfaces";
 import axios from "axios";
+import { cookies } from "next/headers";
 
 interface UserState {
     user: IUser | null,
@@ -42,13 +43,22 @@ export const useUserStore = create((set: any, get: any) => ({
     logout: async () => {
         set(() => ({ isLoading: true }));
 
-        try {
-            await axios.post(`${process.env.DEV_URI}auth/logout`, { withCredentials: true });
+        /*         fetch(`${process.env.DEV_URI}auth/logout`, {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+                ).then((res) => {
+                    console.log(res);
+        
+                });
+                       */
+        const response = await axios.post(`${process.env.DEV_URI}auth/logout`, { credentials: 'include' }, { withCredentials: true });
 
-            set(() => ({ user: null, isAuth: false, isAdmin: false, }));
+        set(() => ({ user: null, isAuth: false, isAdmin: false, }));
 
-        } catch (error) {
-        }
 
         set(() => ({ isLoading: false }));
     },

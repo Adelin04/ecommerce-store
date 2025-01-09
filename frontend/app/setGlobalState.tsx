@@ -8,12 +8,14 @@ import { useCategoryStore } from './zustandStore/useCategoryStore';
 import Loading from './loading';
 import { useMounted } from './component/useMounted';
 import { useUserStore } from './zustandStore/useUserStore';
+import { CookiesProvider } from 'react-cookie';
 
 const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
     const { checkAuth } = useUserStore();
     const { getProducts } = useProductStore();
     const { getCategories } = useCategoryStore();
     const { hasMounted } = useMounted()
+
 
     useEffect(() => {
         checkAuth();
@@ -26,7 +28,9 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
         return <Loading />
     return (
         <Container>
-            {children}
+            <CookiesProvider>
+                {children}
+            </CookiesProvider>
         </Container>
     )
 }

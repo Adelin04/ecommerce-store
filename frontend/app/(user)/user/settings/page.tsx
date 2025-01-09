@@ -10,10 +10,11 @@ import styled from "styled-components";
 import Notifications from '@/app/component/user/popUpNotifications';
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '@/app/component/ui/Button';
+import { redirect } from 'next/navigation'
 
 export default function Settings() {
   const { hasMounted } = useMounted()
-  const { user, logout } = useUserStore();
+  const { user, isAuth, logout } = useUserStore();
   const [btnClicked, setBtnClicked] = useState<any>('Profile');
 
   const Menu: any = {
@@ -35,6 +36,7 @@ export default function Settings() {
     setBtnClicked(buttonClicked)
   }
 
+  if (!isAuth) return redirect('/');
   if (!hasMounted)
     return <Loading />
   return (
