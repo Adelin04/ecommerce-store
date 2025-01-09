@@ -80,10 +80,10 @@ const NavBar = ({ navBarMenu }: any) => {
                     </WrapperLogoUserProfile>
 
                     <MenuNavBar className='wrapper-nav-link'>
-                        {navBarMenu && navBarMenu.map((menu: any, index: number) => {
+                    {navBarMenu && navBarMenu.map((menu: any, index: number) => {
                             return (
                                 <WrapperLink key={index} className='wrapper-link'>
-                                    <Link className='link' href={menu.to}>{menu.name}</Link>
+                                    <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => handleClickNavBarMenu(menu.name)}>{menu.name}</p>
                                 </WrapperLink>
                             )
                         })}
