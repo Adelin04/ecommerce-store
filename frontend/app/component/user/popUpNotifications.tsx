@@ -4,6 +4,7 @@
 import UserProfileImageLogin from '../../../assets/userLogin.png'
 import Image from "next/image";
 import Link from "next/link";
+import { use, useEffect, useState } from 'react';
 import styled from "styled-components";
 
 interface PropsAddNewProduct {
@@ -12,6 +13,11 @@ interface PropsAddNewProduct {
 
 
 export default function Notifications({ close }: PropsAddNewProduct) {
+    const [messageResponse, setMessageResponse] = useState<string>('');
+
+    useEffect(() => {
+        setMessageResponse('This future is not ready');
+    }, []);
 
     return (
         <Container>
@@ -41,9 +47,11 @@ export default function Notifications({ close }: PropsAddNewProduct) {
                 </LeftContent>
 
                 <RightContent className="rightContent">
-                <WrapperTitle className="wrapperTitleRightSide">
+                    <WrapperTitle className="wrapperTitleRightSide">
                         <label>Notifications</label>
                     </WrapperTitle>
+                    {messageResponse && <p className='message'>{messageResponse}</p>}
+                    <div></div>
                 </RightContent>
             </PopUp>
         </Container >

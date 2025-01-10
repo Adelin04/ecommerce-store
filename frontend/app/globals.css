@@ -98,6 +98,15 @@ button:active {
   color: var(--button-color-active);
 }
 
+.message{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: salmon;
+  font-weight: bold;
+  font-size: 15px;
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

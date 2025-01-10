@@ -29,7 +29,6 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
 
     const handleSaveActions = () => {
         const file: any = imageProfile && imageProfile.files[0];
-        formData.append('file', file);
 
         user && uploadImageProfileUser(formData, user._id).then((response) => {
             const { success, message } = response;
@@ -38,6 +37,7 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
     }
 
     const handleAddNewEmail = (e: any) => {
+
         if (emails.length === 2) return
         if (e.key === 'Enter') {
             setEmails([...emails, e.target.value]);
@@ -75,7 +75,8 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
             <ContainerEmailAddress>
 
                 <WrapperEmailAddress>
-                    <WrapperIconAddEmail className="wrapper-icon-add-email" onClick={() => { setToggleInputNewEmail(true) }}>
+                    {messageResponse && <p className='message'>{messageResponse}</p>}
+                    <WrapperIconAddEmail className="wrapper-icon-add-email" onClick={() => { /* setToggleInputNewEmail(true) */; setMessageResponse('This future is not ready'); }}>
                         <FaPlus className={'plus-icon'} />
                         <span>
                             {'Add new email address'}
@@ -105,7 +106,7 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
     }
 
     return (
-        <Container>
+        <Container className="containerPopUp">
             <PopUp>
                 <Link className='close' href={'/'}> go to store </Link>
                 <LeftContent className="leftContent">
@@ -116,8 +117,8 @@ export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
                         </WrapperTitleLeftSide>
 
                         <ButtonsLeftSide>
-                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => setBtnClicked('Profile')}>Profile</Button>
-                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => setBtnClicked('Email')}>Email</Button>
+                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => { setMessageResponse(''); setBtnClicked('Profile') }}>Profile</Button>
+                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => { setMessageResponse(''); setBtnClicked('Email') }}>Email</Button>
                         </ButtonsLeftSide>
 
                     </ContainerLeftSide>
@@ -153,7 +154,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: red; */
+    
     
     .close{
         display: flex;
@@ -208,6 +209,7 @@ const PopUp = styled.div`
     box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
     background: white;
 `
+
 
 const LeftContent = styled.div`
     display: flex;
@@ -343,14 +345,6 @@ const WrapperProfile = styled.div`
     padding: 15px 0px;
     /* border-bottom: 1px solid #c7c7c7ba; */
     
-    .message{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: salmon;
-        font-weight: bold;
-        font-size: 15px;
-    }
 
     label{
         font-size: 20px;

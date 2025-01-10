@@ -36,9 +36,10 @@ const Container = styled.div`
     }
 
     .img-logo{
-        width: 50px;
+        width: 80px;
         height: auto;
         cursor: pointer;
+        padding: 5px;
         background: var(--primary-color);
         border-radius: 50%;
     }
@@ -46,15 +47,15 @@ const Container = styled.div`
     @media (max-width: 400px) {
       .img-logo{
         transition: all 0.2s ease-in-out;
-        width: 25px;
+        width: 50px;
     }
   }
 `
 
 const LabelLogo = styled.label`
+    padding: 15px;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 500;
     cursor: pointer;
-    padding: 5px;
 `
