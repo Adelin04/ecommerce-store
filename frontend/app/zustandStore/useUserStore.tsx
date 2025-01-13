@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { IAddress, IUser } from "../interfaces/interfaces";
 import axios from "axios";
-import { cookies } from "next/headers";
 
 interface UserState {
     user: IUser | null,
@@ -67,11 +66,11 @@ export const useUserStore = create((set: any, get: any) => ({
         set(() => ({ checkingAuth: true }));
         try {
             const fetchUser = await axios.get(`${process.env.DEV_URI}auth/profile`, { withCredentials: true });
-
+            
             const user = fetchUser.data
             set(() => ({ user: user, isAuth: true, isAdmin: user.role === 'admin', }));
         } catch (error) {
-            set(() => ({ user: null, isAuth: false, }));
+            set(() => ({ user: null, isAuth: false }));
         }
         set(() => ({ checkingAuth: false }));
     },

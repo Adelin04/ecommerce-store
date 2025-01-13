@@ -8,7 +8,7 @@ import { useUserStore } from '@/app/zustandStore/useUserStore'
 import { redirect } from 'next/navigation'
 
 const AuthPage = () => {
-    const { isAuth } = useUserStore();
+    const { isAuth } = useUserStore();    
     const [toggle, setToggle] = useState(true);
 
     if (isAuth)

@@ -16,6 +16,16 @@ export default function Settings() {
   const { hasMounted } = useMounted()
   const { user, isAuth, logout } = useUserStore();
   const [btnClicked, setBtnClicked] = useState<any>('Profile');
+  const [menus, setMenus] = useState(
+    {
+      menuUser: [
+        'Profile', 'Security', 'Notifications'
+      ],
+      menuAdmin: [
+        'Create New Product', 'Delete Product', 'Update Product'
+      ]
+    }
+  );
 
   const Menu: any = {
     Profile: () => <PopUpProfile close={handleClosePopUp} user={user} />,
@@ -45,15 +55,43 @@ export default function Settings() {
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>
           <WrapperButtons className='wrapper-buttons'>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-              <Button id='Profile' style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Profile</Button>
-              <Button id='Security' style={{ color: btnClicked === 'Security' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Security</Button>
-              <Button id='Notifications' style={{ color: btnClicked === 'Notifications' ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>Notifications</Button>
-            </div>
+
+            <UserPanel>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                  {
+                    menus.menuUser.map((menu: any, index: number) => {
+                      return (
+                        <Button key={index} id={menu} style={{ color: btnClicked === menu ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>{menu}</Button>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+            </UserPanel>
+
+
+            {
+              user?.role === 'admin' &&
+              <AdminPanel>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                  <div className='admin-panel-label'><label>Admin Panel</label></div>
+                  {
+                    menus.menuAdmin.map((menu: any, index: number) => {
+                      return (
+                        <Button key={index} id={menu} style={{ color: btnClicked === menu ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>{menu}</Button>
+                      )
+                    })
+                  }
+                </div>
+              </AdminPanel>
+            }
+
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
               <Button id='Notifications' style={{ color: 'salmon' }} onClick={() => { logout() }}>Logout</Button>
             </div>
+            
           </WrapperButtons>
         </WrapperSlider>
       </Slider>
@@ -120,15 +158,38 @@ const WrapperButtons = styled.div`
       background-color: var(--button-color);
     }
 
-    button:hover{
-      cursor: pointer;
-      border: 1px solid var(--button-border-hover);
+`
+
+const AdminPanel = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 15px 0px;
+
+    .admin-panel-label{
+      margin: 0px 0px 10px 0px;
     }
     
-    button:active{
-      background-color: var(--button-backgound-hover);
-      color: var(--button-color-active);
+
+    label{
+      padding: 5px 0px;
+      font-size: 17px;
+      font-weight: bold;
+      color: #ffffff;
     }
+`
+
+const UserPanel = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 15px 0px;
 `
 
 
