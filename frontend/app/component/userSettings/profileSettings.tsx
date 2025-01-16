@@ -12,13 +12,13 @@ import UploadImage from '../uploadImage';
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '../ui/Button';
 
-interface PropsAddNewProduct {
+interface PropsProfileSettings{
     close: () => void | null,
     user: IUser | null
 }
 
 
-export default function PopUpProfile({ close, user }: PropsAddNewProduct) {
+export default function ProfileSettings({ close, user }: PropsProfileSettings) {
     const { updateUserById, uploadImageProfileUser } = useUserStore();
     const [btnClicked, setBtnClicked] = useState<any>('Profile');
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);

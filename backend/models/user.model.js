@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
     },
     role: { type: String, enum: ["customer", "admin"], default: "customer" },
     address: { type: String },
-    imageProfile: { type: String },
+    imageProfile: { type: String, trim: true, default: "" },
     password: {
       type: String,
       required: true,

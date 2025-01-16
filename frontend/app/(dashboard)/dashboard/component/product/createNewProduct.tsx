@@ -1,0 +1,346 @@
+
+'use client'
+
+import UserProfileImageLogin from '../../../assets/userLogin.png'
+import Image from "next/image";
+import Link from "next/link";
+import styled from "styled-components";
+import Button from '../../../../component/ui/Button';
+import { useState } from 'react';
+import { IUser } from '@/app/interfaces/interfaces';
+import { TfiEmail } from 'react-icons/tfi';
+import { MdOutlinePassword } from 'react-icons/md';
+
+interface PropsCreateNewProduct {
+    close: () => void | null,
+    user: IUser | null
+}
+
+
+export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
+    const [btnClicked, setBtnClicked] = useState<any>('Change Password');
+
+    const [productName,setProductName] = useState('');
+    const [productColor, setProductColor] = useState('');
+    const [productDescription, setDescriptionProduct] = useState('');
+    const [productPrice, setProductPrice] = useState('');
+    const [selectedPictures, setSelectedPictures]: any = useState(null);
+    const [productBrand, setProductBrand] = useState('');
+    const [productCode, setProductCode] = useState('');
+    const [productSize, setProductSize] = useState('');
+    const [productStock, setProductStock]: any = useState(1);
+    const [productCategory,setProductCategory] = useState('');
+    const [productSuperCategory,setProductSuperCategory] = useState('');
+    const [listOfProductAdded, setListOfProductAdded] = useState([]);
+
+    const resetFields = () => {
+        setProductName('');
+        setProductColor('');
+        setDescriptionProduct('');        
+        setProductPrice('');
+        setProductBrand('');
+        setProductSize('');
+        setProductStock(1);
+        setProductCategory('');
+        setProductSuperCategory('');
+        setProductCode('');
+        setSelectedPictures(null)
+    }
+
+    const handleClickCloseButton = (e: any) => {
+        e.preventDefault();
+        resetFields();
+        close();
+    }
+
+    const handleSaveActions = () => {
+        console.log('clicked');
+    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+    }
+
+    // name: string;
+    // description: string;
+    // price: number;
+    // category: string;
+    // code: string;
+    // image: string;
+    // size: number;
+    // stock: number;
+    // color: string;
+    // gender: string;
+    // brand: string;
+    // seller: string;
+    // currency: string;
+    return (
+        <Container>
+            <PopUp>
+                <Header className="header">
+                    <label>Create New Product</label>
+                    <Link className='close' href={'/'}> go to store </Link>
+                </Header>
+
+                <Main>
+                    <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+
+                        <WrapperLabelsInputs className='wrapper-labels-inputs'>
+                            <WrapperLabelInput>
+                                <label >Name</label>
+                                <input type={'text'} autoFocus={true} value={productName} id={'productName'} onChange={(e) => { setProductName(e.target.value) }} />
+                                <TfiEmail style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                            <WrapperLabelInput>
+                                <label >Color</label>
+                                <input type={'text'} value={productColor} id={'productColor'} onChange={(e) => { setProductColor(e.target.value) }} />
+                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                            <WrapperLabelInput>
+                                <label >Description</label>
+                                <input type={'text'} value={productDescription} id={'productDescription'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
+                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                            <WrapperLabelInput>
+                                <label >Price</label>
+                                <input type={'text'} value={productPrice} id={'productPrice'} onChange={(e) => { setProductPrice(e.target.value) }} />
+                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                            <WrapperLabelInput>
+                                <label >Brand</label>
+                                <input type={'text'} value={productBrand} id={'productBrand'} onChange={(e) => { setProductBrand(e.target.value) }} />
+                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                            <WrapperLabelInput>
+                                <label >Unique Code</label>
+                                <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
+                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                            <WrapperLabelInput>
+                                <label >Stock</label>
+                                <input type={'text'} value={productStock} id={'productStock'} onChange={(e) => { productStock > 0 && setProductStock(e.target.value) }} />
+                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                            </WrapperLabelInput>
+
+                        </WrapperLabelsInputs>
+
+                    </form>
+
+
+
+                    {/*    <label >Description Product</label>
+                    <input type={'text'} value={descriptionProduct} id={'descriptionProduct'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
+                    <label>Price Product</label>
+                    <input type={'number'} value={priceProduct} id={'priceProduct'} onChange={(e) => { setPriceProduct(e.target.value) }} />
+                    <label >Brand Product</label>
+                    <input type={'text'} value={brandProduct} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
+                    <label >Stock Product</label>
+                    <input type={'number'} value={stockProduct} id={'stockProduct'} onChange={(e) => { parseInt(e.target.value) > 0 && setStockProduct(e.target.value) }} />
+                    <label >Code Product</label>
+                    <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
+                    <label >Size Product</label> */}
+                    {/*    <select value={sizeProduct} onChange={(e) => setSizeProduct(e.target.value)}>
+                        < option value={'None'} > None</option>
+                        {
+                            sizesProductAvailable?.map((size: any, index: number) => {
+                                return (
+                                    < option key={index} value={size.name} > {size.name}</option>
+                                )
+                            })
+                        }
+                    </select>
+
+                    <label>Category Product</label>
+                    <select value={categoryProduct} onChange={(e) => setCategoryProduct(e.target.value)}>
+                        < option value={'None'} > None</option>
+                        {
+                            categoriesProductAvailable && categoriesProductAvailable.map((category: any, index: number) => {
+                                return (
+                                    < option key={index} value={category.name} > {category.name}</option>
+                                )
+                            })
+                        }
+                    </select>
+
+                    <label>Super Category Product</label>
+                    <select value={superCategoryProduct} onChange={(e) => setSuperCategoryProduct(e.target.value)}>
+                        < option value={'None'} > None</option>
+                        {
+                            superCategoriesProductAvailable && superCategoriesProductAvailable.map((superCategory: any, index: number) => {
+                                return (
+                                    < option key={index} value={superCategory.name} > {superCategory.name}</option>
+                                )
+                            })
+                        }
+                    </select> */}
+                </Main>
+
+                <Footer>
+                    <Button style={{ color: 'salmon', }} onClick={() => { handleSaveActions() }}>Save Actions</Button>
+                </Footer>
+
+            </PopUp>
+        </Container >
+    );
+}
+
+
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+
+    .close{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* position: absolute; */
+        top: 10px;
+        right: 10px;
+        padding: 5px 0px;
+        min-width: 90px;
+        font-size: 13px;    
+        width:  auto;
+        height: 25px;
+        /* height: auto; */
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 0px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 5px 0px;
+        background-color: var(--button-color);
+    }
+
+    .close:hover{
+      cursor: pointer;
+      border: 1px solid var(--button-border-hover);
+    }
+    
+    .close:active{
+      background-color: var(--button-background-hover);
+      color: var(--button-color-active);
+    }  background-color:var(--button-color);
+
+`
+
+const PopUp = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width:auto;
+    height: auto;
+    width: 600px;
+    height: 500px;
+    border-radius: 10px;
+    border-top:  1px solid salmon;
+    box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
+    background: white;
+`
+
+const Header = styled.div`
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    padding: 5px 15px;
+    border-bottom: 1px solid #c7c7c7ba;
+    
+    label{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        /* color: #ffffff;         */
+    }
+    
+    p{
+        font-size: 10px;
+        font-weight: bold;
+        /* color: #ffffff; */
+    }
+`
+const Main = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* background-color: green; */
+`
+
+const WrapperLabelsInputs = styled.div`
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height: auto;
+    margin: auto;
+    border-radius: 5px;
+
+    label {
+        color: grey;
+        font-size: 12px;
+        width: 99%;
+        margin: 1px 0px;
+        padding-left: 2px;
+        text-align:left;
+    }
+    
+    input{
+        width: 100%;
+        height: 30px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        margin: 0px;
+        background-color: var(--input-color);
+        color: #ffffff;
+        text-align:center;
+    }
+
+    ::placeholder{
+        color: grey;
+        font-size: 10px;
+    }
+    
+`
+
+const WrapperLabelInput = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+`
+
+const Footer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 5px 15px;
+`

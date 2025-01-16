@@ -9,9 +9,11 @@ import { useProductStore } from '../zustandStore/useProductStore';
 import Link from 'next/link';
 import UserProfile from './userProfile';
 import { useRouter } from 'next/navigation';
+import { useUserStore } from '../zustandStore/useUserStore';
 
 const NavBar = ({ navBarMenu }: any) => {
     const router = useRouter()
+    const { user } = useUserStore()
     const { products, resetSelectedProducts } = useProductStore()
     const { setCategoryClicked, categorySelected }: any = useCategoryStore()
 
@@ -61,7 +63,7 @@ const NavBar = ({ navBarMenu }: any) => {
                     </MenuNavBar>
 
                     <WrapperUserProfile className='wrapper-user-profile'>
-                        <UserProfile />
+                        <UserProfile user={user}/>
                     </WrapperUserProfile>
 
                 </WrapperNavBar>)
@@ -75,7 +77,7 @@ const NavBar = ({ navBarMenu }: any) => {
 
 
                         <WrapperUserProfileResponsive className='wrapper-user-profile'>
-                            <UserProfile />
+                            <UserProfile user={user}/>
                         </WrapperUserProfileResponsive>
                     </WrapperLogoUserProfile>
 

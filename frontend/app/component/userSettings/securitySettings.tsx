@@ -7,17 +7,19 @@ import Link from "next/link";
 import styled from "styled-components";
 import Button from '../ui/Button';
 import { useState } from 'react';
+import { IUser } from '@/app/interfaces/interfaces';
 
-interface PropsAddNewProduct {
+interface PropsSecuritySettings {
     close: () => void | null,
+    user: IUser | null
 }
 
 
-export default function PopUpSecurity({ close }: PropsAddNewProduct) {
+export default function SecuritySettings({ close, user }: PropsSecuritySettings) {
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
 
     const handleSaveActions = () => {
-      console.log('clicked');
+        console.log('clicked');
     }
 
     return (

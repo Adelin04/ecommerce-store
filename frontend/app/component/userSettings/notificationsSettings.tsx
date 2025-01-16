@@ -1,18 +1,20 @@
 
 'use client'
 
+import { IUser } from '@/app/interfaces/interfaces';
 import UserProfileImageLogin from '../../../assets/userLogin.png'
 import Image from "next/image";
 import Link from "next/link";
 import { use, useEffect, useState } from 'react';
 import styled from "styled-components";
 
-interface PropsAddNewProduct {
+interface PropsNotificationsSettings {
     close: () => void | null,
+    user: IUser | null
 }
 
 
-export default function Notifications({ close }: PropsAddNewProduct) {
+export default function NotificationsSettings({ close, user }: PropsNotificationsSettings) {
     const [messageResponse, setMessageResponse] = useState<string>('');
 
     useEffect(() => {

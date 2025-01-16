@@ -5,16 +5,14 @@ import UserProfileImageLogin from '../../assets/userLogin.png'
 import UserProfileImageLogout from '../../assets/userLogout.png'
 import Link from 'next/link';
 import Image from 'next/image';
-import { useUserStore } from '../zustandStore/useUserStore';
-// import { useUserStore } from '../store/useUserStore';
+import { IUser } from '../interfaces/interfaces';
 
-const UserProfile = () => {
-    const { user } = useUserStore();
-
+const UserProfile = ({user}: {user: IUser | null}) => {
+    
     return (
         <Container className="container-user-profile">
             <Link className='link-user-profile' href={user ? "/user/settings" : "/auth"}>
-                <Image className='img-user-profile' src={user ? `${user.imageProfile}` : UserProfileImageLogin} alt="User Profile" width={50} height={50} />
+                <Image className='img-user-profile' src={ user ? user.imageProfile || UserProfileImageLogin : UserProfileImageLogout} alt="User Profile" width={50} height={50} />
             </Link>
         </Container>
     )

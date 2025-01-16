@@ -1,16 +1,17 @@
 
 'use client'
 
-import PopUpSecurity from '@/app/component/user/popUpSecurity';
-import PopUpProfile from '../../../component/user/popUpProfile'
+import SecuritySettings from '@/app/component/userSettings/securitySettings';
+import ProfileSettings from '../../../component/userSettings/profileSettings'
 import { useMounted } from "@/app/component/useMounted";
 import Loading from "@/app/loading";
 import React, { useState } from 'react';
 import styled from "styled-components";
-import Notifications from '@/app/component/user/popUpNotifications';
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '@/app/component/ui/Button';
 import { redirect } from 'next/navigation'
+import Link from 'next/link';
+import NotificationsSettings from '@/app/component/userSettings/notificationsSettings';
 
 export default function Settings() {
   const { hasMounted } = useMounted()
@@ -21,16 +22,16 @@ export default function Settings() {
       menuUser: [
         'Profile', 'Security', 'Notifications'
       ],
-      menuAdmin: [
-        'Create New Product', 'Delete Product', 'Update Product'
-      ]
+      // menuAdmin: [
+      //   'Create New Product', 'Delete Product', 'Update Product'
+      // ]
     }
   );
 
   const Menu: any = {
-    Profile: () => <PopUpProfile close={handleClosePopUp} user={user} />,
-    Security: () => <PopUpSecurity close={handleClosePopUp} />,
-    Notifications: () => <Notifications close={handleClosePopUp} />,
+    Profile: () => <ProfileSettings close={handleClosePopUp} user={user} />,
+    Security: () => <SecuritySettings close={handleClosePopUp} user={null} />,
+    Notifications: () => <NotificationsSettings close={handleClosePopUp} user={null}/>,
   };
 
   const handleClosePopUp = () => setBtnClicked(null);
@@ -71,7 +72,7 @@ export default function Settings() {
             </UserPanel>
 
 
-            {
+            {/* {
               user?.role === 'admin' &&
               <AdminPanel>
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
@@ -85,13 +86,14 @@ export default function Settings() {
                   }
                 </div>
               </AdminPanel>
-            }
+            } */}
 
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+              {user?.role === 'admin' && <Button> <Link href={'/dashboard'} style={{ color: 'salmon' }} >Dashboard</Link></Button>}
               <Button id='Notifications' style={{ color: 'salmon' }} onClick={() => { logout() }}>Logout</Button>
             </div>
-            
+
           </WrapperButtons>
         </WrapperSlider>
       </Slider>
@@ -160,27 +162,27 @@ const WrapperButtons = styled.div`
 
 `
 
-const AdminPanel = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    margin: 15px 0px;
+// const AdminPanel = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     align-items: center;
+//     width: 100%;
+//     height: 100%;
+//     margin: 15px 0px;
 
-    .admin-panel-label{
-      margin: 0px 0px 10px 0px;
-    }
-    
+//     .admin-panel-label{
+//       margin: 0px 0px 10px 0px;
+//     }
 
-    label{
-      padding: 5px 0px;
-      font-size: 17px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-`
+
+//     label{
+//       padding: 5px 0px;
+//       font-size: 17px;
+//       font-weight: bold;
+//       color: #ffffff;
+//     }
+// `
 
 const UserPanel = styled.div`
     display: flex;
