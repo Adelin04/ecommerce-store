@@ -106,7 +106,7 @@ const WrapperLogin = styled.div`
         border: none;
         border-radius: 5px;
         margin: 0px;
-        background-color: var(--input-color);
+        /* background-color: var(--input-color); */
         color: #ffffff;
         text-align:center;
     }

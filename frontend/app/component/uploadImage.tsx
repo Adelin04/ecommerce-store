@@ -22,8 +22,8 @@ const UploadImage = ({ imagesSelected, multipleFile }: PropsUploadImages) => {
 
 
   return (
-    <Container>
-      <WrapperInput>
+    <Container className="container-upload-image">
+      <WrapperInput className="wrapper-input-upload-images">
         <input
           className="custom-file-input"
           name="newImage"
@@ -55,10 +55,11 @@ input {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 25px auto;
+      margin: 10px auto;
       color: transparent;
       width: 150px;
       height: 35px;
+      border: none;
     }
     
     input::-webkit-file-upload-button {

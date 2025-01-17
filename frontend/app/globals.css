@@ -9,6 +9,7 @@
   --button-color-active: rgb(4, 121, 112);
   --button-background-hover: #ffffff50;
   --button-border-hover: #fa807285;
+  --input-color: #ffffff;
 }
 
 :root {

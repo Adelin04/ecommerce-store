@@ -1,7 +1,7 @@
 
 'use client'
 
-import UserProfileImageLogin from '../../../assets/userLogin.png'
+import Logo from '../../../../../assets/logoIcon.svg'
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { IUser } from '@/app/interfaces/interfaces';
 import { TfiEmail } from 'react-icons/tfi';
 import { MdOutlinePassword } from 'react-icons/md';
+import UploadImage from '@/app/component/uploadImage';
+import { useCategoryStore } from '@/app/zustandStore/useCategoryStore';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -18,9 +20,11 @@ interface PropsCreateNewProduct {
 
 
 export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
+    const { categories } = useCategoryStore()
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
+    const [sizesProductAvailable, setSizesProductAvailable] = useState(['S', 'M', 'L', 'XL']);
 
-    const [productName,setProductName] = useState('');
+    const [productName, setProductName] = useState('');
     const [productColor, setProductColor] = useState('');
     const [productDescription, setDescriptionProduct] = useState('');
     const [productPrice, setProductPrice] = useState('');
@@ -29,14 +33,14 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     const [productCode, setProductCode] = useState('');
     const [productSize, setProductSize] = useState('');
     const [productStock, setProductStock]: any = useState(1);
-    const [productCategory,setProductCategory] = useState('');
-    const [productSuperCategory,setProductSuperCategory] = useState('');
+    const [productCategory, setProductCategory] = useState('');
+    const [productSuperCategory, setProductSuperCategory] = useState('');
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
     const resetFields = () => {
         setProductName('');
         setProductColor('');
-        setDescriptionProduct('');        
+        setDescriptionProduct('');
         setProductPrice('');
         setProductBrand('');
         setProductSize('');
@@ -61,19 +65,6 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         e.preventDefault();
     }
 
-    // name: string;
-    // description: string;
-    // price: number;
-    // category: string;
-    // code: string;
-    // image: string;
-    // size: number;
-    // stock: number;
-    // color: string;
-    // gender: string;
-    // brand: string;
-    // seller: string;
-    // currency: string;
     return (
         <Container>
             <PopUp>
@@ -85,100 +76,113 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                 <Main>
                     <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
+
                         <WrapperLabelsInputs className='wrapper-labels-inputs'>
-                            <WrapperLabelInput>
-                                <label >Name</label>
-                                <input type={'text'} autoFocus={true} value={productName} id={'productName'} onChange={(e) => { setProductName(e.target.value) }} />
-                                <TfiEmail style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                            <div className='zone_1' style={{ width: '100%' }}>
+                                <WrapperLabelInput>
+                                    <label >Name</label>
+                                    <input type={'text'} autoFocus={true} value={productName} id={'productName'} onChange={(e) => { setProductName(e.target.value) }} />
+                                    <TfiEmail style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                            <WrapperLabelInput>
-                                <label >Color</label>
-                                <input type={'text'} value={productColor} id={'productColor'} onChange={(e) => { setProductColor(e.target.value) }} />
-                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                                <WrapperLabelInput>
+                                    <label >Color</label>
+                                    <input type={'text'} value={productColor} id={'productColor'} onChange={(e) => { setProductColor(e.target.value) }} />
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                            <WrapperLabelInput>
-                                <label >Description</label>
-                                <input type={'text'} value={productDescription} id={'productDescription'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
-                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                                <WrapperLabelInput>
+                                    <label >Description</label>
+                                    <input type={'text'} value={productDescription} id={'productDescription'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                            <WrapperLabelInput>
-                                <label >Price</label>
-                                <input type={'text'} value={productPrice} id={'productPrice'} onChange={(e) => { setProductPrice(e.target.value) }} />
-                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                                <WrapperLabelInput>
+                                    <label >Price</label>
+                                    <input type={'text'} value={productPrice} id={'productPrice'} onChange={(e) => { setProductPrice(e.target.value) }} />
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                            <WrapperLabelInput>
-                                <label >Brand</label>
-                                <input type={'text'} value={productBrand} id={'productBrand'} onChange={(e) => { setProductBrand(e.target.value) }} />
-                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                                <WrapperLabelInput>
+                                    <label >Brand</label>
+                                    <input type={'text'} value={productBrand} id={'productBrand'} onChange={(e) => { setProductBrand(e.target.value) }} />
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                            <WrapperLabelInput>
-                                <label >Unique Code</label>
-                                <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
-                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                                <WrapperLabelInput>
+                                    <label >Unique Code</label>
+                                    <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                            <WrapperLabelInput>
-                                <label >Stock</label>
-                                <input type={'text'} value={productStock} id={'productStock'} onChange={(e) => { productStock > 0 && setProductStock(e.target.value) }} />
-                                <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                            </WrapperLabelInput>
+                                <WrapperLabelInput>
+                                    <label >Stock</label>
+                                    <input type={'text'} value={productStock} id={'productStock'} onChange={(e: any) => { e.target.value >= 0 && setProductStock(e.target.value) }} />
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
+
+                                <WrapperLabelInput>
+
+                                    <div className='wrapper-size-category'>
+
+                                        <div className='wrapper-size'>
+                                            <label>Size Product</label>
+                                            <select className='select-size' value={productSize} onChange={(e) => setProductSize(e.target.value)}>
+                                                < option value={'None'} > None </option>
+                                                {
+                                                    sizesProductAvailable?.map((size: any, index: number) => {
+                                                        return (
+                                                            < option key={index} value={size} > {size}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div className='wrapper-category'>
+                                            <label>Category Product</label>
+                                            <select className='select-category' value={productCategory} onChange={(e) => setProductCategory(e.target.value)}>
+                                                < option value={'None'} > None</option>
+                                                {
+                                                    categories && categories.map((category: any, index: number) => {
+                                                        const { category: name } = category
+                                                        return (
+                                                            < option key={index} value={name} > {name}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </WrapperLabelInput>
+                            </div>
+
+                            <div className='zone_2' style={{ width: '100%' }}>
+                                <label className="label-picture">Picture Product</label>
+
+                                <WrapperImages className="wrapper-images">
+
+                                    <div className="left-images">
+                                        <div className="img_1"><Image width={100} height={100} src={selectedPictures !== null && selectedPictures.blobs[0] || Logo} alt="img 1" /></div>
+                                        <div className="img_2"><Image width={100} height={100} src={selectedPictures !== null && selectedPictures.blobs[1] || Logo} alt="img 2" /></div>
+                                    </div>
+
+                                    <div className="right-images">
+                                        <div className="img_3"><Image width={100} height={100} src={selectedPictures !== null && selectedPictures.blobs[2] || Logo} alt="img 3" /></div>
+                                        <div className="img_4"><Image width={100} height={100} src={selectedPictures !== null && selectedPictures.blobs[3] || Logo} alt="img 4" /></div>
+                                    </div>
+
+                                </WrapperImages>
+
+                                <UploadImage imagesSelected={(images: any) => setSelectedPictures(images)} multipleFile={true} />
+                            </div>
 
                         </WrapperLabelsInputs>
 
                     </form>
 
-
-
-                    {/*    <label >Description Product</label>
-                    <input type={'text'} value={descriptionProduct} id={'descriptionProduct'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
-                    <label>Price Product</label>
-                    <input type={'number'} value={priceProduct} id={'priceProduct'} onChange={(e) => { setPriceProduct(e.target.value) }} />
-                    <label >Brand Product</label>
-                    <input type={'text'} value={brandProduct} id={'brandProduct'} onChange={(e) => { setBrandProduct(e.target.value) }} />
-                    <label >Stock Product</label>
-                    <input type={'number'} value={stockProduct} id={'stockProduct'} onChange={(e) => { parseInt(e.target.value) > 0 && setStockProduct(e.target.value) }} />
-                    <label >Code Product</label>
-                    <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
-                    <label >Size Product</label> */}
-                    {/*    <select value={sizeProduct} onChange={(e) => setSizeProduct(e.target.value)}>
-                        < option value={'None'} > None</option>
-                        {
-                            sizesProductAvailable?.map((size: any, index: number) => {
-                                return (
-                                    < option key={index} value={size.name} > {size.name}</option>
-                                )
-                            })
-                        }
-                    </select>
-
-                    <label>Category Product</label>
-                    <select value={categoryProduct} onChange={(e) => setCategoryProduct(e.target.value)}>
-                        < option value={'None'} > None</option>
-                        {
-                            categoriesProductAvailable && categoriesProductAvailable.map((category: any, index: number) => {
-                                return (
-                                    < option key={index} value={category.name} > {category.name}</option>
-                                )
-                            })
-                        }
-                    </select>
-
-                    <label>Super Category Product</label>
-                    <select value={superCategoryProduct} onChange={(e) => setSuperCategoryProduct(e.target.value)}>
-                        < option value={'None'} > None</option>
-                        {
-                            superCategoriesProductAvailable && superCategoriesProductAvailable.map((superCategory: any, index: number) => {
-                                return (
-                                    < option key={index} value={superCategory.name} > {superCategory.name}</option>
-                                )
-                            })
-                        }
-                    </select> */}
                 </Main>
 
                 <Footer>
@@ -246,7 +250,7 @@ const PopUp = styled.div`
     width:auto;
     height: auto;
     width: 600px;
-    height: 500px;
+    height: 900px;
     border-radius: 10px;
     border-top:  1px solid salmon;
     box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
@@ -313,16 +317,33 @@ const WrapperLabelsInputs = styled.div`
         border: none;
         border-radius: 5px;
         margin: 0px;
-        background-color: var(--input-color);
         color: #ffffff;
         text-align:center;
     }
 
     ::placeholder{
-        color: grey;
+        color: #ffffff;
         font-size: 10px;
     }
-    
+
+    .zone_2{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+        /* background-color: var(--secondary-color); */
+
+        label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 5px 0px;
+            padding: 5px;
+        }
+    }
 `
 
 const WrapperLabelInput = styled.div`
@@ -333,6 +354,71 @@ const WrapperLabelInput = styled.div`
     align-items: center;
     width: 100%;
     padding: 5px;
+
+    .wrapper-size-category {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+        
+        label {
+            margin: 0px 5px ;
+            padding: 5px;
+        }
+        
+        option {
+            background-color: #ffffff;
+        }
+    }
+
+    .wrapper-size{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+
+    .wrapper-category{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+`
+
+const WrapperImages = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+
+    .left-images {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+
+        img {
+            margin: 10px;
+        }
+    }
+    
+    .right-images {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+
+        img {
+            margin: 10px;
+        }
+    }
 `
 
 const Footer = styled.div`
