@@ -176,12 +176,12 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                                 </WrapperImages>
 
-                                <UploadImage imagesSelected={(images: any) => setSelectedPictures(images)} multipleFile={true} />
                             </div>
 
                         </WrapperLabelsInputs>
 
                     </form>
+                    <UploadImage imagesSelected={(images: any) => setSelectedPictures(images)} multipleFile={true} />
 
                 </Main>
 
@@ -250,7 +250,7 @@ const PopUp = styled.div`
     width:auto;
     height: auto;
     width: 600px;
-    height: 900px;
+    height: 950px;
     border-radius: 10px;
     border-top:  1px solid salmon;
     box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
@@ -300,7 +300,8 @@ const WrapperLabelsInputs = styled.div`
     height: auto;
     margin: auto;
     border-radius: 5px;
-
+    
+    
     label {
         color: grey;
         font-size: 12px;
@@ -317,15 +318,26 @@ const WrapperLabelsInputs = styled.div`
         border: none;
         border-radius: 5px;
         margin: 0px;
-        color: #ffffff;
+        color: black;
         text-align:center;
+        border: 1px solid grey;
     }
-
+    
     ::placeholder{
         color: #ffffff;
         font-size: 10px;
     }
-
+    
+    .zone_1{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+     
+    }
+    
     .zone_2{
         display: flex;
         flex-direction: column;
