@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { TfiEmail } from "react-icons/tfi";
 import { MdOutlinePassword } from "react-icons/md";
 import { useUserStore } from '@/app/zustandStore/useUserStore';
+import Button from '../ui/Button';
 
 const Login = () => {
     const { login } = useUserStore();
@@ -36,8 +37,8 @@ const Login = () => {
                         <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                     </WrapperLabelInput>
 
+                    <Button className='login-button' type='submit'>Login</Button>
                 </WrapperLogin>
-                <button className='login-button' type='submit'>Login</button>
             </form>
 
         </Container>
@@ -52,9 +53,9 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 30%;
-    min-width: 300px;
+    min-width: 350px;
     padding: 20px;
-    height: 100%;
+    min-height: 300px;
     margin: auto;
     border-radius: 5px;
     background-color: var(--secondary-color);

@@ -66,8 +66,9 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     }
 
     return (
-        <Container>
-            <PopUp>
+        <Container className='container-create-new-product'>
+            <PopUp className='pop-up-create-new-product'>
+                
                 <Header className="header">
                     <label>Create New Product</label>
                     <Link className='close' href={'/'}> go to store </Link>

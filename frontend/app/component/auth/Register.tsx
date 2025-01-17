@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { TfiEmail } from "react-icons/tfi";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlinePassword } from "react-icons/md";
+import Button from '../ui/Button';
 
 const Register = () => {
     const [user, setUser] = useState(true)
@@ -64,7 +65,7 @@ const Register = () => {
 
 
                 </WrapperRegister>
-                <button className='register-button' type='submit'>Register</button>
+                <Button className='register-button' type='submit'>Register</Button>
             </form>
 
         </Container >
@@ -81,7 +82,7 @@ const Container = styled.div`
     width: 30%;
     min-width: 300px;
     padding: 20px;
-    height: auto;
+    min-height: 500px;
     margin: auto;
     border-radius: 5px;
     background-color: var(--secondary-color);
