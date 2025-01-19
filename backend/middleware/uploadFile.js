@@ -4,6 +4,7 @@ import fs from "fs";
 
 const __dirname = path.resolve();
 
+// User Image Storage
 const storage = multer.diskStorage({
   destination: async function (req, file, cb) {
     if (!req.params.id) {
@@ -20,8 +21,31 @@ const storage = multer.diskStorage({
   },
 });
 
+  // Product Images Storage
+const productStorage = multer.diskStorage({
+  destination: async function (req, file, cb) {
+    console.log(file);
+  //  console.log(req.files);
+    console.log(req.body);
+    
+
+    // cb(null, `${__dirname}/uploads/products`);
+  },
+
+  // filename: async function (req, file, cb) {
+  //   const fileName = `test`;
+
+  //   cb(null, fileName);
+  // }
+});
+
 export const upload = multer(
   { storage: storage },
   { limits: { fileSize: 1024 * 1024 * 25 /* Max file size 25MB */ } }
 );
 // export const upload = multer({ dest: "uploads/" }, { limits: { fileSize: 1000000 } });
+
+export const uploadProductImage = multer(
+  { storage: productStorage },
+  { limits: { fileSize: 1024 * 1024 * 25 /* Max file size 25MB */ } }
+);

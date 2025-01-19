@@ -12,6 +12,9 @@ import { TfiEmail } from 'react-icons/tfi';
 import { MdOutlinePassword } from 'react-icons/md';
 import UploadImage from '@/app/component/uploadImage';
 import { useCategoryStore } from '@/app/zustandStore/useCategoryStore';
+import HeaderMenu from '../ui/headerMenu';
+import { useProductStore } from '@/app/zustandStore/useProductStore';
+import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -20,21 +23,22 @@ interface PropsCreateNewProduct {
 
 
 export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
+    const { createNewProduct } = useProductStore()
     const { categories } = useCategoryStore()
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
+    const [message, setMessage] = useState('');
     const [sizesProductAvailable, setSizesProductAvailable] = useState(['S', 'M', 'L', 'XL']);
 
     const [productName, setProductName] = useState('');
     const [productColor, setProductColor] = useState('');
     const [productDescription, setDescriptionProduct] = useState('');
-    const [productPrice, setProductPrice] = useState('');
-    const [selectedPictures, setSelectedPictures]: any = useState(null);
+    const [productPrice, setProductPrice] = useState<number | string>(0);
     const [productBrand, setProductBrand] = useState('');
     const [productCode, setProductCode] = useState('');
     const [productSize, setProductSize] = useState('');
     const [productStock, setProductStock]: any = useState(1);
     const [productCategory, setProductCategory] = useState('');
-    const [productSuperCategory, setProductSuperCategory] = useState('');
+    const [selectedPictures, setSelectedPictures]: any = useState(null);
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
     const resetFields = () => {
@@ -46,7 +50,6 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         setProductSize('');
         setProductStock(1);
         setProductCategory('');
-        setProductSuperCategory('');
         setProductCode('');
         setSelectedPictures(null)
     }
@@ -57,8 +60,35 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         close();
     }
 
-    const handleSaveActions = () => {
-        console.log('clicked');
+    const handleSaveActions = async () => {
+        // if (useExistEmptyFields(productName, productColor, productDescription, productPrice, productBrand, productCode, productSize, productStock, productCategory)) { setMessage('Please fill all the fields'); return }
+
+        const newProduct = new FormData();
+        newProduct.append('name', productName);
+        newProduct.append('color', productColor);
+        newProduct.append('description', productDescription);
+        newProduct.append('price', parseFloat(productPrice.toLocaleString()).toFixed(2));
+        newProduct.append('brand', productBrand);
+        newProduct.append('code', productCode);
+        newProduct.append('size', productSize);
+        newProduct.append('stock', productStock);
+        newProduct.append('category', productCategory);
+
+
+        // append all images to formData
+        for (let index = 0; index < selectedPictures.files.length; index++) {
+            let image = selectedPictures.files[index];
+
+            newProduct.append(`file${index}`, image);
+        }
+
+
+        user?.isAdmin && createNewProduct(newProduct)
+            .then((response) => {
+                console.log(response);
+                const { success, message }: any = response;
+                setMessage(message);
+            });
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -68,11 +98,8 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     return (
         <Container className='container-create-new-product'>
             <PopUp className='pop-up-create-new-product'>
-                
-                <Header className="header">
-                    <label>Create New Product</label>
-                    <Link className='close' href={'/'}> go to store </Link>
-                </Header>
+                <HeaderMenu linkText={'go to store'} label={'Create New Product'} children={null} />
+                {message && <p className='message'>{message}</p>}
 
                 <Main>
                     <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -100,7 +127,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                                 <WrapperLabelInput>
                                     <label >Price</label>
-                                    <input type={'text'} value={productPrice} id={'productPrice'} onChange={(e) => { setProductPrice(e.target.value) }} />
+                                    <input type={'number'} value={productPrice} id={'productPrice'} onChange={(e) => { setProductPrice(e.target.value) }} />
                                     <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
 
@@ -118,7 +145,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                                 <WrapperLabelInput>
                                     <label >Stock</label>
-                                    <input type={'text'} value={productStock} id={'productStock'} onChange={(e: any) => { e.target.value >= 0 && setProductStock(e.target.value) }} />
+                                    <input type={'number'} value={productStock} id={'productStock'} onChange={(e: any) => { e.target.value >= 0 && setProductStock(e.target.value) }} />
                                     <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
 
@@ -200,15 +227,15 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: red; */
+
+    label {
+        font-weight: bold;
+    }
 
     .close{
         display: flex;
         justify-content: center;
         align-items: center;
-        /* position: absolute; */
-        top: 10px;
-        right: 10px;
         padding: 5px 0px;
         min-width: 90px;
         font-size: 13px;    
@@ -251,44 +278,17 @@ const PopUp = styled.div`
     width:auto;
     height: auto;
     width: 600px;
-    height: 950px;
+    height: 550px;
     border-radius: 10px;
     border-top:  1px solid salmon;
     box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
     background: white;
 `
-
-const Header = styled.div`
-    display: flex;
-    /* flex-direction: column; */
-    justify-content: space-between;
-    align-items: start;
-    width: 100%;
-    padding: 5px 15px;
-    border-bottom: 1px solid #c7c7c7ba;
-    
-    label{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        font-size: 20px;
-        font-weight: bold;
-        /* color: #ffffff;         */
-    }
-    
-    p{
-        font-size: 10px;
-        font-weight: bold;
-        /* color: #ffffff; */
-    }
-`
 const Main = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display:grid;
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
     /* background-color: green; */
 `
 

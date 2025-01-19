@@ -9,11 +9,11 @@ import {
   searchProducts,
 } from "../controllers/product.controller.js";
 import { adminRoute, protectRoute } from "../middleware/auth.middleware.js";
-import { get } from "mongoose";
+import {  uploadProductImage } from "../middleware/uploadFile.js";
 
 const router = express.Router();
 
-router.post("/createProduct", protectRoute, adminRoute, createProduct);
+router.post("/createProduct",uploadProductImage.any("file"), /* protectRoute, adminRoute, */ createProduct);
 router.get("/getAllProducts", getAllProducts);
 router.get("/getProductById/:id", getProductById);
 router.get("/getProductsByCategory/:id", getProductsByCategory);

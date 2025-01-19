@@ -32,6 +32,14 @@ const INITIAL_STATE: ProductState = {
 
 export const useProductStore = create((set: any, get: any) => ({
     ...INITIAL_STATE,
+
+    createNewProduct: async (product: any) => {
+        const response = await axios.post(`${process.env.DEV_URI}products/createProduct`, product);
+        return response.data
+
+        // set(() => ({ newProductsAdded: [...get().newProductsAdded, response.data] }))
+    },
+
     getProducts: async () => {
 
         const fetchProducts = await axios.get(`${process.env.DEV_URI}products/getAllProducts`);
