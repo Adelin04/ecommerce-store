@@ -4,6 +4,7 @@ import Product from "../models/product.model.js";
 import Size from "../models/size.model.js";
 
 export const createProduct = async (req, res) => {
+  // const image = req.files.map((image) => image.path);
   // console.log(req.body);
   // try {
   //   const {

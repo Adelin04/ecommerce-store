@@ -21,13 +21,14 @@ const storage = multer.diskStorage({
   },
 });
 
-  // Product Images Storage
+// Product Images Storage
 const productStorage = multer.diskStorage({
   destination: async function (req, file, cb) {
-    console.log(file);
-  //  console.log(req.files);
-    console.log(req.body);
-    
+    req.files.map((image) => {
+      console.log(image);
+    })
+    // console.log(file);
+
 
     // cb(null, `${__dirname}/uploads/products`);
   },

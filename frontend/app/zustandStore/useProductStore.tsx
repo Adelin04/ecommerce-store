@@ -34,7 +34,9 @@ export const useProductStore = create((set: any, get: any) => ({
     ...INITIAL_STATE,
 
     createNewProduct: async (product: any) => {
-        const response = await axios.post(`${process.env.DEV_URI}products/createProduct`, product);
+        // console.log(product.getAll('image'));
+        
+        const response = await axios.post(`${process.env.DEV_URI}products/createProduct`, product, { withCredentials: true });
         return response.data
 
         // set(() => ({ newProductsAdded: [...get().newProductsAdded, response.data] }))

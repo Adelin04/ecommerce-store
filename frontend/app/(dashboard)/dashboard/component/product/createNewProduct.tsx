@@ -74,25 +74,52 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         newProduct.append('stock', productStock);
         newProduct.append('category', productCategory);
 
-
+        
         // append all images to formData
+        // [...selectedPictures.files].map((file) => { newProduct.append('image', file) })
         for (let index = 0; index < selectedPictures.files.length; index++) {
             let image = selectedPictures.files[index];
-
-            newProduct.append(`file${index}`, image);
+            newProduct.append(`image`, image);
         }
 
-
-        user?.isAdmin && createNewProduct(newProduct)
-            .then((response) => {
-                console.log(response);
-                const { success, message }: any = response;
-                setMessage(message);
-            });
+        await fetch(`${process.env.DEV_URI}products/createProduct`, {
+            method: 'POST',
+            body: newProduct
+        })
+        // user?.isAdmin && createNewProduct(newProduct)
+        //     .then((response) => {
+        //         console.log(response);
+        //         const { success, message }: any = response;
+        //         setMessage(message);
+        //     });
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const newProduct = new FormData();
+        newProduct.append('name', productName);
+        newProduct.append('color', productColor);
+        newProduct.append('description', productDescription);
+        newProduct.append('price', parseFloat(productPrice.toLocaleString()).toFixed(2));
+        newProduct.append('brand', productBrand);
+        newProduct.append('code', productCode);
+        newProduct.append('size', productSize);
+        newProduct.append('stock', productStock);
+        newProduct.append('category', productCategory);
+
+        
+        // append all images to formData
+        // [...selectedPictures.files].map((file) => { newProduct.append('image', file) })
+        for (let index = 0; index < selectedPictures.files.length; index++) {
+            let image = selectedPictures.files[index];
+            newProduct.append(`image`, image);
+        }
+
+        await fetch(`${process.env.DEV_URI}products/createProduct`, {
+            method: 'POST',
+            body: newProduct
+        })
     }
 
     return (
@@ -214,7 +241,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                 </Main>
 
                 <Footer>
-                    <Button style={{ color: 'salmon', }} onClick={() => { handleSaveActions() }}>Save Actions</Button>
+                    <Button style={{ color: 'salmon', }} onClick={(e) => { handleSubmit(e) }}>Save Actions</Button>
                 </Footer>
 
             </PopUp>
