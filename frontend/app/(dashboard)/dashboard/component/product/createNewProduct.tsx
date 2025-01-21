@@ -3,10 +3,9 @@
 
 import Logo from '../../../../../assets/logoIcon.svg'
 import Image from "next/image";
-import Link from "next/link";
 import styled from "styled-components";
 import Button from '../../../../component/ui/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IUser } from '@/app/interfaces/interfaces';
 import { TfiEmail } from 'react-icons/tfi';
 import { MdOutlinePassword } from 'react-icons/md';
@@ -15,6 +14,8 @@ import { useCategoryStore } from '@/app/zustandStore/useCategoryStore';
 import HeaderMenu from '../ui/headerMenu';
 import { useProductStore } from '@/app/zustandStore/useProductStore';
 import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
+import { useCurrencyStore } from '@/app/zustandStore/useCurrencyStore';
+import { useColorStore } from '@/app/zustandStore/useColorStore';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -24,6 +25,8 @@ interface PropsCreateNewProduct {
 
 export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
     const { createNewProduct } = useProductStore()
+    const { getCurrencies, currencies: currencies } = useCurrencyStore()
+    const { getColors, colors } = useColorStore()
     const { categories } = useCategoryStore()
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
     const [message, setMessage] = useState('');
@@ -61,6 +64,12 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     }
 
     const handleSaveActions = async () => {
+
+
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         // if (useExistEmptyFields(productName, productColor, productDescription, productPrice, productBrand, productCode, productSize, productStock, productCategory)) { setMessage('Please fill all the fields'); return }
 
         const newProduct = new FormData();
@@ -74,53 +83,35 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         newProduct.append('stock', productStock);
         newProduct.append('category', productCategory);
 
-        
+
         // append all images to formData
+
+        // 1st method
         // [...selectedPictures.files].map((file) => { newProduct.append('image', file) })
-        for (let index = 0; index < selectedPictures.files.length; index++) {
-            let image = selectedPictures.files[index];
-            newProduct.append(`image`, image);
+
+        // 2nd method
+        // for (let index = 0; index < selectedPictures.files.length; index++) {
+        //     let image = selectedPictures.files[index];
+        //     newProduct.append(`image`, image);
+        // }
+
+        // 3rd method
+        for (const file of selectedPictures.files) {
+            newProduct.append('image', file)
         }
 
-        await fetch(`${process.env.DEV_URI}products/createProduct`, {
-            method: 'POST',
-            body: newProduct
-        })
-        // user?.isAdmin && createNewProduct(newProduct)
-        //     .then((response) => {
-        //         console.log(response);
-        //         const { success, message }: any = response;
-        //         setMessage(message);
-        //     });
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const newProduct = new FormData();
-        newProduct.append('name', productName);
-        newProduct.append('color', productColor);
-        newProduct.append('description', productDescription);
-        newProduct.append('price', parseFloat(productPrice.toLocaleString()).toFixed(2));
-        newProduct.append('brand', productBrand);
-        newProduct.append('code', productCode);
-        newProduct.append('size', productSize);
-        newProduct.append('stock', productStock);
-        newProduct.append('category', productCategory);
-
-        
-        // append all images to formData
-        // [...selectedPictures.files].map((file) => { newProduct.append('image', file) })
-        for (let index = 0; index < selectedPictures.files.length; index++) {
-            let image = selectedPictures.files[index];
-            newProduct.append(`image`, image);
-        }
 
         await fetch(`${process.env.DEV_URI}products/createProduct`, {
             method: 'POST',
             body: newProduct
         })
     }
+
+
+    useEffect(() => {
+        getCurrencies();
+        getColors();
+    }, [])
 
     return (
         <Container className='container-create-new-product'>
@@ -140,11 +131,6 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                                     <TfiEmail style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
 
-                                <WrapperLabelInput>
-                                    <label >Color</label>
-                                    <input type={'text'} value={productColor} id={'productColor'} onChange={(e) => { setProductColor(e.target.value) }} />
-                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                                </WrapperLabelInput>
 
                                 <WrapperLabelInput>
                                     <label >Description</label>
@@ -177,39 +163,54 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                                 </WrapperLabelInput>
 
                                 <WrapperLabelInput>
+                                    <label >Color</label>
+                                    <select className='select-color' value={productColor} onChange={(e) => setProductColor(e.target.value)}>
+                                        < option value={'None'} > None </option>
+                                        {
+                                            colors?.map((color: any, index: number) => {
+                                                return (
+                                                    < option key={index} value={color.color} > {color.color}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
 
-                                    <div className='wrapper-size-category'>
+                                    {/* <input type={'text'} value={productColor} id={'productColor'} onChange={(e) => { setProductColor(e.target.value) }} /> */}
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
 
-                                        <div className='wrapper-size'>
-                                            <label>Size Product</label>
-                                            <select className='select-size' value={productSize} onChange={(e) => setProductSize(e.target.value)}>
-                                                < option value={'None'} > None </option>
-                                                {
-                                                    sizesProductAvailable?.map((size: any, index: number) => {
-                                                        return (
-                                                            < option key={index} value={size} > {size}</option>
-                                                        )
-                                                    })
-                                                }
-                                            </select>
-                                        </div>
-
-                                        <div className='wrapper-category'>
-                                            <label>Category Product</label>
-                                            <select className='select-category' value={productCategory} onChange={(e) => setProductCategory(e.target.value)}>
-                                                < option value={'None'} > None</option>
-                                                {
-                                                    categories && categories.map((category: any, index: number) => {
-                                                        const { category: name } = category
-                                                        return (
-                                                            < option key={index} value={name} > {name}</option>
-                                                        )
-                                                    })
-                                                }
-                                            </select>
-                                        </div>
-
+                                <WrapperLabelInput>
+                                    <div className='wrapper-size'>
+                                        <label>Size Product</label>
+                                        <select className='select-size' value={productSize} onChange={(e) => setProductSize(e.target.value)}>
+                                            < option value={'None'} > None </option>
+                                            {
+                                                sizesProductAvailable?.map((size: any, index: number) => {
+                                                    return (
+                                                        < option key={index} value={size} > {size}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
                                     </div>
+                                </WrapperLabelInput>
+
+                                <WrapperLabelInput>
+                                    <div className='wrapper-category'>
+                                        <label>Category Product</label>
+                                        <select className='select-category' value={productCategory} onChange={(e) => setProductCategory(e.target.value)}>
+                                            < option value={'None'} > None</option>
+                                            {
+                                                categories && categories.map((category: any, index: number) => {
+                                                    const { category: name } = category
+                                                    return (
+                                                        < option key={index} value={name} > {name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+
 
                                 </WrapperLabelInput>
                             </div>
@@ -339,7 +340,7 @@ const WrapperLabelsInputs = styled.div`
         text-align:left;
     }
     
-    input{
+   select, input{
         width: 100%;
         height: 30px;
         outline: none;

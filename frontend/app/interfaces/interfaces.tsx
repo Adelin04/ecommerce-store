@@ -51,6 +51,15 @@ export interface ICategory {
     gender: string;
 }
 
+export interface ICurrency {
+    _id: number | string;
+    currency: string;
+}
+export interface IColor {
+    _id: number | string;
+    color: string;
+}
+
 export interface IOrder {
     _id: number | string;
     user: string;

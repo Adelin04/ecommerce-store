@@ -4,57 +4,46 @@ import Product from "../models/product.model.js";
 import Size from "../models/size.model.js";
 
 export const createProduct = async (req, res) => {
-  // const image = req.files.map((image) => image.path);
-  // console.log(req.body);
-  // try {
-  //   const {
-  //     name,
-  //     description,
-  //     price,
-  //     category,
-  //     image,
-  //     color,
-  //     brand,
-  //     seller,
-  //     discount,
-  //     stock,
-  //     size,
-  //     currency,
-  //     code,
-  //   } = req.body;
-  //   const sizeExist = await Size.findOne({ size: size.toUpperCase() });
-  //   const currencyExist = await Currency.findOne({ currency });
-  //   const colorExist = await Color.findOne({ color });
+  const image = req.files.map((image) => image.path);
+  console.log(req.body);
+  console.log(image);
+  try {
+    const { name, description, price, category, image, color, brand, seller, discount, stock, size, currency, code, } = req.body;
+    const sizeExist = await Size.findOne({ size: size.toUpperCase() });
+    // const currencyExist = await Currency.findOne({ currency });
+    // const colorExist = await Color.findOne({ color });
 
-  //   if (sizeExist && currencyExist) {
-  //     // const product = await Product.create({
-  //     //   name,
-  //     //   description,
-  //     //   price,
-  //     //   category,
-  //     //   image,
-  //     //   color: colorExist._id,
-  //     //   brand,
-  //     //   seller,
-  //     //   discount,
-  //     //   stock,
-  //     //   size: sizeExist._id,
-  //     //   currency: currencyExist._id,
-  //     //   code,
-  //     // });
+    if (sizeExist /* && currencyExist && colorExist */) {
+      const product = await Product.create({
+        name,
+        description,
+        price,
+        category,
+        image,
+        // color: colorExist._id,
+        brand,
+        seller,
+        discount,
+        stock,
+        size: sizeExist._id,
+        // currency: currencyExist._id,
+        code,
+      });
 
-  //     res
-  //       .status(201)
-  //       .json({ /* product, */ message: "Product created successfully" });
-  //   } else {
-  //     res.status(400).send("Size or currency not found");
-  //   }
-  // } catch (error) {
-  //   res
-  //     .status(500)
-  //     .send({ message: "Error creating product", error: error.message });
-  // }
-  res.status(201).json({success: true, message: "Product created successfully" });
+      res
+        .status(201)
+        .json({ product, message: "Product created successfully" });
+    } else {
+      res.status(400).send("Size or currency not found");
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error creating product", error: error.message });
+      console.log(error);
+      
+  }
+  // res.status(201).json({ success: true, message: "Product created successfully" });
 };
 
 export const getAllProducts = async (req, res) => {
