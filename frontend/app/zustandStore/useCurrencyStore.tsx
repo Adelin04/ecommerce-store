@@ -19,8 +19,8 @@ export const useCurrencyStore = create((set: any, get: any) => ({
 
     getCurrencies: async () => {
         const fetchCurrency = await axios.get(`${process.env.DEV_URI}currency/getAllCurrencies`, { withCredentials: true });
-
-        set(() => ({ currency: fetchCurrency.data }))
+        
+        set(() => ({ currencies: fetchCurrency.data }))
     },
 
 }))

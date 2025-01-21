@@ -60,6 +60,12 @@ export interface IColor {
     color: string;
 }
 
+export interface IBrand {
+    _id: number | string;
+    color: string;
+    image: string;
+}
+
 export interface IOrder {
     _id: number | string;
     user: string;

@@ -14,6 +14,7 @@ import currencyRoutes from "./routes/currency.routes.js";
 import colorRoutes from "./routes/color.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
 import genderRoutes from "./routes/gender.routes.js";
+import brandRoutes from "./routes/brand.routes.js";
 
 dotenv.config();
 const app = express();
@@ -49,6 +50,7 @@ app.use("/api/currency", currencyRoutes);
 app.use("/api/color", colorRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/gender", genderRoutes);
+app.use("/api/brand", brandRoutes);
 
 
 

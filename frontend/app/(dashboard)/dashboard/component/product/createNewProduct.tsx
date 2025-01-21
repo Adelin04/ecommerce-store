@@ -16,6 +16,7 @@ import { useProductStore } from '@/app/zustandStore/useProductStore';
 import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
 import { useCurrencyStore } from '@/app/zustandStore/useCurrencyStore';
 import { useColorStore } from '@/app/zustandStore/useColorStore';
+import { useBrandStore } from '@/app/zustandStore/useBrandStore';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -25,7 +26,8 @@ interface PropsCreateNewProduct {
 
 export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
     const { createNewProduct } = useProductStore()
-    const { getCurrencies, currencies: currencies } = useCurrencyStore()
+    const { getCurrencies, currencies } = useCurrencyStore()
+    const { getBrands, brands } = useBrandStore()
     const { getColors, colors } = useColorStore()
     const { categories } = useCategoryStore()
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
@@ -41,6 +43,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     const [productSize, setProductSize] = useState('');
     const [productStock, setProductStock]: any = useState(1);
     const [productCategory, setProductCategory] = useState('');
+    const [productCurrency, setProductCurrency] = useState();
     const [selectedPictures, setSelectedPictures]: any = useState(null);
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
@@ -111,7 +114,9 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     useEffect(() => {
         getCurrencies();
         getColors();
+        getBrands();
     }, [])
+
 
     return (
         <Container className='container-create-new-product'>
@@ -145,14 +150,9 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                                 </WrapperLabelInput>
 
                                 <WrapperLabelInput>
-                                    <label >Brand</label>
-                                    <input type={'text'} value={productBrand} id={'productBrand'} onChange={(e) => { setProductBrand(e.target.value) }} />
-                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
-                                </WrapperLabelInput>
-
-                                <WrapperLabelInput>
                                     <label >Unique Code</label>
                                     <input type={'text'} value={productCode} id={'productCode'} onChange={(e) => { setProductCode(e.target.value) }} />
+                                    <Button type={'button'} className='generate-code' onClick={() => setProductCode(Math.random().toString(36).slice(2))}>generate</Button>
                                     <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
 
@@ -161,6 +161,22 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                                     <input type={'number'} value={productStock} id={'productStock'} onChange={(e: any) => { e.target.value >= 0 && setProductStock(e.target.value) }} />
                                     <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
+
+                                <WrapperLabelInput>
+                                    <label >Brand</label>
+                                    <select className='select-brand' value={productBrand} onChange={(e) => setProductBrand(e.target.value)}>
+                                        < option value={'None'} > None </option>
+                                        {
+                                            brands?.map((brand: any, index: number) => {
+                                                return (
+                                                    < option key={index} value={brand.brand} > {brand.brand}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
+                                </WrapperLabelInput>
+
 
                                 <WrapperLabelInput>
                                     <label >Color</label>
@@ -174,44 +190,51 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                                             })
                                         }
                                     </select>
-
-                                    {/* <input type={'text'} value={productColor} id={'productColor'} onChange={(e) => { setProductColor(e.target.value) }} /> */}
                                     <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
 
                                 <WrapperLabelInput>
-                                    <div className='wrapper-size'>
-                                        <label>Size Product</label>
-                                        <select className='select-size' value={productSize} onChange={(e) => setProductSize(e.target.value)}>
-                                            < option value={'None'} > None </option>
-                                            {
-                                                sizesProductAvailable?.map((size: any, index: number) => {
-                                                    return (
-                                                        < option key={index} value={size} > {size}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
+                                    <label>Size Product</label>
+                                    <select className='select-size' value={productSize} onChange={(e) => setProductSize(e.target.value)}>
+                                        < option value={'None'} > None </option>
+                                        {
+                                            sizesProductAvailable?.map((size: any, index: number) => {
+                                                return (
+                                                    < option key={index} value={size} > {size}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
                                 </WrapperLabelInput>
 
                                 <WrapperLabelInput>
-                                    <div className='wrapper-category'>
-                                        <label>Category Product</label>
-                                        <select className='select-category' value={productCategory} onChange={(e) => setProductCategory(e.target.value)}>
-                                            < option value={'None'} > None</option>
-                                            {
-                                                categories && categories.map((category: any, index: number) => {
-                                                    const { category: name } = category
-                                                    return (
-                                                        < option key={index} value={name} > {name}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
+                                    <label>Category Product</label>
+                                    <select className='select-category' value={productCategory} onChange={(e) => setProductCategory(e.target.value)}>
+                                        < option value={'None'} > None</option>
+                                        {
+                                            categories && categories.map((category: any, index: number) => {
+                                                const { category: name } = category
+                                                return (
+                                                    < option key={index} value={name} > {name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </WrapperLabelInput>
 
-
+                                <WrapperLabelInput>
+                                    <label>Currency Product</label>
+                                    <select className='select-currency' value={productCurrency} onChange={(e) => setProductCategory(e.target.value)}>
+                                        < option value={'None'} > None</option>
+                                        {
+                                            currencies && currencies.map((currency: any, index: number) => {
+                                                const { currency: name } = currency
+                                                return (
+                                                    < option key={index} value={name} > {name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
                                 </WrapperLabelInput>
                             </div>
 
@@ -425,6 +448,19 @@ const WrapperLabelInput = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .generate-code{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        width : 20px;
+        height: 20px;
     }
 `
 
