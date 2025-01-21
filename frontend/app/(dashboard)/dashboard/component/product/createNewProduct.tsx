@@ -17,6 +17,7 @@ import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
 import { useCurrencyStore } from '@/app/zustandStore/useCurrencyStore';
 import { useColorStore } from '@/app/zustandStore/useColorStore';
 import { useBrandStore } from '@/app/zustandStore/useBrandStore';
+import { useGenderStore } from '@/app/zustandStore/useGenderStore';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -29,6 +30,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     const { getCurrencies, currencies } = useCurrencyStore()
     const { getBrands, brands } = useBrandStore()
     const { getColors, colors } = useColorStore()
+    const {  getGenders, genders } = useGenderStore()
     const { categories } = useCategoryStore()
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
     const [message, setMessage] = useState('');
@@ -43,7 +45,8 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     const [productSize, setProductSize] = useState('');
     const [productStock, setProductStock]: any = useState(1);
     const [productCategory, setProductCategory] = useState('');
-    const [productCurrency, setProductCurrency] = useState();
+    const [productCurrency, setProductCurrency] = useState<string>('');
+    const [productGender, setProductGender] = useState<string>('');
     const [selectedPictures, setSelectedPictures]: any = useState(null);
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
@@ -85,6 +88,8 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         newProduct.append('size', productSize);
         newProduct.append('stock', productStock);
         newProduct.append('category', productCategory);
+        newProduct.append('currency', productCurrency);
+        newProduct.append('gender', productGender);
 
 
         // append all images to formData
@@ -115,6 +120,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         getCurrencies();
         getColors();
         getBrands();
+        getGenders();
     }, [])
 
 
@@ -224,11 +230,26 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                                 <WrapperLabelInput>
                                     <label>Currency Product</label>
-                                    <select className='select-currency' value={productCurrency} onChange={(e) => setProductCategory(e.target.value)}>
+                                    <select className='select-currency' value={productCurrency} onChange={(e) => setProductCurrency(e.target.value)}>
                                         < option value={'None'} > None</option>
                                         {
                                             currencies && currencies.map((currency: any, index: number) => {
                                                 const { currency: name } = currency
+                                                return (
+                                                    < option key={index} value={name} > {name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </WrapperLabelInput>
+
+                                <WrapperLabelInput>
+                                    <label>Gender Product</label>
+                                    <select className='select-gender' value={productGender} onChange={(e) => setProductGender(e.target.value)}>
+                                        < option value={'None'} > None</option>
+                                        {
+                                            genders && genders.map((gender: any, index: number) => {
+                                                const { gender: name } = gender
                                                 return (
                                                     < option key={index} value={name} > {name}</option>
                                                 )

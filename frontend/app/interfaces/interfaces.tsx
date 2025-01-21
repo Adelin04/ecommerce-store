@@ -66,6 +66,11 @@ export interface IBrand {
     image: string;
 }
 
+export interface IGender {
+    _id: number | string;
+    gender: string;
+}
+
 export interface IOrder {
     _id: number | string;
     user: string;

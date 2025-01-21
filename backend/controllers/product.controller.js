@@ -1,38 +1,85 @@
+import path from "path";
 import Color from "../models/color.model.js";
 import Currency from "../models/currency.model.js";
 import Product from "../models/product.model.js";
 import Size from "../models/size.model.js";
+import Brand from "../models/brand.model.js";
+import Gender from "../models/gender.model.js";
+import { deleteFile } from "../utils/utils.js";
+import { cloudinaryHandler } from "../lib/cloudinaryHandler.js";
+
+const __dirname = path.resolve();
+const folderCloudinary = "ProductImages";
 
 export const createProduct = async (req, res) => {
-  const image = req.files.map((image) => image.path);
-  console.log(req.body);
-  console.log(image);
   try {
-    const { name, description, price, category, image, color, brand, seller, discount, stock, size, currency, code, } = req.body;
-    const sizeExist = await Size.findOne({ size: size.toUpperCase() });
-    // const currencyExist = await Currency.findOne({ currency });
-    // const colorExist = await Color.findOne({ color });
+    const image = req.files.map((image) => image.path);
+    const { originalname, mimetype, path, size: sizeImage } = image;
+    const {
+      name,
+      description,
+      price,
+      category,
+      image: imageProduct,
+      color,
+      brand,
+      seller,
+      discount,
+      stock,
+      size,
+      currency,
+      code,
+      gender,
+    } = req.body;
 
-    if (sizeExist /* && currencyExist && colorExist */) {
-      const product = await Product.create({
+    const url_upload_cloudinary = `${__dirname}\\uploads\\${originalname}`;
+    const sizeExist = await Size.findOne({ size: size.toUpperCase() });
+    const currencyExist = await Currency.findOne({ currency });
+    const colorExist = await Color.findOne({ color });
+    const brandExist = await Brand.findOne({ brand });
+    const genderExist = await Gender.findOne({ gender });
+
+    if (sizeExist && currencyExist && colorExist && brandExist && genderExist) {
+      const newProductCreated = await Product.create({
         name,
         description,
         price,
         category,
-        image,
-        // color: colorExist._id,
-        brand,
+        image: imageProduct,
+        color: colorExist._id,
+        brand: brandExist._id,
         seller,
         discount,
         stock,
         size: sizeExist._id,
-        // currency: currencyExist._id,
+        currency: currencyExist._id,
         code,
+        gender: genderExist._id,
       });
 
-      res
-        .status(201)
-        .json({ product, message: "Product created successfully" });
+      if (newProductCreated) {
+        // Upload the user profile image to Cloudinary and save the URL in the database
+        const cloudinaryRes = await cloudinaryHandler(
+          url_upload_cloudinary,
+          folderCloudinary
+        );
+
+        if (cloudinaryRes.success) {
+          const product = await Product.findById(newProductCreated._id);
+          product.image = cloudinaryRes.res.secure_url;
+          await product.save();
+
+          deleteFile(url_upload_cloudinary);
+
+          res
+            .status(201)
+            .json({ product, message: "Product created successfully" });
+        } else {
+          res
+            .status(500)
+            .json({ message: "Error uploading image to Cloudinary" });
+        }
+      }
     } else {
       res.status(400).send("Size or currency not found");
     }
@@ -40,8 +87,7 @@ export const createProduct = async (req, res) => {
     res
       .status(500)
       .send({ message: "Error creating product", error: error.message });
-      console.log(error);
-      
+    console.log(error);
   }
   // res.status(201).json({ success: true, message: "Product created successfully" });
 };

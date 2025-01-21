@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
 
   images: {
-    domains: ["e-commerce-photos.s3.amazonaws.com","cdn.pixabay.com","media.istockphoto.com","api.cloudinary.com","res.cloudinary.com,https://flaticons.net"],
+    domains: ["e-commerce-photos.s3.amazonaws.com","cdn.pixabay.com","media.istockphoto.com","api.cloudinary.com","res.cloudinary.com"],
   },
   
 

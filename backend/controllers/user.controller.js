@@ -97,11 +97,13 @@ export const uploadImageProfileUser = async (req, res) => {
     );
 
     // Update the user's imageProfile
-    user.imageProfile = cloudinaryRes.res.secure_url;
-    await user.save();
+    if (cloudinaryRes.success) {
+      user.imageProfile = cloudinaryRes.res.secure_url;
+      await user.save();
 
-    // Remove the uploaded file
-    if (cloudinaryRes.success) deleteFile(url_upload_cloudinary);
+      // Remove the uploaded file
+      if (cloudinaryRes.success) deleteFile(url_upload_cloudinary);
+    }
 
     res
       .status(200)
