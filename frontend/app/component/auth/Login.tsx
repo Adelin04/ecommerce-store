@@ -37,7 +37,7 @@ const Login = () => {
                         <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                     </WrapperLabelInput>
 
-                    <Button className='login-button' type='submit'>Login</Button>
+                    <Button className='component-login-button' type='submit'>Login</Button>
                 </WrapperLogin>
             </form>
 
@@ -60,7 +60,7 @@ const Container = styled.div`
     border-radius: 5px;
     background-color: var(--secondary-color);
 
-    .login-button{
+    .component-login-button{
         width:  97%;
         height: 30px;
         outline: none;

@@ -23,7 +23,6 @@ const AuthPage = () => {
                     (<WrapperAuthPage className='wrapper-auth-page'>
                         <div className="register-account">
                             <span> Don't you have an account? </span>
-                            {/* <button className='click-to-login' onClick={() => setToggle(!toggle)}> Register</button> */}
                             <Button className='register-button' onClick={() => setToggle(!toggle)}> Register </Button>
                         </div>
                         <Login />
@@ -32,8 +31,7 @@ const AuthPage = () => {
                     (<WrapperAuthPage>
                         <div className="register-account">
                             <span> Do you have an account? </span>
-                            {/* <button className='click-to-register' onClick={() => setToggle(!toggle)}> Login</button> */}
-                            <Button className='register-button' onClick={() => setToggle(!toggle)}> Login </Button>
+                            <Button className='login-button' onClick={() => setToggle(!toggle)}> Login </Button>
                         </div>
                         <Register />
                     </WrapperAuthPage>)
@@ -75,17 +73,23 @@ const WrapperAuthPage = styled.div`
         margin: 10px auto;
         
         span {
-            font-size: 10px;
+            font-size: 11px;
+            font-weight: bold;
             color: white;
             padding-right: 10px;
             margin: 5px;
         }
     }
 
-   .register-button,
+   .login-button,
    .register-button {
-        width:  20%;
-        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:  auto;
+        height: 17px;
+        padding: 10px;
+        font-size: 12px;
         cursor: pointer;
     }
 `

@@ -2,8 +2,8 @@ import User from "../models/user.model.js";
 import mongoose from "mongoose";
 // import { v2 as cloudinary } from "cloudinary";
 import path from "path";
-import fs from "fs";
 import { cloudinaryHandler } from "../lib/cloudinaryHandler.js";
+import { deleteFile } from "../utils/utils.js";
 
 const __dirname = path.resolve();
 const folderCloudinary = "ProfileImage";
@@ -110,16 +110,5 @@ export const uploadImageProfileUser = async (req, res) => {
       .json({ success: true, message: "Image uploaded successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
-  }
-};
-
-const deleteFile = (filePath) => {
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath, (error) => {
-      if (error) {
-        console.log(error);
-        return error;
-      }
-    });
   }
 };

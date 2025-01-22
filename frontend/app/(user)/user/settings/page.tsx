@@ -31,7 +31,7 @@ export default function Settings() {
   const Menu: any = {
     Profile: () => <ProfileSettings close={handleClosePopUp} user={user} />,
     Security: () => <SecuritySettings close={handleClosePopUp} user={null} />,
-    Notifications: () => <NotificationsSettings close={handleClosePopUp} user={null}/>,
+    Notifications: () => <NotificationsSettings close={handleClosePopUp} user={null} />,
   };
 
   const handleClosePopUp = () => setBtnClicked(null);
@@ -90,7 +90,7 @@ export default function Settings() {
 
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-              {user?.role === 'admin' && <Button> <Link href={'/dashboard'} style={{ color: 'salmon' }} >Dashboard</Link></Button>}
+              {user?.role === 'admin' && <Link className='link-dashboard' href={'/dashboard'} style={{ color: 'salmon' }} >Dashboard</Link>}
               <Button id='Notifications' style={{ color: 'salmon' }} onClick={() => { logout() }}>Logout</Button>
             </div>
 
@@ -143,7 +143,12 @@ const WrapperButtons = styled.div`
     height: 100%;
     margin: 15px 0px;
     
+    .link-dashboard,
     button{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       padding: 5px 0px;
       min-width: 90px;
       font-size: 13px;    

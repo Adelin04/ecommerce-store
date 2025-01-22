@@ -65,7 +65,7 @@ const Register = () => {
 
 
                 </WrapperRegister>
-                <Button className='register-button' type='submit'>Register</Button>
+                <Button className='component-register-button' type='submit'>Register</Button>
             </form>
 
         </Container >
@@ -87,7 +87,7 @@ const Container = styled.div`
     border-radius: 5px;
     background-color: var(--secondary-color);
 
-    .register-button{
+    .component-register-button{
         width:  97%;
         height: 30px;
         outline: none;
