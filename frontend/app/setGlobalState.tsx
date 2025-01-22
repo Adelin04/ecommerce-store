@@ -11,7 +11,7 @@ import { useUserStore } from './zustandStore/useUserStore';
 
 const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
     const { checkAuth } = useUserStore();
-    const { getProducts } = useProductStore();
+    const { getProducts, products } = useProductStore();
     const { getCategories } = useCategoryStore();
     const { hasMounted } = useMounted()
 
@@ -20,14 +20,16 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
         checkAuth();
         getProducts();
         getCategories();
+
     }, [checkAuth])
 
 
+    console.log(products)
     if (!hasMounted)
         return <Loading />
     return (
         <Container>
-                {children}
+            {children}
         </Container>
     )
 }
