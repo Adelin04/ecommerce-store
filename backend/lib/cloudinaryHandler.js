@@ -26,9 +26,6 @@ export const cloudinaryHandler = async (url_upload_cloudinary, folderCloudinary)
             crop: "scale",
             quality: "auto",
           });
-        // // Update the user's imageProfile
-        // user.imageProfile = result.secure_url;
-        // await user.save();
       })
       .catch((error) => {
         console.log(error);
