@@ -19,8 +19,7 @@ export const useGenderStore = create((set: any, get: any) => ({
 
     getGenders: async () => {
         const fetchGenders = await axios.get(`${process.env.DEV_URI}gender/getAllGenders`, { withCredentials: true });
-        console.log(fetchGenders.data);
-        
+       
         set(() => ({ genders: fetchGenders.data }))
     },
 
