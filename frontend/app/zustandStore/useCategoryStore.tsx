@@ -28,8 +28,7 @@ export const useCategoryStore = create((set: any, get: any) => ({
     },
 
     setCategoryClicked: (categoryClicked: string) => {
-        console.log(categoryClicked);
-        
+     
         set(() => ({ categorySelected: get().categories.filter((category: ICategory) => category?.gender.gender === categoryClicked?.toLowerCase()) }))
     }
 

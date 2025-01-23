@@ -22,8 +22,6 @@ const NavBar = ({ navBarMenu }: any) => {
         height: window.innerHeight,
     });
     const [clickedGender, setClickedGender] = useState(() => localStorage.getItem('Gender')|| 'MEN')
-   
-    console.log(categorySelected);
 
     const handleClickNavBarMenu = (menuName: string) => {
         localStorage.setItem('Gender', menuName)
