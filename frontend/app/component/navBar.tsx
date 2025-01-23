@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import Logo from './logo';
 // import UserProfile from './UserProfile.jsx';
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCategoryStore } from '../zustandStore/useCategoryStore';
 import { useProductStore } from '../zustandStore/useProductStore';
 import Link from 'next/link';
@@ -21,10 +21,13 @@ const NavBar = ({ navBarMenu }: any) => {
         width: window.innerWidth,
         height: window.innerHeight,
     });
-    const [clickedGender, setClickedGender] = useState(localStorage.getItem('Gender') || "MEN")
+    const [clickedGender, setClickedGender] = useState(() => localStorage.getItem('Gender')|| 'MEN')
+   
+    console.log(categorySelected);
 
     const handleClickNavBarMenu = (menuName: string) => {
         localStorage.setItem('Gender', menuName)
+
         setClickedGender(menuName)
         setCategoryClicked(menuName)
         resetSelectedProducts()
@@ -32,6 +35,8 @@ const NavBar = ({ navBarMenu }: any) => {
     }
 
     useEffect(() => {
+        setCategoryClicked(localStorage.getItem('Gender')|| 'MEN')
+
         const handleResize = () => {
             setWindowDimensions({
                 width: window.innerWidth,
@@ -40,7 +45,7 @@ const NavBar = ({ navBarMenu }: any) => {
         };
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [products, categorySelected]);
+    }, [products]);
 
     return (
         <Container className='nav-container'>
@@ -63,7 +68,7 @@ const NavBar = ({ navBarMenu }: any) => {
                     </MenuNavBar>
 
                     <WrapperUserProfile className='wrapper-user-profile'>
-                        <UserProfile user={user}/>
+                        <UserProfile user={user} />
                     </WrapperUserProfile>
 
                 </WrapperNavBar>)
@@ -77,12 +82,12 @@ const NavBar = ({ navBarMenu }: any) => {
 
 
                         <WrapperUserProfileResponsive className='wrapper-user-profile'>
-                            <UserProfile user={user}/>
+                            <UserProfile user={user} />
                         </WrapperUserProfileResponsive>
                     </WrapperLogoUserProfile>
 
                     <MenuNavBar className='wrapper-nav-link'>
-                    {navBarMenu && navBarMenu.map((menu: any, index: number) => {
+                        {navBarMenu && navBarMenu.map((menu: any, index: number) => {
                             return (
                                 <WrapperLink key={index} className='wrapper-link'>
                                     <p className='link' style={{ color: clickedGender === menu.name ? 'var(--button-color)' : '#ffffff' }} onClick={() => handleClickNavBarMenu(menu.name)}>{menu.name}</p>

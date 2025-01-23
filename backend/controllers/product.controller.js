@@ -17,22 +17,7 @@ export const createProduct = async (req, res) => {
   let newProductCreated = null;
 
   try {
-    const {
-      name,
-      description,
-      price,
-      category,
-      image: imageProduct,
-      color,
-      brand,
-      seller,
-      discount,
-      stock,
-      size,
-      currency,
-      code,
-      gender,
-    } = req.body;
+    const { name, description, price, category, image: imageProduct, color, brand, seller, discount, stock, size, currency, code, gender, } = req.body;
     const sizeExist = await Size.findOne({ size: size.toUpperCase() });
     const currencyExist = await Currency.findOne({ currency });
     const colorExist = await Color.findOne({ color });
@@ -70,17 +55,17 @@ export const createProduct = async (req, res) => {
       url_upload_cloudinary = null;
 
       if (cloudinaryRes.success) {
-        await ProductImages.create({
+        const newProductImage = await ProductImages.create({
           image: cloudinaryRes.res.secure_url,
           product: newProductCreated._id,
         });
 
-        newProductCreated.images = cloudinaryRes.res.secure_url;
+        newProductCreated.images.push(newProductImage._id);
         await newProductCreated.save();
-
-        // Delete the local file
-        deleteFile(url_upload_cloudinary);
       }
+
+      // Delete the local file
+      if (cloudinaryRes.success) deleteFile(url_upload_cloudinary);
     }
 
     res.status(201).json({
@@ -104,7 +89,8 @@ export const getAllProducts = async (req, res) => {
       .populate("currency")
       .populate("color")
       .populate("gender")
-      .populate("brand");
+      .populate("brand")
+      .populate("images");
     res.status(200).json(products);
   } catch (error) {
     res

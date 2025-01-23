@@ -6,7 +6,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import Button from '../../../../component/ui/Button';
 import { useEffect, useState } from 'react';
-import { IUser } from '@/app/interfaces/interfaces';
+import { ICurrency, IUser } from '@/app/interfaces/interfaces';
 import { TfiEmail } from 'react-icons/tfi';
 import { MdOutlinePassword } from 'react-icons/md';
 import UploadImage from '@/app/component/uploadImage';
@@ -18,6 +18,7 @@ import { useCurrencyStore } from '@/app/zustandStore/useCurrencyStore';
 import { useColorStore } from '@/app/zustandStore/useColorStore';
 import { useBrandStore } from '@/app/zustandStore/useBrandStore';
 import { useGenderStore } from '@/app/zustandStore/useGenderStore';
+import Loading from '@/app/loading';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -26,11 +27,11 @@ interface PropsCreateNewProduct {
 
 
 export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
-    const { createNewProduct } = useProductStore()
+    const { createNewProduct, loading } = useProductStore()
     const { getCurrencies, currencies } = useCurrencyStore()
     const { getBrands, brands } = useBrandStore()
     const { getColors, colors } = useColorStore()
-    const {  getGenders, genders } = useGenderStore()
+    const { getGenders, genders } = useGenderStore()
     const { categories } = useCategoryStore()
     const [btnClicked, setBtnClicked] = useState<any>('Change Password');
     const [message, setMessage] = useState('');
@@ -38,14 +39,14 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
     const [productName, setProductName] = useState('');
     const [productColor, setProductColor] = useState('');
-    const [productDescription, setDescriptionProduct] = useState('');
+    const [productDescription, setProductDescription] = useState('');
     const [productPrice, setProductPrice] = useState<number | string>(0);
     const [productBrand, setProductBrand] = useState('');
     const [productCode, setProductCode] = useState('');
     const [productSize, setProductSize] = useState('');
     const [productStock, setProductStock]: any = useState(1);
     const [productCategory, setProductCategory] = useState('');
-    const [productCurrency, setProductCurrency] = useState<string>('');
+    const [productCurrency, setProductCurrency] = useState<any>('');
     const [productGender, setProductGender] = useState<string>('');
     const [selectedPictures, setSelectedPictures]: any = useState(null);
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
@@ -53,14 +54,22 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     const resetFields = () => {
         setProductName('');
         setProductColor('');
-        setDescriptionProduct('');
+        setProductDescription('');
         setProductPrice('');
         setProductBrand('');
+        setProductCode('');
         setProductSize('');
         setProductStock(1);
         setProductCategory('');
-        setProductCode('');
-        setSelectedPictures(null)
+        setProductCurrency('');
+        setProductGender('');
+        setSelectedPictures(null);
+
+        cleanMessage();
+    }
+
+    const cleanMessage = () => {
+        setTimeout(() => setMessage(''), 3000)
     }
 
     const handleClickCloseButton = (e: any) => {
@@ -76,7 +85,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // if (useExistEmptyFields(productName, productColor, productDescription, productPrice, productBrand, productCode, productSize, productStock, productCategory)) { setMessage('Please fill all the fields'); return }
+        if (useExistEmptyFields(productName, productColor, productDescription, productPrice, productBrand, productCode, productSize, productStock, productCategory)) { setMessage('Please fill all the fields'); cleanMessage(); return }
 
         const newProduct = new FormData();
         newProduct.append('name', productName);
@@ -108,10 +117,13 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
             newProduct.append('image', file)
         }
 
+        await createNewProduct(newProduct).then((response) => {
+            console.log(response);
 
-        await fetch(`${process.env.DEV_URI}products/createProduct`, {
-            method: 'POST',
-            body: newProduct
+            if (response.success) {
+                setMessage('Product created successfully');
+                resetFields();
+            }
         })
     }
 
@@ -127,12 +139,13 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
     return (
         <Container className='container-create-new-product'>
             <PopUp className='pop-up-create-new-product'>
-                <HeaderMenu linkText={'go to store'} label={'Create New Product'} children={null} />
-                {message && <p className='message'>{message}</p>}
+
+                {loading && <WrapperLoading><Loading /></WrapperLoading>}
+
+                <HeaderMenu linkText={'go to store'} label={'Create New Product'} children={message && <p className='message'>{message}</p>} />
 
                 <Main>
                     <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-
 
                         <WrapperLabelsInputs className='wrapper-labels-inputs'>
                             <div className='zone_1' style={{ width: '100%' }}>
@@ -145,7 +158,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                                 <WrapperLabelInput>
                                     <label >Description</label>
-                                    <input type={'text'} value={productDescription} id={'productDescription'} onChange={(e) => { setDescriptionProduct(e.target.value) }} />
+                                    <input type={'text'} value={productDescription} id={'productDescription'} onChange={(e) => { setProductDescription(e.target.value) }} />
                                     <MdOutlinePassword style={{ position: 'absolute', left: '10px', top: '27px', color: 'grey' }} />
                                 </WrapperLabelInput>
 
@@ -332,8 +345,12 @@ const Container = styled.div`
     .close:active{
       background-color: var(--button-background-hover);
       color: var(--button-color-active);
-    }  background-color:var(--button-color);
+    }  
 
+    .message{
+        font-size: 17px;
+        font-weight: bold;
+    }
 `
 
 const PopUp = styled.div`
@@ -356,6 +373,16 @@ const PopUp = styled.div`
     box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
     background: white;
 `
+const WrapperLoading = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index:10;
+`
+
 const Main = styled.div`
     display:grid;
     width: 100%;

@@ -14,6 +14,7 @@ interface ProductState {
     newProductsAdded: [],
     selectedProduct: IProduct | null,
     selectedProducts: Array<IProduct> | null,
+    loading: boolean
 }
 
 // Initialize a default state
@@ -28,18 +29,19 @@ const INITIAL_STATE: ProductState = {
     newProductsAdded: [],
     selectedProduct: null,
     selectedProducts: null,
+    loading: false
 }
 
 export const useProductStore = create((set: any, get: any) => ({
     ...INITIAL_STATE,
 
     createNewProduct: async (product: any) => {
-        // console.log(product.getAll('image'));
-        
+        set(() => ({ loading: true }));
         const response = await axios.post(`${process.env.DEV_URI}products/createProduct`, product, { withCredentials: true });
-        return response.data
 
-        // set(() => ({ newProductsAdded: [...get().newProductsAdded, response.data] }))
+        set(() => ({ newProductsAdded: [...get().newProductsAdded, response.data] }))
+        set(() => ({ loading: false }));
+        return response.data
     },
 
     getProducts: async () => {

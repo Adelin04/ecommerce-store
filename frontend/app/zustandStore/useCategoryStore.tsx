@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { URI } from "../utils/URI";
 import { ICategory } from "../interfaces/interfaces";
 
 interface CategoryState {
@@ -29,8 +28,9 @@ export const useCategoryStore = create((set: any, get: any) => ({
     },
 
     setCategoryClicked: (categoryClicked: string) => {
+        console.log(categoryClicked);
         
-        set(() => ({ categorySelected: get().categories.filter((category: ICategory) => category.gender.gender === categoryClicked.toLowerCase()) }))
+        set(() => ({ categorySelected: get().categories.filter((category: ICategory) => category?.gender.gender === categoryClicked?.toLowerCase()) }))
     }
 
 }))

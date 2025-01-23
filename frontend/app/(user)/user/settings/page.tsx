@@ -22,9 +22,6 @@ export default function Settings() {
       menuUser: [
         'Profile', 'Security', 'Notifications'
       ],
-      // menuAdmin: [
-      //   'Create New Product', 'Delete Product', 'Update Product'
-      // ]
     }
   );
 
@@ -70,24 +67,6 @@ export default function Settings() {
                 </div>
               </div>
             </UserPanel>
-
-
-            {/* {
-              user?.role === 'admin' &&
-              <AdminPanel>
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                  <div className='admin-panel-label'><label>Admin Panel</label></div>
-                  {
-                    menus.menuAdmin.map((menu: any, index: number) => {
-                      return (
-                        <Button key={index} id={menu} style={{ color: btnClicked === menu ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>{menu}</Button>
-                      )
-                    })
-                  }
-                </div>
-              </AdminPanel>
-            } */}
-
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
               {user?.role === 'admin' && <Link className='link-dashboard' href={'/dashboard'} style={{ color: 'salmon' }} >Dashboard</Link>}
