@@ -19,6 +19,7 @@ import { useColorStore } from '@/app/zustandStore/useColorStore';
 import { useBrandStore } from '@/app/zustandStore/useBrandStore';
 import { useGenderStore } from '@/app/zustandStore/useGenderStore';
 import Loading from '@/app/loading';
+import FooterMenu from '../ui/footerMenu';
 
 interface PropsCreateNewProduct {
     close: () => void | null,
@@ -142,7 +143,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                 {loading && <WrapperLoading><Loading /></WrapperLoading>}
 
-                <HeaderMenu linkText={'go to store'} label={'Create New Product'} children={message && <p className='message'>{message}</p>} />
+                <HeaderMenu label={'Create New Product'} children={message && <p className='message'>{message}</p>} onclick={()=>close()} />
 
                 <Main>
                     <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -298,9 +299,10 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                 </Main>
 
-                <Footer>
+                <FooterMenu >
+                    <Button style={{ margin: '5px', }} onClick={(e) => { handleClickCloseButton(e) }}>go to store</Button>
                     <Button style={{ color: 'salmon', }} onClick={(e) => { handleSubmit(e) }}>Save Actions</Button>
-                </Footer>
+                </FooterMenu>
 
             </PopUp>
         </Container >
@@ -317,7 +319,7 @@ const Container = styled.div`
         font-weight: bold;
     }
 
-    .close{
+    .go-to-store{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -337,12 +339,13 @@ const Container = styled.div`
         background-color: var(--button-color);
     }
 
-    .close:hover{
+    .close,
+    .go-to-store:hover{
       cursor: pointer;
       border: 1px solid var(--button-border-hover);
     }
     
-    .close:active{
+    .go-to-store:active{
       background-color: var(--button-background-hover);
       color: var(--button-color-active);
     }  
@@ -546,12 +549,3 @@ const WrapperImages = styled.div`
     }
 `
 
-const Footer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    padding: 5px 15px;
-`

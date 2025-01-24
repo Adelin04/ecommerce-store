@@ -1,18 +1,19 @@
+import Button from "@/app/component/ui/Button"
 import Link from "next/link"
 import styled from "styled-components"
 
 interface PropsHeaderMenu {
     children: React.ReactNode
     label: string | null
-    linkText: string | null
+    onclick: () => Function | void | null
 }
 
-export default function HeaderMenu({ children, label, linkText }: PropsHeaderMenu) {
+export default function HeaderMenu({ children, label, onclick }: PropsHeaderMenu) {
     return (
         <Header className="header">
-            <div className="wrapper-label-link">
+            <div className="wrapper-label-close">
                 <label>{label}</label>
-                <Link className='close' href={'/'}> {linkText} </Link>
+                <p className='close' onClick={onclick} > X </p>
             </div>
 
             <div className="wrapper-children">
@@ -32,13 +33,24 @@ const Header = styled.div`
     padding: 5px 15px;
     border-bottom: 1px solid #c7c7c7ba;
     
-    .wrapper-label-link{
+    .wrapper-label-close{
         display: flex;
         /* flex-direction: column; */
         justify-content: space-between;
         align-items: start;
         width: 100%;
+        padding: 10px;
+
+    .close:hover{
+      cursor: pointer;
+      border: 1px solid var(--button-border-hover);
     }
+    
+    .close:active{
+      background-color: var(--button-background-hover);
+      color: var(--button-color-active);
+    }  
+}
     
     .wrapper-children{
         display: flex;
@@ -56,10 +68,23 @@ const Header = styled.div`
         font-weight: bold;
         /* color: #ffffff;         */
     }
+
+    .wrapper-close{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     
     p{
-        font-size: 10px;
-        font-weight: bold;
-        /* color: #ffffff; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        font-size: 13px;
+        font-weight: bolder;
+        color: salmon;
+        background-color: var(--button-color);
+        border-radius: 50px;
     }
     `

@@ -8,6 +8,7 @@ import { useUserStore } from "@/app/zustandStore/useUserStore";
 import React, { useState } from "react";
 import styled from "styled-components";
 import CreateNewProduct from "./component/product/createNewProduct";
+import CreateNewColor from "./component/product/createNewColor";
 
 export default function Dashboard() {
   const { hasMounted } = useMounted()
@@ -16,22 +17,27 @@ export default function Dashboard() {
   const [menus, setMenus] = useState(
     {
       menuAdmin: [
-        'CreateNewProduct', 'DeleteProduct', 'UpdateProduct'
+        'Create New Product', 'Create New Color', 'Create New Brand', 'Create New Category', 'Create New Gender', 'Create New Size', 'Create New Currency'
       ]
     }
   );
 
   const Menu: any = {
     CreateNewProduct: () => <CreateNewProduct close={handleClosePopUp} user={user} />,
-    UpdateProduct: () => <CreateNewProduct close={handleClosePopUp} user={user} />,
-    DeleteProduct: () => <CreateNewProduct close={handleClosePopUp} user={user} />,
+    CreateNewColor: () => <CreateNewColor close={handleClosePopUp} user={user} />,
+    // CreateNewBrand: () => <CreateNewBrand close={handleClosePopUp} user={user} />,
+    // CreateNewCategory: () => <CreateNewCategory close={handleClosePopUp} user={user} />,
+    // CreateNewGender: () => <CreateNewGender close={handleClosePopUp} user={user} />,
+    // CreateNewSize: () => <CreateNewSize close={handleClosePopUp} user={user} />,
+    // CreateNewCurrency: () => <CreateNewCurrency close={handleClosePopUp} user={user} />
   };
 
   const handleClosePopUp = () => setBtnClicked(null);
 
   const createElementCustom = () => {
+    if (Menu[`${btnClicked.split(" ").join("").trim()}`] === undefined) return null
     return React.createElement(
-      Menu[`${btnClicked}`] as any)
+      Menu[`${btnClicked.split(" ").join("").trim()}`] as any)
   }
 
   const onOpenMenu = (buttonClicked: string) => {
@@ -52,7 +58,7 @@ export default function Dashboard() {
                 {
                   menus.menuAdmin.map((menu: any, index: number) => {
                     return (
-                      <Button key={index} id={menu} style={{ color: btnClicked === menu ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>{menu}</Button>
+                      <Button key={index} id={menu} style={{ color: btnClicked === menu.split(" ").join("").trim() ? 'salmon' : '#ffffff' }} onClick={(e: any) => { onOpenMenu(e.target.id) }}>{menu}</Button>
                     )
                   })
                 }
@@ -61,7 +67,7 @@ export default function Dashboard() {
           }
         </WrapperSlider>
       </Slider>
-      
+
       <Content>
         {btnClicked && createElementCustom()}
       </Content>
