@@ -9,11 +9,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CreateNewProduct from "./component/product/createNewProduct";
 import CreateNewColor from "./component/product/createNewColor";
+import { useProductStore } from "@/app/zustandStore/useProductStore";
+import ProductsListAdmin from "./component/product/productListAdmin";
 
 export default function Dashboard() {
   const { hasMounted } = useMounted()
+  const { products } = useProductStore()
   const { user, isAuth, logout } = useUserStore();
-  const [btnClicked, setBtnClicked] = useState<any>('CreateNewProduct');
+  const [btnClicked, setBtnClicked] = useState<any>(null);
   const [menus, setMenus] = useState(
     {
       menuAdmin: [
@@ -69,6 +72,19 @@ export default function Dashboard() {
       </Slider>
 
       <Content>
+{/*         <TableHead>
+          <p className='name'>Name</p>
+          <p className='color'>Color</p>
+          <p className='size'>Size</p>
+          <p className='price'>Price</p>
+          <p className='currency'>Currency</p>
+          <p className='brand'>Brand</p>
+          <p className='seller'>Seller</p>
+          <p className='gender'>Gender</p>
+          <p className='category'>Category</p>
+
+        </TableHead> */}
+        <ProductsListAdmin products={products} />
         {btnClicked && createElementCustom()}
       </Content>
 
@@ -77,11 +93,11 @@ export default function Dashboard() {
 }
 
 const Container = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
-width: 100%;
-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
 `
 const Slider = styled.div`
     display: flex;
@@ -134,6 +150,7 @@ const AdminPanel = styled.div`
 const Content = styled.div`
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -141,3 +158,20 @@ const Content = styled.div`
     /* background-color: salmon; */
     /* border: 5px solid black; */
 `
+
+/* const TableHead = styled.div`
+    position:fixed;
+    top: 0px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 50px;
+    padding: 5px 15px;
+    margin: 5px auto;
+    border-bottom: 1px solid #c7c7c7ba;
+    border-top: 1px solid #c7c7c7ba;
+    border-radius: 10px;
+` */
