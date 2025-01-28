@@ -71,4 +71,11 @@ export const useProductStore = create((set: any, get: any) => ({
         set(() => ({ selectedProducts: null }))
     },
 
+    updateProduct: async (product: any) => {        
+        set(() => ({ loading: true }));
+        const response = await axios.put(`${process.env.DEV_URI}products/updateProduct/${product._id}`, product, { withCredentials: true });
+        set(() => ({ loading: false }));
+        return response.data
+    },
+
 }))

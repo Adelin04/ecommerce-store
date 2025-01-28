@@ -6,7 +6,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import Button from '../../../../component/ui/Button';
 import { useEffect, useState } from 'react';
-import { ICurrency, IUser } from '@/app/interfaces/interfaces';
+import { IProduct, IUser } from '@/app/interfaces/interfaces';
 import { TfiEmail } from 'react-icons/tfi';
 import { MdOutlinePassword } from 'react-icons/md';
 import UploadImage from '@/app/component/uploadImage';
@@ -20,35 +20,37 @@ import { useBrandStore } from '@/app/zustandStore/useBrandStore';
 import { useGenderStore } from '@/app/zustandStore/useGenderStore';
 import Loading from '@/app/loading';
 import FooterMenu from '../ui/footerMenu';
+import { useSizeStore } from '@/app/zustandStore/useSizeSore';
 
-interface PropsCreateNewProduct {
-    close: () => Function | null,
+interface PropsEditProduct {
+    close: () => void | null,
     user: IUser | null
+    product: IProduct
 }
 
 
-export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
-    const { createNewProduct, loading } = useProductStore()
+export default function EditProduct({ close, user, product }: PropsEditProduct) {
+    const{ updateProduct,loading } = useProductStore();
+    const [message, setMessage] = useState('');
     const { getCurrencies, currencies } = useCurrencyStore()
     const { getBrands, brands } = useBrandStore()
     const { getColors, colors } = useColorStore()
     const { getGenders, genders } = useGenderStore()
     const { categories } = useCategoryStore()
-    const [btnClicked, setBtnClicked] = useState<any>('Change Password');
-    const [message, setMessage] = useState('');
     const [sizesProductAvailable, setSizesProductAvailable] = useState(['S', 'M', 'L', 'XL']);
 
-    const [productName, setProductName] = useState('');
-    const [productColor, setProductColor] = useState('');
-    const [productDescription, setProductDescription] = useState('');
-    const [productPrice, setProductPrice] = useState<number | string>(0);
-    const [productBrand, setProductBrand] = useState('');
-    const [productCode, setProductCode] = useState('');
-    const [productSize, setProductSize] = useState('');
-    const [productStock, setProductStock]: any = useState(1);
-    const [productCategory, setProductCategory] = useState('');
-    const [productCurrency, setProductCurrency] = useState<any>('');
-    const [productGender, setProductGender] = useState<string>('');
+    const [productName, setProductName] = useState(product.name);
+    const [productColor, setProductColor] = useState(product.color.color);
+    const [productDescription, setProductDescription] = useState(product.description);
+    const [productPrice, setProductPrice] = useState<number | string>(product.price);
+    const [productBrand, setProductBrand] = useState(product.brand);
+    const [productCode, setProductCode] = useState(product.code);
+    const [productSize, setProductSize] = useState(product.size.size);
+    const [productStock, setProductStock]: any = useState(product.stock);
+    const [productCategory, setProductCategory] = useState(product.category);
+    const [productCurrency, setProductCurrency] = useState<any>(product.currency.currency);
+    const [productGender, setProductGender] = useState<string>(product.gender.gender);
+    const [productImages, setProductImages]: any = useState(product.images.map((image: any) => image.image));
     const [selectedPictures, setSelectedPictures]: any = useState(null);
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
@@ -88,18 +90,18 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         e.preventDefault();
         if (useExistEmptyFields(productName, productColor, productDescription, productPrice, productBrand, productCode, productSize, productStock, productCategory)) { setMessage('Please fill all the fields'); cleanMessage(); return }
 
-        const newProduct = new FormData();
-        newProduct.append('name', productName);
-        newProduct.append('color', productColor);
-        newProduct.append('description', productDescription);
-        newProduct.append('price', parseFloat(productPrice.toLocaleString()).toFixed(2));
-        newProduct.append('brand', productBrand);
-        newProduct.append('code', productCode);
-        newProduct.append('size', productSize);
-        newProduct.append('stock', productStock);
-        newProduct.append('category', productCategory);
-        newProduct.append('currency', productCurrency);
-        newProduct.append('gender', productGender);
+        const updatedProduct = new FormData();
+        updatedProduct.append('name', productName);
+        updatedProduct.append('color', productColor);
+        updatedProduct.append('description', productDescription);
+        updatedProduct.append('price', parseFloat(productPrice.toLocaleString()).toFixed(2));
+        updatedProduct.append('brand', productBrand);
+        updatedProduct.append('code', productCode);
+        updatedProduct.append('size', productSize);
+        updatedProduct.append('stock', productStock);
+        updatedProduct.append('category', productCategory);
+        updatedProduct.append('currency', productCurrency);
+        updatedProduct.append('gender', productGender);
 
 
         // append all images to formData
@@ -115,10 +117,10 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
         // 3rd method
         for (const file of selectedPictures.files) {
-            newProduct.append('image', file)
+            updatedProduct.append('image', file)
         }
 
-        await createNewProduct(newProduct).then((response) => {
+        await updateProduct(updatedProduct).then((response) => {
             console.log(response);
 
             if (response.success) {
@@ -130,10 +132,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
 
     useEffect(() => {
-        getCurrencies();
-        getColors();
-        getBrands();
-        getGenders();
+
     }, [])
 
 
@@ -143,7 +142,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
 
                 {loading && <WrapperLoading><Loading /></WrapperLoading>}
 
-                <HeaderMenu label={'Create New Product'} children={message && <p className='message'>{message}</p>} onclick={()=>close()} />
+                <HeaderMenu label={'EditProduct'} children={message && <p className='message'>{message}</p>} onclick={() => close()} />
 
                 <Main>
                     <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -373,7 +372,7 @@ const PopUp = styled.div`
     height: 550px;
     border-radius: 10px;
     border-top:  1px solid salmon;
-    box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5);
+    /* box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.5); */
     background: white;
 `
 const WrapperLoading = styled.div`

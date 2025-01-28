@@ -13,7 +13,8 @@ export default function ProductsListAdmin({ products }: any) {
         return <Loading />
     return (
         <Container className='container-products-list'>
-            <TableHead>
+{/*             <TableHead>
+                <p className='name'>Image</p>
                 <p className='name'>Name</p>
                 <p className='color'>Color</p>
                 <p className='size'>Size</p>
@@ -24,7 +25,8 @@ export default function ProductsListAdmin({ products }: any) {
                 <p className='gender'>Gender</p>
                 <p className='category'>Category</p>
 
-            </TableHead>
+            </TableHead> */}
+
             <WrapperProductList className='wrapper-products-list'>
 
                 {products && products.map((product: IProduct, index: number) =>
@@ -42,6 +44,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 80%;
+    height: 100%;
     margin: auto;
 `
 
@@ -56,7 +59,7 @@ const WrapperProductList = styled.div`
     margin: auto;
 `
 
-const TableHead = styled.div`
+/* const TableHead = styled.div`
     position:fixed;
     top: 0px;
     display: flex;
@@ -70,4 +73,8 @@ const TableHead = styled.div`
     border-top: 1px solid #c7c7c7ba;
     border-radius: 10px;
     background-color: var(--secondary-color);
-`
+
+    p{
+        color: #ffffff;
+    }
+` */

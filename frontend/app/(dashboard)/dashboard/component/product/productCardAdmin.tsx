@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import EditIcon from '../../../../../assets/edit_icon.svg';
 import DeleteIcon from '../../../../../assets/delete_icon.svg';
 import Image from 'next/image';
+import EditProduct from './editProduct';
 
 interface PropsProductCard {
     product: IProduct | null
@@ -14,7 +15,7 @@ interface PropsProductCard {
 export default function ProductCardAdmin({ product }: PropsProductCard) {
     const { selectProduct } = useProductStore();
     const router = useRouter()
-    console.log(product);
+    const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
         product && selectProduct(product._id)
@@ -22,10 +23,10 @@ export default function ProductCardAdmin({ product }: PropsProductCard) {
     };
 
     return (
-        <Container className='container-product-card' onClick={handleClick}>
+        <Container className='container-product-card' >
 
             <WrapperProductCard className='wrapper-product-card' >
-                <img className='img-product-card' src={product?.image || product?.images[0].image} alt={product?.name} />
+                <img className='img-product-card' src={product?.image || product?.images[0].image} alt={product?.name} onClick={handleClick} />
                 <p className='name'>{product?.name}</p>
                 <p className='color'>{product?.color.color}</p>
                 <p className='size'>{product?.size.size}</p>
@@ -40,13 +41,13 @@ export default function ProductCardAdmin({ product }: PropsProductCard) {
 
             </WrapperProductCard>
 
+            {open && <EditProduct product={product as IProduct} user={null} close={()=>setOpen(false)}/>}
+           
             <WrapperButtonsProductCard className='wrapper-buttons-product-card' >
-                <Image className='button-edit' src={EditIcon} alt={'edit icon'} />
+                <Image className='button-edit' src={EditIcon} alt={'edit icon'} onClick={()=>setOpen(!open)} />
                 <Image className='button-delete' src={DeleteIcon} alt={'delete icon'} />
             </WrapperButtonsProductCard>
 
-            {/* <WrapperDetailsProductCard className='wrapper-details-product-card' > */}
-            {/* </WrapperDetailsProductCard> */}
         </Container>
     )
 }
@@ -57,9 +58,8 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
+    height: 110px;
     margin: 3px;
-    cursor: pointer;
     border: 1px solid salmon;
     border-radius: 10px;
 `
@@ -84,17 +84,18 @@ const WrapperProductCard = styled.div`
         height: 100px;
         border-radius: 10px;
         object-fit: cover;
+        cursor: pointer;
     }
 `
 
 const WrapperButtonsProductCard = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     width: auto;
     height: 100%;
     margin: auto;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
 
     .button-edit, .button-delete{
@@ -108,27 +109,17 @@ const WrapperButtonsProductCard = styled.div`
         cursor: pointer;
     }
     
-  /*   .button-edit{
+    .button-delete,
+    .button-edit{
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 40px;
+        padding: 5px;
+        margin: 2px;
         border-radius: 10px;
         border: none;
-        background-color: #ffffff;
         cursor: pointer;
     }
-
-    .button-delete{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 40px;
-        border-radius: 10px;
-        border: none;
-        background-color: #ffffff;
-        cursor: pointer;
-    } */
 `
