@@ -21,6 +21,7 @@ import { useGenderStore } from '@/app/zustandStore/useGenderStore';
 import Loading from '@/app/loading';
 import FooterMenu from '../ui/footerMenu';
 import { useSizeStore } from '@/app/zustandStore/useSizeSore';
+import { useRouter } from 'next/navigation';
 
 interface PropsEditProduct {
     close: () => void | null,
@@ -30,6 +31,7 @@ interface PropsEditProduct {
 
 
 export default function EditProduct({ close, user, product }: PropsEditProduct) {
+    const router = useRouter()
     const{ updateProduct,loading } = useProductStore();
     const [message, setMessage] = useState('');
     const { getCurrencies, currencies } = useCurrencyStore()
@@ -299,7 +301,7 @@ export default function EditProduct({ close, user, product }: PropsEditProduct) 
                 </Main>
 
                 <FooterMenu >
-                    <Button style={{ margin: '5px', }} onClick={(e) => { handleClickCloseButton(e) }}>go to store</Button>
+                <Button style={{ margin: '5px', }} onClick={()=>{router.push('/')}}>go to store</Button>
                     <Button style={{ color: 'salmon', }} onClick={(e) => { handleSubmit(e) }}>Save Actions</Button>
                 </FooterMenu>
 

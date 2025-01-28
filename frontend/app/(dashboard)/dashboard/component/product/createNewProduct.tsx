@@ -20,6 +20,7 @@ import { useBrandStore } from '@/app/zustandStore/useBrandStore';
 import { useGenderStore } from '@/app/zustandStore/useGenderStore';
 import Loading from '@/app/loading';
 import FooterMenu from '../ui/footerMenu';
+import { useRouter } from 'next/navigation';
 
 interface PropsCreateNewProduct {
     close: () => Function | null,
@@ -28,6 +29,7 @@ interface PropsCreateNewProduct {
 
 
 export default function CreateNewProduct({ close, user }: PropsCreateNewProduct) {
+    const router = useRouter()
     const { createNewProduct, loading } = useProductStore()
     const { getCurrencies, currencies } = useCurrencyStore()
     const { getBrands, brands } = useBrandStore()
@@ -300,7 +302,7 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
                 </Main>
 
                 <FooterMenu >
-                    <Button style={{ margin: '5px', }} onClick={(e) => { handleClickCloseButton(e) }}>go to store</Button>
+                    <Button style={{ margin: '5px', }} onClick={()=>{router.push('/')}}>go to store</Button>
                     <Button style={{ color: 'salmon', }} onClick={(e) => { handleSubmit(e) }}>Save Actions</Button>
                 </FooterMenu>
 
