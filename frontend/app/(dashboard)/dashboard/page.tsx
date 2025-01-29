@@ -50,7 +50,7 @@ export default function Dashboard() {
   if (!hasMounted)
     return <Loading />
   return (
-    <Container className='container'>
+    <Container className='container' style={{overflow: `${btnClicked ? 'hidden' : 'auto'}`}}>
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>
           {
@@ -72,7 +72,7 @@ export default function Dashboard() {
       </Slider>
 
       <div className='spacer'></div>
-      
+
       <Content>
         {/*         <TableHead>
           <p className='name'>Name</p>
@@ -87,7 +87,9 @@ export default function Dashboard() {
 
         </TableHead> */}
         <ProductsListAdmin products={products} />
-        {btnClicked && createElementCustom()}
+        <div style={btnClicked?{position: 'absolute', width: '100%' ,height: '100%',backgroundColor: '#b3b3b345',overflow: 'hidden'}:{}}>
+          {btnClicked && createElementCustom()}
+        </div>
       </Content>
 
     </Container >

@@ -13,7 +13,7 @@ export default function ProductsListAdmin({ products }: any) {
         return <Loading />
     return (
         <Container className='container-products-list'>
-{/*             <TableHead>
+            {/*             <TableHead>
                 <p className='name'>Image</p>
                 <p className='name'>Name</p>
                 <p className='color'>Color</p>
@@ -28,7 +28,6 @@ export default function ProductsListAdmin({ products }: any) {
             </TableHead> */}
 
             <WrapperProductList className='wrapper-products-list'>
-
                 {products && products.map((product: IProduct, index: number) =>
                     <ProductCardAdmin product={product} key={index} />
                 )}

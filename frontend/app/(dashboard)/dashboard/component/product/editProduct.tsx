@@ -20,7 +20,6 @@ import { useBrandStore } from '@/app/zustandStore/useBrandStore';
 import { useGenderStore } from '@/app/zustandStore/useGenderStore';
 import Loading from '@/app/loading';
 import FooterMenu from '../ui/footerMenu';
-import { useSizeStore } from '@/app/zustandStore/useSizeSore';
 import { useRouter } from 'next/navigation';
 
 interface PropsEditProduct {
@@ -140,6 +139,7 @@ export default function EditProduct({ close, user, product }: PropsEditProduct) 
 
     return (
         <Container className='container-create-new-product'>
+
             <PopUp className='pop-up-create-new-product'>
 
                 {loading && <WrapperLoading><Loading /></WrapperLoading>}
@@ -306,6 +306,7 @@ export default function EditProduct({ close, user, product }: PropsEditProduct) 
                 </FooterMenu>
 
             </PopUp>
+            
         </Container >
     );
 }

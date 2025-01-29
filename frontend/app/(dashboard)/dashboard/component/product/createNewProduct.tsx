@@ -23,7 +23,7 @@ import FooterMenu from '../ui/footerMenu';
 import { useRouter } from 'next/navigation';
 
 interface PropsCreateNewProduct {
-    close: () => Function | null,
+    close: () => void | null,
     user: IUser | null
 }
 
