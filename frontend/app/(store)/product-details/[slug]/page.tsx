@@ -21,6 +21,13 @@ const ProductSlug = ({ params }: any) => {
 
     }, [selectedProduct, params.slug])
 
+    // useEffect(() => {
+    //     if (selectedProduct === null)
+    //         const fetchedProductById: any = async () => await fetchProductById(params.slug)
+    //     setProduct(fetchProduct.data)
+
+    // }, [selectedProduct, params.slug])
+
     return (
         <div>
             {<ProductCard product={selectedProduct || product} />}

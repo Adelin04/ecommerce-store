@@ -62,12 +62,12 @@ export const useUserStore = create((set: any, get: any) => ({
         set(() => ({ isLoading: false }));
     },
 
-    checkAuth: async () => {
+    checkAuth: async (user: IUser) => {
         set(() => ({ checkingAuth: true }));
         try {
-            const fetchUser = await axios.get(`${process.env.DEV_URI}auth/profile`, { withCredentials: true });
-            
-            const user = fetchUser.data
+            // const fetchUser = await axios.get(`${process.env.DEV_URI}auth/profile`, { withCredentials: true });
+            // const user = fetchUser.data
+
             set(() => ({ user: user, isAuth: true, isAdmin: user.role === 'admin', }));
         } catch (error) {
             set(() => ({ user: null, isAuth: false }));

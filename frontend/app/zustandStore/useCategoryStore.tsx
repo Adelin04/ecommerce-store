@@ -17,10 +17,10 @@ const INITIAL_STATE: CategoryState = {
 export const useCategoryStore = create((set: any, get: any) => ({
     categories: INITIAL_STATE.categories,
 
-    getCategories: async () => {
-        const fetchCategories = await axios.get(`${process.env.DEV_URI}category/getAllCategories`);
+    setCategories: async (categories: Array<ICategory>) => {
+        // const fetchCategories = await axios.get(`${process.env.DEV_URI}category/getAllCategories`);
 
-        set(() => ({ categories: fetchCategories.data }))
+        set(() => ({ categories: categories}))
 
         //Set men as the default selected category
         set(() => ({ categorySelected: get().categories.filter((category: any) => category.gender.gender === 'men') }))
@@ -28,7 +28,7 @@ export const useCategoryStore = create((set: any, get: any) => ({
     },
 
     setCategoryClicked: (categoryClicked: string) => {
-     
+
         set(() => ({ categorySelected: get().categories.filter((category: ICategory) => category?.gender.gender === categoryClicked?.toLowerCase()) }))
     }
 

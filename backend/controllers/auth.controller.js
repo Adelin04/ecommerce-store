@@ -153,8 +153,9 @@ export const refreshToken = async (req, res) => {
 };
 
 export const getProfileUser = async (req, res) => {
-  try {
+  try {    
     const user = await User.findById(req.user._id);
+
     user.password = undefined;
     res.status(200).json(user);
   } catch (error) {

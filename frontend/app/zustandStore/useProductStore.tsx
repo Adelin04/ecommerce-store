@@ -44,10 +44,10 @@ export const useProductStore = create((set: any, get: any) => ({
         return response.data
     },
 
-    getProducts: async () => {
+    setProducts: async (products: Array<IProduct>) => {
 
-        const fetchProducts = await axios.get(`${process.env.DEV_URI}products/getAllProducts`);
-        set(() => ({ products: fetchProducts.data }))
+        // const fetchProducts = await axios.get(`${process.env.DEV_URI}products/getAllProducts`);
+        set(() => ({ products: products }))
     },
 
     getProductById: async (_id: string) => {
