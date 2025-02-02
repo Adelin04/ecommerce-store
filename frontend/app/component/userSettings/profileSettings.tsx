@@ -5,35 +5,42 @@ import { IUser } from '@/app/interfaces/interfaces';
 import UserProfileImageLogin from '../../../assets/userLogin.png'
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import UploadImage from '../uploadImage';
-import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '../ui/Button';
+import { uploadImageProfileUser } from '@/app/actions/userActions';
 
-interface PropsProfileSettings{
+interface PropsProfileSettings {
     close: () => void | null,
     user: IUser | null
 }
 
 
 export default function ProfileSettings({ close, user }: PropsProfileSettings) {
-    const { updateUserById, uploadImageProfileUser } = useUserStore();
     const [btnClicked, setBtnClicked] = useState<any>('Profile');
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
     const [imageProfile, setImageProfile] = useState<string | File | null>(null);
     const [emails, setEmails] = useState<Array<string>>([]);
-    const [messageResponse, setMessageResponse] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
     const formData = new FormData();
+
+
+    const cleanMessage = () => {
+        setTimeout(() => setMessage(''), 3000)
+    }
 
     const handleSaveActions = () => {
         const file: any = imageProfile && imageProfile.files[0];
+        formData.append('file', file);
 
         user && uploadImageProfileUser(formData, user._id).then((response) => {
             const { success, message } = response;
-            setMessageResponse(message);
+            setMessage(message);
         });
+
+        cleanMessage();
     }
 
     const handleAddNewEmail = (e: any) => {
@@ -53,7 +60,7 @@ export default function ProfileSettings({ close, user }: PropsProfileSettings) {
     const ContentProfile = (user: IUser | null) => {
         return (
             <WrapperProfile className="wrapperTitleRightSide">
-                {messageResponse && <p className='message'>{messageResponse}</p>}
+                {message && <p className='message'>{message}</p>}
                 <div className="wrapper-image-name">
 
                     {user ? <span className='name'>{`${user?.firstName} ${user?.lastName} `} </span> : 'Name'}
@@ -75,8 +82,8 @@ export default function ProfileSettings({ close, user }: PropsProfileSettings) {
             <ContainerEmailAddress>
 
                 <WrapperEmailAddress>
-                    {messageResponse && <p className='message'>{messageResponse}</p>}
-                    <WrapperIconAddEmail className="wrapper-icon-add-email" onClick={() => { /* setToggleInputNewEmail(true) */; setMessageResponse('This future is not ready'); }}>
+                    {message && <p className='message'>{message}</p>}
+                    <WrapperIconAddEmail className="wrapper-icon-add-email" onClick={() => { /* setToggleInputNewEmail(true) */; setMessage('This future is not ready'); }}>
                         <FaPlus className={'plus-icon'} />
                         <span>
                             {'Add new email address'}
@@ -117,8 +124,8 @@ export default function ProfileSettings({ close, user }: PropsProfileSettings) {
                         </WrapperTitleLeftSide>
 
                         <ButtonsLeftSide>
-                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => { setMessageResponse(''); setBtnClicked('Profile') }}>Profile</Button>
-                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => { setMessageResponse(''); setBtnClicked('Email') }}>Email</Button>
+                            <Button style={{ color: btnClicked === 'Profile' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => { setMessage(''); setBtnClicked('Profile') }}>Profile</Button>
+                            <Button style={{ color: btnClicked === 'Email' ? 'salmon' : '#ffffff', width: '80%' }} onClick={() => { setMessage(''); setBtnClicked('Email') }}>Email</Button>
                         </ButtonsLeftSide>
 
                     </ContainerLeftSide>

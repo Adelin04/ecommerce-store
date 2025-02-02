@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { IAddress, IUser } from "../interfaces/interfaces";
 import axios from "axios";
+import { refreshToken } from "../actions/userActions";
 
 interface UserState {
     user: IUser | null,
@@ -75,31 +76,35 @@ export const useUserStore = create((set: any, get: any) => ({
         set(() => ({ checkingAuth: false }));
     },
 
-    refreshToken: async () => {
+    setRefreshToken: async () => {
         // Prevent multiple simultaneous refresh attempts
         if (get().checkingAuth) return;
 
         set({ checkingAuth: true });
         try {
-            const response = await axios.post(`${process.env.DEV_URI}auth/refresh-token`, {}, { withCredentials: true });
+            // const response = await axios.post(`${process.env.DEV_URI}auth/refresh-token`, {}, { withCredentials: true });
             set({ checkingAuth: false });
-            return response.data;
+            // return response.data;
+            const response = refreshToken();
+            console.log(response);
+            
+            return response;
         } catch (error) {
             set({ user: null, checkingAuth: false });
             throw error;
         }
     },
 
-    updateUserById: async (image: any, id: string | number) => {
-        try {
-            const response = await axios.put(`${process.env.DEV_URI}user/updateUserById/${id}`, { imageProfile: image }, { withCredentials: true });
-            console.log(response.data);
+    // updateUserById: async (image: any, id: string | number) => {
+    //     try {
+    //         const response = await axios.put(`${process.env.DEV_URI}user/updateUserById/${id}`, { imageProfile: image }, { withCredentials: true });
+    //         console.log(response.data);
 
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
+    //         return response.data;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // },
 
 
     uploadImageProfileUser: async (formData: any, id: string | number) => {
@@ -134,7 +139,7 @@ axios.interceptors.response.use(
                 }
 
                 // Start a new refresh process
-                refreshPromise = useUserStore.getState().refreshToken();
+                refreshPromise = useUserStore.getState().setRefreshToken();
                 await refreshPromise;
                 refreshPromise = null;
 

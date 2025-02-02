@@ -77,7 +77,7 @@ export const uploadImageProfileUser = async (req, res) => {
       user.imageProfile = cloudinaryRes.res.secure_url;
       await user.save();
 
-        // Delete the local file
+      // Delete the local file
       if (cloudinaryRes.success) deleteFile(url_upload_cloudinary);
     }
 

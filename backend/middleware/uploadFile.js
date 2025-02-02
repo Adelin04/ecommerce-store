@@ -11,7 +11,11 @@ const storage = multer.diskStorage({
       return res.status(404).json({ message: "User not found" });
     }
 
-    cb(null, `${__dirname}/uploads`);
+    if (!fs.existsSync(`${__dirname}\\uploads`)) {
+      fs.mkdirSync(`${__dirname}\\uploads`, { recursive: true });
+    }
+
+      cb(null, `${__dirname}/uploads`);
   },
 
   filename: async function (req, file, cb) {
@@ -24,13 +28,17 @@ const storage = multer.diskStorage({
 // Product Images Storage
 const productStorage = multer.diskStorage({
   destination: async function (req, file, cb) {
+    if (!fs.existsSync(`${__dirname}\\uploads`)) {
+      fs.mkdirSync(`${__dirname}\\uploads`, { recursive: true });
+    }
+    
     cb(null, `${__dirname}/uploads`);
   },
 
   filename: async function (req, file, cb) {
     const fileName = `${file.originalname}`;
     cb(null, fileName);
-  }
+  },
 });
 
 export const upload = multer(

@@ -44,7 +44,7 @@ export default function Settings() {
     setBtnClicked(buttonClicked)
   }
 
-  if (!isAuth) return redirect('/');
+  // if (user === null) return <Loading /> /* redirect('/') */;
   if (!hasMounted)
     return <Loading />
   return (

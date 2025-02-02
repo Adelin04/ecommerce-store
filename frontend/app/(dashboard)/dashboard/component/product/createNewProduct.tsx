@@ -121,7 +121,6 @@ export default function CreateNewProduct({ close, user }: PropsCreateNewProduct)
         }
 
         await createNewProduct(newProduct).then((response) => {
-            console.log(response);
 
             if (response.success) {
                 setMessage('Product created successfully');

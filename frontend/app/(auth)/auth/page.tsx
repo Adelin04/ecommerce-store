@@ -9,10 +9,10 @@ import { redirect } from 'next/navigation'
 import Button from '@/app/component/ui/Button'
 
 const AuthPage = () => {
-    const { isAuth } = useUserStore();
+    const { user } = useUserStore();
     const [toggle, setToggle] = useState(true);
 
-    if (isAuth)
+    if (user)
         return redirect('/');
     else
         return (
