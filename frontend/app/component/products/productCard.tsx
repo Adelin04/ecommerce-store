@@ -9,6 +9,8 @@ interface PropsProductCard {
 }
 
 const ProductCard = ({ product }: PropsProductCard) => {
+    console.log(product);
+    
     const { selectProduct } = useProductStore();
     const router = useRouter()
 

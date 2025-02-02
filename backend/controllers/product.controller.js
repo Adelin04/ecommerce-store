@@ -101,7 +101,13 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id)
+      .populate("size")
+      .populate("currency")
+      .populate("color")
+      .populate("gender")
+      .populate("brand")
+      .populate("images");
 
     res.status(200).json(product);
   } catch (error) {

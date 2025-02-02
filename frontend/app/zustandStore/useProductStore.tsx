@@ -50,12 +50,12 @@ export const useProductStore = create((set: any, get: any) => ({
         set(() => ({ products: products }))
     },
 
-    getProductById: async (_id: string) => {
+    setProductById: async (product:IProduct) => {
 
-        const fetchProduct = await axios.get(`${process.env.DEV_URI}products/getProductById/${_id}`);
-        console.log(fetchProduct.data);
+        // const fetchProduct = await axios.get(`${process.env.DEV_URI}products/setProductById/${_id}`);
+        console.log();
 
-        set(() => ({ productById: fetchProduct.data }))
+        set(() => ({ productById: product }))
     },
 
     selectProduct: (id: string) => {
