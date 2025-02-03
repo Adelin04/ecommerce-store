@@ -5,7 +5,7 @@ import ProductCard from '@/app/component/products/productCard'
 import { IProduct } from '@/app/interfaces/interfaces'
 import { useProductStore } from '@/app/zustandStore/useProductStore'
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 
 const ProductSlug = ({ params }: any) => {
     const { selectedProduct, setProductById }: any = useProductStore()
@@ -16,16 +16,18 @@ const ProductSlug = ({ params }: any) => {
             setProduct(fetchProduct.data)
         } */
 
-    useEffect(() => {
+    async function fetchedProductById() {
+        const getProductById: any = await fetchProductById(params.slug.toString().trim()).then((data) => { return data });
 
-        if (selectedProduct === null) {
-            const getProductById: any = async () => await fetchProductById(params.slug).then((data) => { console.log('data', data);});
-            // console.log('getProductById', getProductById);
+        console.log('getProductById', getProductById);
+        setProductById(getProductById)
+    }
+
+    useLayoutEffect(() => {
+        if (selectedProduct === null) fetchedProductById()
+
+            console.log('product', product);
             
-            setProductById(getProductById)
-        }
-        console.log('selectedProduct',selectedProduct);
-
     }, [selectedProduct])
 
     // useEffect(() => {
@@ -37,6 +39,7 @@ const ProductSlug = ({ params }: any) => {
 
     return (
         <div>
+            {console.log('selectedProduct', selectedProduct)}
             {selectedProduct && <ProductCard product={selectedProduct} />}
         </div>
     )

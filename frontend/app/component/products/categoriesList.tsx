@@ -9,8 +9,7 @@ const CategoriesList = ({ categories }: any) => {
     return (
         <Container className='container-products-list'>
             <WrapperProductList className='wrapper-products-list'>
-                {categories && categories.map((category: any, index: number) =>
-                    <CategoryCard category={category} image={category.image} key={index} />
+                {categories && categories.map((category: any, index: number) => { return <CategoryCard category={category} image={category.image} key={index} /> }
                 )}
             </WrapperProductList>
         </Container>

@@ -21,7 +21,6 @@ export async function fetchProductById(_id: string) {
     
     const response = await fetch(`${process.env.DEV_URI}products/getProductById/${_id}`);
     const product = await response.json();
-    console.log(_id);
-    console.log(product);
+    
     return product;
 }

@@ -9,7 +9,6 @@ interface PropsProductCard {
 }
 
 const ProductCard = ({ product }: PropsProductCard) => {
-    console.log(product);
     
     const { selectProduct } = useProductStore();
     const router = useRouter()
@@ -22,7 +21,7 @@ const ProductCard = ({ product }: PropsProductCard) => {
     return (
         <Container className='container-product-card' onClick={handleClick}>
             <WrapperProductCard className='wrapper-product-card' >
-                <img className='img-product-card' src={product?.image || product?.images[0].image} alt={product?.name} />
+                <img className='img-product-card' src={product?.images[0].image} alt={product?.name} />
                 <WrapperDetailsProductCard className='wrapper-details-product-card' >
                     <p className='name'>{product?.name}</p>
                     <p className='price'>{product?.price}</p>
