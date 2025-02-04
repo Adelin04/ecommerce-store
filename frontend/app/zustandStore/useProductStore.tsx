@@ -63,6 +63,7 @@ export const useProductStore = create((set: any, get: any) => ({
     },
 
     selectedByCategory: (category: any, genderSelected: string) => {
+console.log(category, genderSelected);
 
         set(() => ({ selectedProducts: get().products.filter((product: any) => product.gender.gender === genderSelected && product.category === category) }))
     },

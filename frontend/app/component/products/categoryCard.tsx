@@ -14,6 +14,7 @@ const CategoryCard = ({ category }: any) => {
     const { image } = category
 
     const handleClick = () => {
+        localStorage.setItem('category-selected', category.category)
         router.push(`/products`);
     };
 
