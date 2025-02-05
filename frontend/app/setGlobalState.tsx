@@ -15,14 +15,11 @@ import { checkIsAuth } from './actions/userActions';
 const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
     const { hasMounted } = useMounted()
     const { checkAuth, checkingAuth } = useUserStore();
-    const { setProducts,products } = useProductStore();
+    const { setProducts } = useProductStore();
     const { setCategories } = useCategoryStore();
 
 
     useEffect(() => {
-        // checkAuth();
-        // getProducts();
-        // getCategories();
         async function fetchData() {
             const categories: Array<ICategory> = await fetchCategories().then((data) => { return data });
             const products: Array<IProduct> = await fetchProducts().then((data) => { return data });

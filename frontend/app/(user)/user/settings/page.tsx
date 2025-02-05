@@ -39,12 +39,11 @@ export default function Settings() {
   }
 
   const onOpenMenu = (buttonClicked: string) => {
-    // cleanProductClickedToEdit()
 
     setBtnClicked(buttonClicked)
   }
 
-  // if (user === null) return <Loading /> /* redirect('/') */;
+  if (user === null) return redirect('/');
   if (!hasMounted)
     return <Loading />
   return (

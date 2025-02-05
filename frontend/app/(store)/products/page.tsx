@@ -1,20 +1,16 @@
 'use client'
 
-import { fetchProducts } from '@/app/actions/productActions';
 import ProductsList from '@/app/component/products/productList';
 import { useMounted } from '@/app/component/useMounted';
 import { IProduct } from '@/app/interfaces/interfaces';
 import Loading from '@/app/loading';
-import { useCategoryStore } from '@/app/zustandStore/useCategoryStore';
 import { useProductStore } from '@/app/zustandStore/useProductStore';
-import { useRouter } from 'next/router';
-import { use, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components'
 import { redirect } from 'next/navigation'
 
 const ProductsPage = () => {
-    const { categorySelected }: any = useCategoryStore();
-    const { selectedProducts, selectedByCategory, products, setProducts }: any = useProductStore();
+    const { selectedProducts, selectedByCategory, products }: any = useProductStore();
     const { hasMounted } = useMounted()
 
     useEffect(() => {

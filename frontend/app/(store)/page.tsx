@@ -17,7 +17,6 @@ const HomePage = () => {
     return <Loading />
   return (
     <Container className='home-container'>
-      {/* {selectedProducts === null ? <CategoriesList categories={categorySelected} /> : <ProductsList products={selectedProducts} />} */}
       <CategoriesList categories={categorySelected} />
     </Container>
   )
