@@ -15,7 +15,7 @@ import { checkIsAuth } from './actions/userActions';
 const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
     const { hasMounted } = useMounted()
     const { checkAuth, checkingAuth } = useUserStore();
-    const { setProducts } = useProductStore();
+    const { setProducts,products } = useProductStore();
     const { setCategories } = useCategoryStore();
 
 
@@ -35,7 +35,6 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
         }
 
         fetchData();
-
     }, [checkingAuth])
 
     if (!hasMounted)

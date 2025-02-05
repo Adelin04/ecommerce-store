@@ -6,41 +6,27 @@ import { IProduct } from '@/app/interfaces/interfaces'
 import { useProductStore } from '@/app/zustandStore/useProductStore'
 import axios from 'axios'
 import React, { useEffect, useLayoutEffect } from 'react'
+import { redirect } from 'next/navigation'
 
 const ProductSlug = ({ params }: any) => {
-    const { selectedProduct, setProductById }: any = useProductStore()
-    const [product, setProduct] = React.useState<IProduct | null>(null)
-
-    /*     const fetchProductById = async (_id: string) => {
-            const fetchProduct = await axios.get(`${process.env.DEV_URI}products/getProductById/${_id}`);
-            setProduct(fetchProduct.data)
-        } */
+    const { selectedProduct }: any = useProductStore()
+    const [afterRefreshPageProduct, setAfterRefreshPageProduct] = React.useState<IProduct | null>(null)
 
     async function fetchedProductById() {
-        const getProductById: any = await fetchProductById(params.slug.toString().trim()).then((data) => { return data });
-
-        console.log('getProductById', getProductById);
-        setProductById(getProductById)
+        const getProductById: IProduct = await fetchProductById(params.slug.toString().trim()).then((data) => { return data });
+        return getProductById
     }
 
-    useLayoutEffect(() => {
-        if (selectedProduct === null) fetchedProductById()
+    useEffect(() => {
+        if (!selectedProduct) fetchedProductById().then((data) => setAfterRefreshPageProduct(data));
 
-            console.log('product', product);
-            
+        // if (!selectedProduct && !afterRefreshPageProduct) return redirect('/');
     }, [selectedProduct])
-
-    // useEffect(() => {
-    //     if (selectedProduct === null)
-    //         const fetchedProductById: any = async () => await fetchProductById(params.slug)
-    //     setProduct(fetchProduct.data)
-
-    // }, [selectedProduct, params.slug])
 
     return (
         <div>
-            {console.log('selectedProduct', selectedProduct)}
-            {selectedProduct && <ProductCard product={selectedProduct} />}
+            {!afterRefreshPageProduct && selectedProduct && <ProductCard product={selectedProduct} />}
+            {!selectedProduct && afterRefreshPageProduct && <ProductCard product={afterRefreshPageProduct} />}
         </div>
     )
 }

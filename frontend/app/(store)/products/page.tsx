@@ -10,6 +10,7 @@ import { useProductStore } from '@/app/zustandStore/useProductStore';
 import { useRouter } from 'next/router';
 import { use, useEffect } from 'react';
 import styled from 'styled-components'
+import { redirect } from 'next/navigation'
 
 const ProductsPage = () => {
     const { categorySelected }: any = useCategoryStore();
@@ -17,9 +18,10 @@ const ProductsPage = () => {
     const { hasMounted } = useMounted()
 
     useEffect(() => {
-        if (!selectedProducts)
-            selectedByCategory(localStorage.getItem('category-selected'), localStorage.getItem('Gender')?.toLowerCase());
-    }, [selectedByCategory])
+        if (!selectedProducts) return selectedByCategory(localStorage.getItem('category-selected'), localStorage.getItem('gender')?.toLowerCase());
+        if (!localStorage.getItem('category-selected') || !localStorage.getItem('gender')) return redirect('/');
+    }, [products])
+
 
     if (!hasMounted)
         return <Loading />
@@ -27,7 +29,7 @@ const ProductsPage = () => {
     return (
         <Container className='home-container'>
             {selectedProducts && <ProductsList products={selectedProducts} />}
-            {selectedProducts && !selectedProducts.length && <ProductsList products={products.filter((product: IProduct) => product.category === localStorage.getItem('category-selected') && product.gender.gender === localStorage.getItem('Gender')?.toLowerCase()) } />}
+            {selectedProducts && !selectedProducts.length && <ProductsList products={products.filter((product: IProduct) => product.category === localStorage.getItem('category-selected') && product.gender.gender === localStorage.getItem('gender')?.toLowerCase())} />}
         </Container>
     )
 }

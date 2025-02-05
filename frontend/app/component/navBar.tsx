@@ -21,10 +21,10 @@ const NavBar = ({ navBarMenu }: any) => {
         width: window.innerWidth,
         height: window.innerHeight,
     });
-    const [clickedGender, setClickedGender] = useState(() => localStorage.getItem('Gender')|| 'MEN')
+    const [clickedGender, setClickedGender] = useState(() => localStorage.getItem('gender')|| 'MEN')
 
     const handleClickNavBarMenu = (menuName: string) => {
-        localStorage.setItem('Gender', menuName)
+        localStorage.setItem('gender', menuName)
 
         setClickedGender(menuName)
         setCategoryClicked(menuName)
@@ -33,7 +33,7 @@ const NavBar = ({ navBarMenu }: any) => {
     }
 
     useEffect(() => {
-        setCategoryClicked(localStorage.getItem('Gender')|| 'MEN')
+        setCategoryClicked(localStorage.getItem('gender')|| 'MEN')
 
         const handleResize = () => {
             setWindowDimensions({

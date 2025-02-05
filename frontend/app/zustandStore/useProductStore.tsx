@@ -50,10 +50,9 @@ export const useProductStore = create((set: any, get: any) => ({
         set(() => ({ products: products }))
     },
 
-    setProductById: async (product:IProduct) => {
+    setProductById: async (product: IProduct) => {
 
         // const fetchProduct = await axios.get(`${process.env.DEV_URI}products/setProductById/${_id}`);
-        console.log();
 
         set(() => ({ productById: product }))
     },
@@ -63,8 +62,6 @@ export const useProductStore = create((set: any, get: any) => ({
     },
 
     selectedByCategory: (category: any, genderSelected: string) => {
-console.log(category, genderSelected);
-
         set(() => ({ selectedProducts: get().products.filter((product: any) => product.gender.gender === genderSelected && product.category === category) }))
     },
 
@@ -72,7 +69,7 @@ console.log(category, genderSelected);
         set(() => ({ selectedProducts: null }))
     },
 
-    updateProduct: async (product: any) => {        
+    updateProduct: async (product: any) => {
         set(() => ({ loading: true }));
         const response = await axios.put(`${process.env.DEV_URI}products/updateProduct/${product._id}`, product, { withCredentials: true });
         set(() => ({ loading: false }));
