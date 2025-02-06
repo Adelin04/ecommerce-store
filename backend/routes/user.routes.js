@@ -12,7 +12,7 @@ import { upload } from "../middleware/uploadFile.js";
 
 const router = express.Router();
 
-router.post("/createUser", protectRoute, adminRoute, createUser);
+router.post("/createUser", createUser);
 router.get("/getAllUsers", protectRoute, adminRoute, getAllUsers);
 router.get("/getUserById/:id", protectRoute, adminRoute, getUserById);
 router.put("/updateUserById/:id", protectRoute, adminRoute, updateUserById);

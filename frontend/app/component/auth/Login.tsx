@@ -4,25 +4,35 @@ import { TfiEmail } from "react-icons/tfi";
 import { MdOutlinePassword } from "react-icons/md";
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '../ui/Button';
+import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
 
 const Login = () => {
     const { login } = useUserStore();
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [message, setMessage] = useState<string>('')
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const cleanMessage = () => {
+        setTimeout(() => setMessage(''), 3000)
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        login(email, password as string);
+
+        if (useExistEmptyFields([email, password])) { setMessage('Please fill all the fields'); cleanMessage(); return }
+        const userLogged = await login(email, password as string);
+        console.log(userLogged);
+
         setEmail('');
         setPassword('')
     }
 
     return (
         <Container className='login-container'>
-
+            <div className='login-message'>{message}</div>
             <h3 className='login-title'>Login to your account</h3>
 
-            <form onSubmit={(e) => { handleSubmit(e) }} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <form style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} onSubmit={(e) => { handleSubmit(e) }}>
                 <WrapperLogin className='wrapper-login'>
 
                     <WrapperLabelInput>
@@ -60,6 +70,19 @@ const Container = styled.div`
     border-radius: 5px;
     background-color: var(--secondary-color);
 
+    .login-message{
+        display:inherit;
+        justify-content: center;
+        align-items : center;
+        text-align: center;
+        width: auto;
+        height: 30px;
+        color: salmon;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+
     .component-login-button{
         width:  97%;
         height: 30px;
@@ -75,7 +98,7 @@ const Container = styled.div`
     .login-title{
         color: #ffffff;
         font-weight: bold;
-        font-size: 13px;
+        font-size: 15px;
         padding-bottom: 15px;
     }
 `
@@ -101,20 +124,22 @@ const WrapperLogin = styled.div`
     }
     
     input{
+        display:inherit;
         width: 100%;
         height: 30px;
         outline: none;
         border: none;
         border-radius: 5px;
         margin: 0px;
-        /* background-color: var(--input-color); */
-        color: #ffffff;
+        background-color: #ffffff;
+        color: #000000;
         text-align:center;
     }
 
     ::placeholder{
+        display:inherit;
         color: grey;
-        font-size: 10px;
+        font-size: 13px;
     }
     
 `

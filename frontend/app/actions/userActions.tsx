@@ -35,6 +35,34 @@ export async function refreshToken() {
     return user;
 }
 
+export async function login(email: string, password: string) {
+    const user = await fetch(`${process.env.DEV_URI}auth/login`, {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => { return res.json() });
+
+        console.log(user)
+    return user;
+}
+
+export async function register(body: any) {
+    const { firstName, lastName, email, password } = body
+    const user = await fetch(`${process.env.DEV_URI}auth/signup`, {
+        method: 'POST',
+        body: JSON.stringify({ firstName, lastName, email, password }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => { return res.json() });
+
+    return user;
+}
+
 export async function logout() {
     await fetch(`${process.env.DEV_URI}auth/logout`,
         {

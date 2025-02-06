@@ -4,29 +4,45 @@ import { TfiEmail } from "react-icons/tfi";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlinePassword } from "react-icons/md";
 import Button from '../ui/Button';
+import { useRouter } from 'next/navigation';
+import { register } from '@/app/actions/userActions';
+import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
 
 const Register = () => {
-    const [user, setUser] = useState(true)
+    const router = useRouter()
 
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const [message, setMessage] = useState<string>('')
 
-    const handleSubmit = (e: React.FormEvent) => {
+
+    const cleanMessage = () => {
+        setTimeout(() => setMessage(''), 3000)
+    }
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setUser(true);
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+
+        if (useExistEmptyFields([firstName, lastName, email, password, confirmPassword])) { setMessage('Please fill all the fields'); cleanMessage(); return }
+        if (password !== confirmPassword) { setMessage('Passwords do not match'); cleanMessage(); return }
+
+        const userRegistered = await register({ firstName, lastName, email, password, confirmPassword });
+
+        if (!userRegistered.success) {
+            setMessage(userRegistered.message);
+            return cleanMessage()
+        };
+
+        if (userRegistered.success) { return router.refresh() }
     }
 
     return (
         <Container className='register-container'>
-
+            <div className='register-message'>{message}</div>
 
             <h3 className='register-title'>Create your account</h3>
 
@@ -65,7 +81,7 @@ const Register = () => {
 
 
                 </WrapperRegister>
-                <Button className='component-register-button' type='submit'>Register</Button>
+                <Button className='component-register-button' type='submit' >Register</Button>
             </form>
 
         </Container >
@@ -87,6 +103,18 @@ const Container = styled.div`
     border-radius: 5px;
     background-color: var(--secondary-color);
 
+    .register-message{
+        display:inherit;
+        justify-content: center;
+        align-items : center;
+        text-align: center;
+        width: auto;
+        height: 30px;
+        color: salmon;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
     .component-register-button{
         width:  97%;
         height: 30px;
@@ -101,8 +129,8 @@ const Container = styled.div`
 
     .register-title{
         color: #ffffff;
-        font-weight: 500;
-        font-size: 13px;
+        font-weight: bold;
+        font-size: 15px;
         padding-bottom: 15px;
     }
 `

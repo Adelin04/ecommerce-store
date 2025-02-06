@@ -40,6 +40,21 @@ export const useUserStore = create((set: any, get: any) => ({
         set(() => ({ isLoading: false, isAuth: true }));
     },
 
+    register: async (email: string, password: string) => {
+        set(() => ({ isLoading: true }));
+
+        try {
+            const fetchUser = await axios.post(`${process.env.DEV_URI}auth/register`, { email, password }, { withCredentials: true });
+            const user = fetchUser.data
+
+            set(() => ({ user: user, isAuth: true, isAdmin: user.role === 'admin', }));
+
+        } catch (error) {
+        }
+
+        set(() => ({ isLoading: false, isAuth: true }));
+    },
+
     logout: async () => {
         set(() => ({ isLoading: true }));
 
@@ -87,7 +102,7 @@ export const useUserStore = create((set: any, get: any) => ({
             // return response.data;
             const response = refreshToken();
             console.log(response);
-            
+
             return response;
         } catch (error) {
             set({ user: null, checkingAuth: false });

@@ -65,7 +65,7 @@ export const signup = async (req, res) => {
 
     setCookie(res, accessToken, refreshToken);
 
-    res.status(201).send({ newUser, message: "User created successfully" });
+    res.status(201).send({ newUser, success: true, message: "User created successfully" });
   } catch (error) {
     res
       .status(500)
@@ -76,6 +76,8 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(email, password);
+    
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
@@ -153,7 +155,7 @@ export const refreshToken = async (req, res) => {
 };
 
 export const getProfileUser = async (req, res) => {
-  try {    
+  try {
     const user = await User.findById(req.user._id);
 
     user.password = undefined;

@@ -28,7 +28,7 @@ const AuthPage = () => {
                         <Login />
                     </WrapperAuthPage>)
                     :
-                    (<WrapperAuthPage>
+                    (<WrapperAuthPage className='wrapper-auth-page'>
                         <div className="register-account">
                             <span> Do you have an account? </span>
                             <Button className='login-button' onClick={() => setToggle(!toggle)}> Login </Button>
@@ -56,6 +56,9 @@ const Container = styled.div`
 `
 
 const WrapperAuthPage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     margin: 20px;
 
