@@ -77,7 +77,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(email, password);
-    
+
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
@@ -87,7 +87,7 @@ export const login = async (req, res) => {
       setCookie(res, accessToken, refreshToken);
 
       user.password = undefined;
-      res.status(200).json(user);
+      res.status(200).json({ user, accessToken, refreshToken, success: true, message: "User logged in successfully" });
     } else {
       res.status(401).send("Invalid email or password");
     }

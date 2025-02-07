@@ -25,27 +25,12 @@ const INITIAL_STATE: UserState = {
 export const useUserStore = create((set: any, get: any) => ({
     ...INITIAL_STATE,
 
-    login: async (email: string, password: string) => {
+    setLogin: async (user: IUser) => {
         set(() => ({ isLoading: true }));
 
         try {
-            const fetchUser = await axios.post(`${process.env.DEV_URI}auth/login`, { email, password }, { withCredentials: true });
-            const user = fetchUser.data
-
-            set(() => ({ user: user, isAuth: true, isAdmin: user.role === 'admin', }));
-
-        } catch (error) {
-        }
-
-        set(() => ({ isLoading: false, isAuth: true }));
-    },
-
-    register: async (email: string, password: string) => {
-        set(() => ({ isLoading: true }));
-
-        try {
-            const fetchUser = await axios.post(`${process.env.DEV_URI}auth/register`, { email, password }, { withCredentials: true });
-            const user = fetchUser.data
+            // const fetchUser = await axios.post(`${process.env.DEV_URI}auth/login`, { email, password }, { withCredentials: true });
+            // const user = fetchUser.data
 
             set(() => ({ user: user, isAuth: true, isAdmin: user.role === 'admin', }));
 

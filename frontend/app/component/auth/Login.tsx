@@ -5,9 +5,10 @@ import { MdOutlinePassword } from "react-icons/md";
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '../ui/Button';
 import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
+import { login } from '@/app/actions/userActions';
 
 const Login = () => {
-    const { login } = useUserStore();
+    const { setLogin } = useUserStore();
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [message, setMessage] = useState<string>('')
@@ -21,10 +22,10 @@ const Login = () => {
 
         if (useExistEmptyFields([email, password])) { setMessage('Please fill all the fields'); cleanMessage(); return }
         const userLogged = await login(email, password as string);
-        console.log(userLogged);
 
-        setEmail('');
-        setPassword('')
+        // setEmail('');
+        // setPassword('')
+        setLogin(userLogged);
     }
 
     return (

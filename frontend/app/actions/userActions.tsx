@@ -1,5 +1,6 @@
 'use server'
 
+import axios from 'axios';
 import { cookies } from 'next/headers';
 
 export async function checkIsAuth() {
@@ -36,16 +37,23 @@ export async function refreshToken() {
 }
 
 export async function login(email: string, password: string) {
+    if (!email || !password) return;
+
     const user = await fetch(`${process.env.DEV_URI}auth/login`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
     })
         .then((res) => { return res.json() });
 
-        console.log(user)
+        console.log(user);
+        
+    // cookies().set('accessToken', user?.accessToken);
+    // cookies().set('refreshToken', user?.refreshToken);
+
     return user;
 }
 
