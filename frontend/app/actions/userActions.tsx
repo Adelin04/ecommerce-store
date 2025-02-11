@@ -39,7 +39,7 @@ export async function refreshToken() {
 export async function login(email: string, password: string) {
     if (!email || !password) return;
 
-    const user = await fetch(`${process.env.DEV_URI}auth/login`, {
+    const result = await fetch(`${process.env.DEV_URI}auth/login`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         credentials: 'include',
@@ -49,12 +49,26 @@ export async function login(email: string, password: string) {
     })
         .then((res) => { return res.json() });
 
-        console.log(user);
-        
-    // cookies().set('accessToken', user?.accessToken);
-    // cookies().set('refreshToken', user?.refreshToken);
+    if (result.success) {
+        const { accessToken, refreshToken } = result;
+        // cookies().set('accessToken', accessToken);
+        // cookies().set('refreshToken', refreshToken);
 
-    return user;
+        cookies().set("accessToken", accessToken, {
+            httpOnly: true, // prevent XSS attacks, cross site scripting attack
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+            maxAge: 24 * 60 * 60 * 1000, // one hour
+        });
+        cookies().set("refreshToken", refreshToken, {
+            httpOnly: true, // prevent XSS attacks, cross site scripting attack
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
+    }
+
+    return result.user;
 }
 
 export async function register(body: any) {

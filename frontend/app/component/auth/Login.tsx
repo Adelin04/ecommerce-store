@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TfiEmail } from "react-icons/tfi";
 import { MdOutlinePassword } from "react-icons/md";
@@ -6,12 +6,14 @@ import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '../ui/Button';
 import { useExistEmptyFields } from '@/app/utils/useExistEmptyFields';
 import { login } from '@/app/actions/userActions';
+import { redirect } from 'next/navigation';
 
 const Login = () => {
-    const { setLogin } = useUserStore();
+    const { setLogin, user } = useUserStore();
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [message, setMessage] = useState<string>('')
+    const goHome = () => { () => redirect("/"); };
 
     const cleanMessage = () => {
         setTimeout(() => setMessage(''), 3000)
@@ -21,15 +23,20 @@ const Login = () => {
         e.preventDefault();
 
         if (useExistEmptyFields([email, password])) { setMessage('Please fill all the fields'); cleanMessage(); return }
+
         const userLogged = await login(email, password as string);
 
-        // setEmail('');
-        // setPassword('')
-        setLogin(userLogged);
+        if (userLogged)
+            setLogin(userLogged);
+
     }
+    useEffect(() => {
+        if (user) return goHome();
+    }, [user, setLogin])
 
     return (
         <Container className='login-container'>
+
             <div className='login-message'>{message}</div>
             <h3 className='login-title'>Login to your account</h3>
 
