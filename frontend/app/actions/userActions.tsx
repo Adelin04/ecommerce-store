@@ -6,19 +6,29 @@ import { cookies } from 'next/headers';
 export async function checkIsAuth() {
     // const accessToken = cookies().get('accessToken')?.value;
     // const refreshToken = cookies().get('refreshToken')?.value;
+
     if (!cookies().has('accessToken')) return false;
 
-    const user = await fetch(`${process.env.DEV_URI}auth/profile`,
+    return await fetch(`${process.env.DEV_URI}auth/profile`,
         {
             method: 'GET',
             headers: {
                 Cookie: cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; '),
             },
         })
-        .then((res) => { return res.json() });
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+            console.log({ data });
 
+            return data
+        })
+        .catch((error) => {
+            if (error instanceof Error)
+                return null;
+        });
 
-    return user;
 }
 
 export async function refreshToken() {
@@ -33,6 +43,7 @@ export async function refreshToken() {
         })
         .then((res) => { return res.json() });
 
+    console.log('user', user);
     return user;
 }
 

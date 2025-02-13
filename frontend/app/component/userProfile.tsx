@@ -10,7 +10,7 @@ const UserProfile = ({ user }: { user: IUser | null }) => {
 
     return (
         <Container className="container-user-profile">
-            <Link className='link-user-profile' href={user ? "/user/settings" : "/auth"}>
+            <Link className='link-user-profile' href={user !== null ? "/user/settings" : "/auth"}>
                 <Image className='img-user-profile' priority src={user?.imageProfile || UserProfileImageLogin} alt="User Profile" width={50} height={50} />
             </Link>
         </Container>
