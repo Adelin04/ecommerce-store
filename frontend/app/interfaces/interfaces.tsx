@@ -27,7 +27,7 @@ export interface IProduct {
     price: number;
     category: string;
     code: string;
-    image: string;
+    images: any;
     size: number;
     stock: number;
     color: string;

@@ -23,7 +23,7 @@ const ProductsPage = () => {
         return <Loading />
 
     return (
-        <Container className='home-container'>
+        <Container className='products-container'>
             {selectedProducts && <ProductsList products={selectedProducts} />}
             {selectedProducts && !selectedProducts.length && <ProductsList products={products.filter((product: IProduct) => product.category === localStorage.getItem('category-selected') && product.gender.gender === localStorage.getItem('gender')?.toLowerCase())} />}
         </Container>

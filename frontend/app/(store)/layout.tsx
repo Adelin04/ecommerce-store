@@ -30,7 +30,7 @@ export default function SetupLayout({
   return (
     <React.Fragment>
       <NavBar navBarMenu={linksNavBar} />
-      <div style={{ paddingTop: '100px' }}>
+      <div style={{ paddingTop: '100px',width: '100%' }}>
         {children}
       </div>
 
