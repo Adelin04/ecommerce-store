@@ -9,6 +9,7 @@ import React, { useEffect, useLayoutEffect } from 'react'
 import { redirect } from 'next/navigation'
 import { useMounted } from '@/app/component/useMounted'
 import Loading from '@/app/loading'
+import CardProductDetails from '@/app/(store)/product-details/cardProductDetails'
 
 const ProductSlug = ({ params }: any) => {
     const { hasMounted } = useMounted()
@@ -23,7 +24,6 @@ const ProductSlug = ({ params }: any) => {
     useEffect(() => {
         if (!selectedProduct) fetchedProductById().then((data) => setAfterRefreshPageProduct(data));
 
-        // if (!selectedProduct && !afterRefreshPageProduct) return redirect('/');
     }, [selectedProduct])
 
     if (!hasMounted)
@@ -31,8 +31,8 @@ const ProductSlug = ({ params }: any) => {
 
     return (
         <div>
-            {!afterRefreshPageProduct && selectedProduct && <ProductCard product={selectedProduct} />}
-            {!selectedProduct && afterRefreshPageProduct && <ProductCard product={afterRefreshPageProduct} />}
+            {!afterRefreshPageProduct && selectedProduct && <CardProductDetails product={selectedProduct} />}
+            {!selectedProduct && afterRefreshPageProduct && <CardProductDetails product={afterRefreshPageProduct} />}
         </div>
     )
 }

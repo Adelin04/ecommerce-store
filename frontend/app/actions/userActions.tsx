@@ -9,26 +9,23 @@ export async function checkIsAuth() {
 
     if (!cookies().has('accessToken')) return false;
 
-    return await fetch(`${process.env.DEV_URI}auth/profile`,
+    const user = await fetch(`${process.env.DEV_URI}auth/profile`,
         {
             method: 'GET',
             headers: {
                 Cookie: cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; '),
             },
         })
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
-            console.log({ data });
-
-            return data
-        })
+        .then((res) => { return res.json() })
+        .then((data) => { return data })
         .catch((error) => {
+            console.log(error);
+
             if (error instanceof Error)
                 return null;
         });
 
+    return user
 }
 
 export async function refreshToken() {

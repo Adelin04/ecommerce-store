@@ -76,7 +76,6 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
 
     const user = await User.findOne({ email });
 
@@ -119,7 +118,7 @@ export const logout = async (req, res) => {
 export const refreshToken = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
-
+    
     if (!refreshToken) {
       return res.status(401).send("No refresh token found");
     }

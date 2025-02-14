@@ -9,7 +9,8 @@ interface UserState {
     isAuth: boolean,
     isAdmin: boolean,
     addresses: Array<any> | null,
-    selectedAddress: IAddress
+    selectedAddress: IAddress,
+    isLoading: boolean
 }
 
 // Initialize a default state
@@ -19,7 +20,8 @@ const INITIAL_STATE: UserState = {
     isAuth: false,
     isAdmin: false,
     addresses: null,
-    selectedAddress: {} as IAddress
+    selectedAddress: {} as IAddress,
+    isLoading: false
 }
 
 export const useUserStore = create((set: any, get: any) => ({
@@ -64,10 +66,8 @@ export const useUserStore = create((set: any, get: any) => ({
     },
 
     checkAuth: async (user: IUser | null) => {
-console.log(user);
-
-        set(() => ({ checkingAuth: true }));
         try {
+            set(() => ({ isLoading: true }));
             // const fetchUser = await axios.get(`${process.env.DEV_URI}auth/profile`, { withCredentials: true });
             // const user = fetchUser.data
 
@@ -75,7 +75,7 @@ console.log(user);
         } catch (error) {
             set(() => ({ user: null, isAuth: false }));
         }
-        set(() => ({ checkingAuth: false }));
+        set(() => ({ checkingAuth: false, isLoading: false }));
     },
 
     setRefreshToken: async () => {

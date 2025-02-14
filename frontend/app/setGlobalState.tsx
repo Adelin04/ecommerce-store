@@ -18,25 +18,23 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
     const { setProducts } = useProductStore();
     const { setCategories } = useCategoryStore();
 
+    async function fetchData() {
+        const categories: Array<ICategory> = await fetchCategories().then((data) => { return data });
+        const products: Array<IProduct> = await fetchProducts().then((data) => { return data });
+        const userResult: any = await checkIsAuth().then((data) => { return data });
+
+
+        setCategories(categories);
+        setProducts(products);
+
+        if (userResult) checkAuth(userResult);
+
+    }
 
     useEffect(() => {
-        async function fetchData() {
-            const categories: Array<ICategory> = await fetchCategories().then((data) => { return data });
-            const products: Array<IProduct> = await fetchProducts().then((data) => { return data });
-            const userResult: any = await checkIsAuth().then((data) => { return data });
-
-
-            setCategories(categories);
-            setProducts(products);
-            console.log({userResult});
-            
-            if (userResult) checkAuth(userResult);
-
-        }
-
         fetchData();
 
-    }, [checkAuth]);
+    }, [checkingAuth]);
 
     if (!hasMounted)
         return <Loading />
