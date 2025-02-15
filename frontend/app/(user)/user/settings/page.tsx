@@ -5,7 +5,7 @@ import SecuritySettings from '@/app/component/userSettings/securitySettings';
 import ProfileSettings from '../../../component/userSettings/profileSettings'
 import { useMounted } from "@/app/component/useMounted";
 import Loading from "@/app/loading";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { useUserStore } from '@/app/zustandStore/useUserStore';
 import Button from '@/app/component/ui/Button';
@@ -33,6 +33,8 @@ export default function Settings() {
 
   const handleClosePopUp = () => setBtnClicked(null);
 
+  const GoHome = () => redirect('/')
+
   const createElementCustom = () => {
     return React.createElement(
       Menu[`${btnClicked}`] as any)
@@ -43,12 +45,14 @@ export default function Settings() {
     setBtnClicked(buttonClicked)
   }
 
-  if (user === null) return redirect('/');
-  if (!hasMounted)
-    return <Loading />
+  useEffect(() => {
+    if (hasMounted && !isAuth) return GoHome()
+  }, [isAuth])
+
+  if (!hasMounted) return <Loading />
+  
   return (
     <Container className='container'>
-
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>
           <WrapperButtons className='wrapper-buttons'>

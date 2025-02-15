@@ -11,8 +11,10 @@ import CreateNewProduct from "./component/product/createNewProduct";
 import CreateNewColor from "./component/product/createNewColor";
 import { useProductStore } from "@/app/zustandStore/useProductStore";
 import ProductsListAdmin from "./component/product/productListAdmin";
+import { useRouter } from 'next/navigation'
 
 export default function Dashboard() {
+  const router = useRouter()
   const { hasMounted } = useMounted()
   const { products } = useProductStore()
   const { user, isAuth, logout } = useUserStore();
@@ -20,10 +22,11 @@ export default function Dashboard() {
   const [menus, setMenus] = useState(
     {
       menuAdmin: [
-        'Create New Product', 'Create New Color', 'Create New Brand', 'Create New Category', 'Create New Gender', 'Create New Size', 'Create New Currency'
+        'Create New Product', 'Create New Color', 'Create New Brand', 'Create New Category', 'Create New Gender', 'Create New Size', 'Create New Currency',
       ]
     }
   );
+
 
   const Menu: any = {
     CreateNewProduct: () => <CreateNewProduct close={handleClosePopUp} user={user} />,
@@ -50,7 +53,7 @@ export default function Dashboard() {
   if (!hasMounted)
     return <Loading />
   return (
-    <Container className='container' style={{overflow: `${btnClicked ? 'hidden' : 'auto'}`}}>
+    <Container className='container' style={{ overflow: `${btnClicked ? 'hidden' : 'auto'}` }}>
       <Slider className='slider'>
         <WrapperSlider className='wrapper-slider'>
           {
@@ -66,6 +69,8 @@ export default function Dashboard() {
                   })
                 }
               </div>
+              {/* <Button id='Notifications' style={{ color: 'salmon' }} onClick={() => {return redirect("/")}}>Go to Store</Button> */}
+              <button id='Notifications' style={{ color: 'salmon' }} onClick={() => router.push("/")}>Go to Store</button>
             </AdminPanel>
           }
         </WrapperSlider>
@@ -84,14 +89,13 @@ export default function Dashboard() {
           <p className='seller'>Seller</p>
           <p className='gender'>Gender</p>
           <p className='category'>Category</p>
-
-        </TableHead> */}
+          
+          </TableHead> */}
         <ProductsListAdmin products={products} />
-        <div style={btnClicked?{position: 'absolute', width: '100%' ,height: '100%',backgroundColor: '#b3b3b345',overflow: 'hidden'}:{}}>
+        <div style={btnClicked ? { position: 'absolute', width: '100%', height: '100%', backgroundColor: '#b3b3b345', overflow: 'hidden' } : {}}>
           {btnClicked && createElementCustom()}
         </div>
       </Content>
-
     </Container >
   );
 }
