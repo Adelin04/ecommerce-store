@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Login from '../../component/auth/Login'
 import Register from '../../component/auth/Register'
 import styled from 'styled-components'
@@ -12,35 +12,37 @@ const AuthPage = () => {
     const { user } = useUserStore();
     const [toggle, setToggle] = useState(true);
 
-    if (user)
-        return redirect('/');
-    else
-        return (
-            <Container className='auth-page-container'>
+    useEffect(() => {
+        if (user) {
+            return redirect('/');
+        }
+    }, [user])
 
-                {toggle ?
+    return (
+        <Container className='auth-page-container'>
 
-                    (<WrapperAuthPage className='wrapper-auth-page'>
-                        <div className="register-account">
-                            <span> Don't you have an account? </span>
-                            <Button className='register-button' onClick={() => setToggle(!toggle)}> Register </Button>
-                        </div>
-                        <Login />
-                    </WrapperAuthPage>)
-                    :
-                    (<WrapperAuthPage className='wrapper-auth-page'>
-                        <div className="register-account">
-                            <span> Do you have an account? </span>
-                            <Button className='login-button' onClick={() => setToggle(!toggle)}> Login </Button>
-                        </div>
-                        <Register />
-                    </WrapperAuthPage>)
+            {toggle ?
 
+                (<WrapperAuthPage className='wrapper-auth-page'>
+                    <div className="register-account">
+                        <span> Don't you have an account? </span>
+                        <Button className='register-button' onClick={() => setToggle(!toggle)}> Register </Button>
+                    </div>
+                    <Login />
+                </WrapperAuthPage>)
+                :
+                (<WrapperAuthPage className='wrapper-auth-page'>
+                    <div className="register-account">
+                        <span> Do you have an account? </span>
+                        <Button className='login-button' onClick={() => setToggle(!toggle)}> Login </Button>
+                    </div>
+                    <Register />
+                </WrapperAuthPage>)
 
-                }
+            }
 
-            </Container>
-        )
+        </Container>
+    )
 }
 
 export default AuthPage
