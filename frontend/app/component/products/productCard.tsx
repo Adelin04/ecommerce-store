@@ -15,7 +15,7 @@ const ProductCard = ({ product }: PropsProductCard) => {
     const { selectProduct } = useProductStore();
     const router = useRouter()
 
-    console.log(product?.price);
+    // console.log(product?.price);
 
 
     function handleClick() {
@@ -25,20 +25,27 @@ const ProductCard = ({ product }: PropsProductCard) => {
 
     return (
         <Container className='container-product-card'>
-            {/* <WrapperProductCard className='wrapper-product-card' >
-            </WrapperProductCard> */}
+
             <img className='img-product-card' src={product?.images[0].image} alt={product?.name} onClick={handleClick} />
+
             <WrapperDetailsProductCard className='wrapper-details-product-card' >
-                <p className='name'>{product?.name}</p>
-                <p className='size'>{product?.size.size}</p>
+
+                {/* <WrapperProductCard className='wrapper-product-card' >
+                </WrapperProductCard> */}
                 <div className='wrapper-price'>
                     <p className='currency'>{product?.currency.currency}</p>
-                    <p className='price'>{usePriceFormatted({ price: product?.price || null })}</p>
+                    <p className='price'>{product?.price}</p>
                 </div>
-                <p className='seller'>{product?.seller}</p>
+                
+                <div>
+                    <p className='name'>{product?.name}</p>
+                    <p className='size'>{product?.size.size}</p>
+                    <p className='seller'>{product?.seller}</p>
+                </div>
+
+                <Button>Add to cart</Button>
             </WrapperDetailsProductCard>
 
-            <Button>Add to cart</Button>
         </Container>
     )
 }
@@ -46,14 +53,15 @@ const ProductCard = ({ product }: PropsProductCard) => {
 export default ProductCard
 
 const Container = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 200px;
-    height: auto;
+    width: 250px;
+    height: 400px;
     margin: 40px;
-    border: 1px solid #c7c7c7ba;
+    /* border: 1px solid black; */
     border-radius: 10px;
     border-top:transparent;
     
@@ -64,7 +72,7 @@ const Container = styled.div`
         align-items: start;
         z-index: 0;
         width: 100%;
-        height: 250px;
+        height: 300px;
         border-radius: 10px;
         object-fit: cover;
         cursor: pointer;
@@ -102,36 +110,44 @@ const Container = styled.div`
     `
 
 const WrapperProductCard = styled.div`
-    /* position: relative; */
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    width: 200px;
-    height: 100%;
-    margin: auto;
-    padding: 10px;
-    border-radius: 10px;
+    position: relative;
+    width: 100%;
 
-    `
+    .wrapper-price {
+        /* position: relative; */
+        /* width: 100%; */
+        font-size: 20px;
+        font-weight: bold;
+        background-color: var(--primary-color);
+    }
+    
+    .currency,
+    .price {
+        /* position: absolute; */
+        right: 0;
+        top: 0;
+        font-weight: bold;
+        color: white;
+    }
+
+`
 const WrapperDetailsProductCard = styled.div`
-    /* position: absolute; */
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    bottom: 0;
     width: 100%;
-    height: 100%;
+    height: 35%;
     margin: auto;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, black 70%);
+   
     
-    .wrapper-price{
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        width:100%;
-    }
-
-
     p {
         color: white;
         font-size: 12px;
