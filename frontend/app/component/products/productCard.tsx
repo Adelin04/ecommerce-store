@@ -30,20 +30,17 @@ const ProductCard = ({ product }: PropsProductCard) => {
 
             <WrapperDetailsProductCard className='wrapper-details-product-card' >
 
-                {/* <WrapperProductCard className='wrapper-product-card' >
-                </WrapperProductCard> */}
-                <div className='wrapper-price'>
-                    <p className='currency'>{product?.currency.currency}</p>
-                    <p className='price'>{product?.price}</p>
-                </div>
-                
-                <div>
-                    <p className='name'>{product?.name}</p>
-                    <p className='size'>{product?.size.size}</p>
-                    <p className='seller'>{product?.seller}</p>
-                </div>
+                <WrapperPrice className='wrapper-price' >
+                    <div className='container-price'>
+                        <span className='currency'>{product?.currency.currency}</span>
+                        <span className='price'>{usePriceFormatted({ price: product?.price || null })}</span>
+                    </div>
+                </WrapperPrice>
 
-                <Button>Add to cart</Button>
+                <WrapperName className='wrapper-name'>
+                    <span className='name'>{product?.name}</span>
+                </WrapperName >
+
             </WrapperDetailsProductCard>
 
         </Container>
@@ -77,55 +74,38 @@ const Container = styled.div`
         object-fit: cover;
         cursor: pointer;
     }
-    
-    .name{
-        /* position: absolute; */
-        color: white;
-        top: 15px;
-        left: 20px;
-    }
-    .color{
-        /* position: absolute; */
-        color: white;
-        top: 30px;
-        left: 20px;
-    }
+`
 
-    .price{
-        /* position: absolute; */
-      /*   color: white;
-        top: 270px;
-        left: 20px; */
-    }
-    .currency {
-        font-size: 20px;
-    }
-
-    .size{
-        /* position: absolute; */
-        color: white;
-        top: 270px;
-        right: 20px;
-    }
-    `
-
-const WrapperProductCard = styled.div`
+const WrapperPrice = styled.div`
     position: relative;
+    display: flex;
+    justify-content: end;
+    align-items: start;
     width: 100%;
-
-    .wrapper-price {
-        /* position: relative; */
-        /* width: 100%; */
+    height: 100%;
+    
+    .container-price {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 20px;
         font-weight: bold;
-        background-color: var(--primary-color);
+        top: 0;
+        right: 0;
+        border-top-right-radius: 5px;
+        /* background-color: green; */
+        background-color: var(--button-color);
     }
-    
+
     .currency,
     .price {
-        /* position: absolute; */
-        right: 0;
-        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        padding: 5px;
+        font-size: 15px;
         font-weight: bold;
         color: white;
     }
@@ -145,11 +125,28 @@ const WrapperDetailsProductCard = styled.div`
     border-bottom-right-radius: 15px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, black 70%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0) -5%, black 70%);
    
-    
-    p {
+
+    .name{
+        /* position: absolute; */
         color: white;
-        font-size: 12px;
+        top: 15px;
+        left: 20px;
     }
-`   
+
+`
+
+const WrapperName = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+
+`

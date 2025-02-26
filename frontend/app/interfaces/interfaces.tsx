@@ -24,7 +24,7 @@ export interface IProduct {
     id: number | string;
     name: string;
     description: string;
-    price: number;
+    price: number | null;
     category: string;
     code: string;
     images: any;
