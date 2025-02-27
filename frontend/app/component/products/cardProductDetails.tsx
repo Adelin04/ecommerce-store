@@ -7,7 +7,7 @@ import Image from 'next/image'
 import usePriceFormatted from '@/app/utils/usePriceFormatted'
 import Button from '../ui/Button'
 
-export default function cardProductDetails({ product }: { product: IProduct }) {
+export default function cardProductDetails({ product }: { product: IProduct | any }) {
     const [selectedImage, setSelectedImage] = useState(0)
     const [productSize, setProductSize] = useState('');
     const [sizesProductAvailable, setSizesProductAvailable] = useState(['S', 'M', 'L', 'XL']);

@@ -27,7 +27,7 @@ export const useCategoryStore = create((set: any, get: any) => ({
 
     setCategoryClicked: (categoryClicked: string) => {
         localStorage.setItem('gender', categoryClicked)
-        set(() => ({ categorySelected: get().categories.filter((category: ICategory) => category?.gender.gender === categoryClicked?.toLowerCase()) }))
+        set(() => ({ categorySelected: get().categories.filter((category: ICategory|any) => category?.gender.gender === categoryClicked?.toLowerCase()) }))
     }
 
 }))

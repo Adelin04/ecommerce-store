@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import { IProduct } from '@/app/interfaces/interfaces';
 import { useProductStore } from '@/app/zustandStore/useProductStore';
 import { useRouter } from 'next/navigation';
-import Button from '../ui/Button';
 import usePriceFormatted from '@/app/utils/usePriceFormatted';
 
 interface PropsProductCard {
     product: IProduct | null
 }
 
-const ProductCard = ({ product }: PropsProductCard) => {
+const ProductCard = ({ product }: PropsProductCard | any) => {
 
     const { selectProduct } = useProductStore();
     const router = useRouter()

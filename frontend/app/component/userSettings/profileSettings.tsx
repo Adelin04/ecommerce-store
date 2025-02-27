@@ -21,7 +21,7 @@ interface PropsProfileSettings {
 export default function ProfileSettings({ close, user }: PropsProfileSettings) {
     const [btnClicked, setBtnClicked] = useState<any>('Profile');
     const [toggleInputNewEmail, setToggleInputNewEmail] = useState<boolean>(false);
-    const [imageProfile, setImageProfile] = useState<string | File | null>(null);
+    const [imageProfile, setImageProfile] = useState<string | File | null|any>(null);
     const [emails, setEmails] = useState<Array<string>>([]);
     const [message, setMessage] = useState<string>('');
     const formData = new FormData();

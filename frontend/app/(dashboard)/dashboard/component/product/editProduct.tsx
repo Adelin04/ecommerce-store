@@ -30,28 +30,29 @@ interface PropsEditProduct {
 
 
 export default function EditProduct({ close, user, product }: PropsEditProduct) {
+    const { name, color, description, price, brand, code, size, stock, currency, gender, category, images, _id } = product
     const router = useRouter()
-    const{ updateProduct,loading } = useProductStore();
+    const { updateProduct, loading } = useProductStore();
     const [message, setMessage] = useState('');
     const { getCurrencies, currencies } = useCurrencyStore()
     const { getBrands, brands } = useBrandStore()
     const { getColors, colors } = useColorStore()
     const { getGenders, genders } = useGenderStore()
     const { categories } = useCategoryStore()
-    const [sizesProductAvailable, setSizesProductAvailable] = useState(['S', 'M', 'L', 'XL']);
+    const [sizesProductAvailable, setSizesProductAvailable]: any = useState(['S', 'M', 'L', 'XL']);
 
-    const [productName, setProductName] = useState(product.name);
-    const [productColor, setProductColor] = useState(product.color.color);
-    const [productDescription, setProductDescription] = useState(product.description);
-    const [productPrice, setProductPrice] = useState<number | string>(product.price);
-    const [productBrand, setProductBrand] = useState(product.brand);
-    const [productCode, setProductCode] = useState(product.code);
-    const [productSize, setProductSize] = useState(product.size.size);
-    const [productStock, setProductStock]: any = useState(product.stock);
-    const [productCategory, setProductCategory] = useState(product.category);
-    const [productCurrency, setProductCurrency] = useState<any>(product.currency.currency);
-    const [productGender, setProductGender] = useState<string>(product.gender.gender);
-    const [productImages, setProductImages]: any = useState(product.images.map((image: any) => image.image));
+    const [productName, setProductName] = useState(product?.name);
+    const [productColor, setProductColor] = useState(color);
+    const [productDescription, setProductDescription] = useState(description);
+    const [productPrice, setProductPrice] = useState<number | string>(price || 0);
+    const [productBrand, setProductBrand] = useState(brand);
+    const [productCode, setProductCode] = useState(code);
+    const [productSize, setProductSize]: any = useState(size);
+    const [productStock, setProductStock]: any = useState(stock);
+    const [productCategory, setProductCategory] = useState(category);
+    const [productCurrency, setProductCurrency] = useState<any>(currency);
+    const [productGender, setProductGender] = useState<string>(gender);
+    const [productImages, setProductImages]: any = useState(images.map((image: any) => image.image));
     const [selectedPictures, setSelectedPictures]: any = useState(null);
     const [listOfProductAdded, setListOfProductAdded] = useState([]);
 
@@ -62,7 +63,7 @@ export default function EditProduct({ close, user, product }: PropsEditProduct) 
         setProductPrice('');
         setProductBrand('');
         setProductCode('');
-        setProductSize('');
+        setProductSize(null);
         setProductStock(1);
         setProductCategory('');
         setProductCurrency('');
@@ -301,12 +302,12 @@ export default function EditProduct({ close, user, product }: PropsEditProduct) 
                 </Main>
 
                 <FooterMenu >
-                <Button style={{ margin: '5px', }} onClick={()=>{router.push('/')}}>go to store</Button>
+                    <Button style={{ margin: '5px', }} onClick={() => { router.push('/') }}>go to store</Button>
                     <Button style={{ color: 'salmon', }} onClick={(e) => { handleSubmit(e) }}>Save Actions</Button>
                 </FooterMenu>
 
             </PopUp>
-            
+
         </Container >
     );
 }

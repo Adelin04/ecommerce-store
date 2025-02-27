@@ -1,14 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-
+  distDir: "build",
+  
   images: {
     domains: ["e-commerce-photos.s3.amazonaws.com","cdn.pixabay.com","media.istockphoto.com","api.cloudinary.com","res.cloudinary.com"],
   },
   
 
   env: {
-    PRODUCTION_URI: "https://am-cloud.eu/api/",
+    PRODUCTION_URI: "https://am-cloud.eu/api-ecomm/",
     DEV_URI: "http://localhost:5000/api/",
   },
 

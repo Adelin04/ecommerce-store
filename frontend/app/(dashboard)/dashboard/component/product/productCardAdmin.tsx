@@ -12,7 +12,8 @@ interface PropsProductCard {
     product: IProduct | null
 }
 
-export default function ProductCardAdmin({ product}: PropsProductCard) {
+export default function ProductCardAdmin({ product }: PropsProductCard) {
+    const { name, color, price, brand, size, currency, gender, category, images, seller } = product as IProduct | any
     const { selectProduct } = useProductStore();
     const router = useRouter()
     const [open, setOpen] = React.useState(false);
@@ -26,15 +27,15 @@ export default function ProductCardAdmin({ product}: PropsProductCard) {
         <Container className='container-product-card' style={{ overflow: `${open ? 'hidden' : 'auto'}` }}>
 
             <WrapperProductCard className='wrapper-product-card' >
-                <img className='img-product-card' src={product?.image || product?.images[0].image} alt={product?.name} onClick={handleClick} />
-                <p className='name'>{product?.name}</p>
-                <p className='color'>{product?.color.color}</p>
-                <p className='size'>{product?.size.size}</p>
-                <p className='price'>{product?.price}{" "}{product?.currency.currency}</p>
-                <p className='brand'>{product?.brand.brand}</p>
-                <p className='seller'>{product?.seller}</p>
-                <p className='gender'>{product?.gender.gender}</p>
-                <p className='category'>{product?.category.category}</p>
+                <img className='img-product-card' src={images[0].image} alt={product?.name} onClick={handleClick} />
+                <p className='name'>{name}</p>
+                <p className='color'>{color.color}</p>
+                <p className='size'>{size.size}</p>
+                <p className='price'>{price}{" "}{currency.currency}</p>
+                <p className='brand'>{brand.brand}</p>
+                <p className='seller'>{seller}</p>
+                <p className='gender'>{gender.gender}</p>
+                <p className='category'>{category.category}</p>
 
             </WrapperProductCard>
 
