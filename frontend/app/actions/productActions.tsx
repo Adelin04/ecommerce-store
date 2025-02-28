@@ -8,7 +8,8 @@ export async function fetchProducts() {
 }
 
 export async function fetchCategories() {
-    const response = await fetch(`${process.env.DEV_URI}category/getAllCategories`);
+    const response = await fetch(`${process.env.PRODUCTION_URI}category/getAllCategories`);
+    
     const categories = await response.json();
 
     return categories;
