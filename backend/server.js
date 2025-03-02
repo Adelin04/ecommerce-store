@@ -51,6 +51,9 @@ app.use("/api/color", colorRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/gender", genderRoutes);
 app.use("/api/brand", brandRoutes);
+app.get("/api-ecomm/", async (req, res) => {
+  res.status(200).json({ message: "API is working" });
+});
 
 
 
