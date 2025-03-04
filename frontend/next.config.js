@@ -10,7 +10,7 @@ const nextConfig = {
 
   env: {
     PRODUCTION_URI: "https://am-cloud.eu/api-ecomm/",
-    DEV_URI: "http://localhost:5000/api/",
+    DEV_URI: "http://localhost:5050/api-ecomm/",
   },
 
   /* async headers() {
