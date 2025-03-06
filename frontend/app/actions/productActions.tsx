@@ -1,16 +1,17 @@
 'use server'
 
+import { URI } from "../utils/URI";
+
 export async function fetchProducts() {
-    const response = await fetch(`$${process.env.PRODUCTION_URI}products/getAllProducts`);
+    const response = await fetch(`${URI}products/getAllProducts`);
     const products = await response.json();
 
     return products;
 }
 
 export async function fetchCategories() {
-    const response = await fetch(`${process.env.PRODUCTION_URI}category/getAllCategories`);
-    console.log(response);
-    
+    const response = await fetch(`${URI}category/getAllCategories`);
+
     const categories = await response.json();
 
     return categories;
@@ -19,7 +20,7 @@ export async function fetchCategories() {
 
 export async function fetchProductById(_id: string) {
 
-    const response = await fetch(`${process.env.PRODUCTION_URI}products/getProductById/${_id}`);
+    const response = await fetch(`${URI}products/getProductById/${_id}`);
     const product = await response.json();
 
     return product;

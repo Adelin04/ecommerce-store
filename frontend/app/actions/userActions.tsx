@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { cookies } from 'next/headers';
+import { URI } from '../utils/URI';
 
 export async function checkIsAuth() {
     // const accessToken = cookies().get('accessToken')?.value;
@@ -9,7 +10,7 @@ export async function checkIsAuth() {
 
     if (!cookies().has('accessToken')) return false;
 
-    const user = await fetch(`${process.env.DEV_URI}auth/profile`,
+    const user = await fetch(`${URI}auth/profile`,
         {
             method: 'GET',
             headers: {
@@ -31,7 +32,7 @@ export async function checkIsAuth() {
 export async function refreshToken() {
     if (!cookies().has('refreshToken')) return false;
 
-    const user = await fetch(`${process.env.DEV_URI}auth/refresh-token`,
+    const user = await fetch(`${URI}auth/refresh-token`,
         {
             method: 'GET',
             headers: {
@@ -47,7 +48,7 @@ export async function refreshToken() {
 export async function login(email: string, password: string) {
     if (!email || !password) return;
 
-    const result = await fetch(`${process.env.DEV_URI}auth/login`, {
+    const result = await fetch(`${URI}auth/login`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         credentials: 'include',
@@ -81,7 +82,7 @@ export async function login(email: string, password: string) {
 
 export async function register(body: any) {
     const { firstName, lastName, email, password } = body
-    const user = await fetch(`${process.env.DEV_URI}auth/signup`, {
+    const user = await fetch(`${URI}auth/signup`, {
         method: 'POST',
         body: JSON.stringify({ firstName, lastName, email, password }),
         headers: {
@@ -94,7 +95,7 @@ export async function register(body: any) {
 }
 
 export async function logout() {
-    await fetch(`${process.env.DEV_URI}auth/logout`,
+    await fetch(`${URI}auth/logout`,
         {
             method: 'GET',
             headers: {
@@ -106,7 +107,7 @@ export async function logout() {
 
 export async function updateUserById(image: any, id: string | number) {
     try {
-        const response = await fetch(`${process.env.DEV_URI}user/updateUserById/${id}`,
+        const response = await fetch(`${URI}user/updateUserById/${id}`,
             {
                 method: 'PUT',
                 body: JSON.stringify({ imageProfile: image }),
@@ -123,7 +124,7 @@ export async function updateUserById(image: any, id: string | number) {
 
 export async function uploadImageProfileUser(formData: any, id: string | number) {
     try {
-        const response = await fetch(`${process.env.DEV_URI}user/uploadImageProfileUser/${id}`, {
+        const response = await fetch(`${URI}user/uploadImageProfileUser/${id}`, {
             method: 'POST',
             body: formData
         }).then((res) => { return res.json() });
