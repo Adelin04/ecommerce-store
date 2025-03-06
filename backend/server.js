@@ -27,6 +27,7 @@ app.use(
       "http://localhost:5173/",
       "http://localhost:3000/",
       "https://am-cloud.eu/api/",
+      "https://e-commerce-boutique.netlify.app/",
     ],
     allowedHeaders: ["Content-Type", "Authorization"],
     optionsSuccessStatus: 200,
