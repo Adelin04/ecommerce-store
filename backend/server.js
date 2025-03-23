@@ -18,7 +18,7 @@ import brandRoutes from "./routes/brand.routes.js";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 // const __dirname = path.resolve();
 
 app.use(
@@ -26,6 +26,7 @@ app.use(
     origins: [
       "http://localhost:5173/",
       "http://localhost:3000/",
+      "http://localhost:5050/",
       "https://am-cloud.eu/api/",
       "https://e-commerce-boutique.netlify.app/",
     ],
@@ -43,16 +44,16 @@ app.use(cookieParser());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/size", sizeRoutes);
-app.use("/api/currency", currencyRoutes);
-app.use("/api/color", colorRoutes);
-app.use("/api/category", categoryRoutes);
-app.use("/api/gender", genderRoutes);
-app.use("/api/brand", brandRoutes);
-app.get("/api-ecomm/", async (req, res) => {
+app.use("/api-ecomm/auth", authRoutes);
+app.use("/api-ecomm/user", userRoutes);
+app.use("/api-ecomm/products", productRoutes);
+app.use("/api-ecomm/size", sizeRoutes);
+app.use("/api-ecomm/currency", currencyRoutes);
+app.use("/api-ecomm/color", colorRoutes);
+app.use("/api-ecomm/category", categoryRoutes);
+app.use("/api-ecomm/gender", genderRoutes);
+app.use("/api-ecomm/brand", brandRoutes);
+app.get("/api-ecomm", async (req, res) => {
   res.status(200).json({ message: "API is working" });
 });
 
@@ -64,3 +65,4 @@ app.listen(PORT, () => {
   connectDB();
 });
 
+// e-commerce-boutique

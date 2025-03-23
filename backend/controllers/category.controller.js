@@ -10,6 +10,7 @@ export const createCategory = async (req, res) => {
 };
 
 export const getAllCategories = async (req, res) => {
+  
   try {
     const categories = await Category.find().populate("gender");
     res.status(200).json(categories);
