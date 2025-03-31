@@ -1,7 +1,6 @@
 import { redis } from "../lib/redis.js";
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 const generateTokens = (userId) => {
@@ -118,7 +117,7 @@ export const logout = async (req, res) => {
 export const refreshToken = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
-    
+
     if (!refreshToken) {
       return res.status(401).send("No refresh token found");
     }
@@ -156,12 +155,13 @@ export const refreshToken = async (req, res) => {
 export const getProfileUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
+    console.log('user - test ', user);
 
     user.password = undefined;
     res.status(200).json(user);
   } catch (error) {
     res
       .status(500)
-      .send({ message: "Error getting user profile", error: error.message });
+      .send({ success: false, message: "Error getting user profile", error: error.message });
   }
 };

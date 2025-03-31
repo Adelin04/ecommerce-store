@@ -23,7 +23,6 @@ const SetGlobalState = ({ children }: { children: React.ReactNode }) => {
         const products: Array<IProduct> = await fetchProducts().then((data) => { return data });
         const userResult: any = await checkIsAuth().then((data) => { return data });
 
-
         setCategories(categories);
         setProducts(products);
 

@@ -18,13 +18,17 @@ export async function checkIsAuth() {
             },
         })
         .then((res) => { return res.json() })
-        .then((data) => { return data })
+        .then((data) => {
+            if (data.success)
+                return data
+        })
         .catch((error) => {
             console.log(error);
 
             if (error instanceof Error)
                 return null;
         });
+
 
     return user
 }
@@ -41,7 +45,22 @@ export async function refreshToken() {
         })
         .then((res) => { return res.json() });
 
-    console.log('user', user);
+    // console.log('user', user);
+    if (user.success) {
+        cookies().set("accessToken", user.accessToken, {
+            httpOnly: true, // prevent XSS attacks, cross site scripting attack
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+            maxAge: 24 * 60 * 60 * 1000, // one hour
+        });
+        cookies().set("refreshToken", user.refreshToken, {
+            httpOnly: true, // prevent XSS attacks, cross site scripting attack
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
+    }
+
     return user;
 }
 
